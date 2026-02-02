@@ -2,6 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { VendorList } from "./vendor-list";
 import { CreateVendorForm } from "./create-vendor-form";
 import { Users, Plus } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "取引先管理",
+  description: "取引先を登録し、専用のアップロードURLを発行できます。",
+};
 
 export default async function VendorsPage() {
   const supabase = await createClient();

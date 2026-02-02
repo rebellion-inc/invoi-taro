@@ -2,6 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { InvoiceList } from "./invoice-list";
 import { InvoiceFilters } from "./invoice-filters";
 import { FileText, TrendingUp, AlertCircle } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "請求書一覧",
+  description: "受け取った請求書の一覧を確認し、支払い状況を管理できます。",
+};
 
 export default async function DashboardPage({
   searchParams,

@@ -2,6 +2,27 @@ import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import { UploadForm } from "./upload-form";
 import { FileUp } from "lucide-react";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}): Promise<Metadata> {
+  const { token } = await params;
+  const vendor = await getVendorByToken(token);
+  
+  if (!vendor) {
+    return {
+      title: "取引先が見つかりません",
+    };
+  }
+
+  return {
+    title: `請求書アップロード - ${vendor.name}`,
+    description: `${vendor.name}様の請求書をアップロードしてください。`,
+  };
+}
 
 // Use service role to bypass RLS for public upload page
 async function getVendorByToken(token: string) {
