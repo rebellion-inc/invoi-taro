@@ -1,9 +1,9 @@
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto for gen_random_bytes
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Organizations table (multi-tenant support)
 CREATE TABLE organizations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -18,16 +18,16 @@ CREATE TABLE profiles (
 
 -- Vendors table (clients who upload invoices)
 CREATE TABLE vendors (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID NOT NULL REFERENCES organizations ON DELETE CASCADE,
   name TEXT NOT NULL,
-  upload_token TEXT UNIQUE NOT NULL DEFAULT encode(gen_random_bytes(16), 'hex'),
+  upload_token TEXT UNIQUE NOT NULL DEFAULT encode(extensions.gen_random_bytes(16), 'hex'),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Invoices table
 CREATE TABLE invoices (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   vendor_id UUID NOT NULL REFERENCES vendors ON DELETE CASCADE,
   organization_id UUID NOT NULL REFERENCES organizations ON DELETE CASCADE,
   file_path TEXT NOT NULL,
