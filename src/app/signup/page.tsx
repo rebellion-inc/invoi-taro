@@ -2,6 +2,7 @@
 
 import { signup } from "@/app/auth/actions";
 import Link from "next/link";
+import Image from "next/image";
 import { useActionState } from "react";
 import { Building2, Mail, Lock, ArrowRight, Loader2, UserPlus } from "lucide-react";
 
@@ -18,8 +19,15 @@ export default function SignupPage() {
       <div className="w-full max-w-md animate-fade-in">
         <div className="glass rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <UserPlus className="w-8 h-8 text-white" />
+            <div className="flex justify-center mb-4">
+              <Image
+                src="/logo.png"
+                alt="請求受取太郎"
+                width={200}
+                height={60}
+                priority
+                className="h-12 w-auto"
+              />
             </div>
             <h2 className="text-3xl font-bold text-gray-900">
               アカウント作成

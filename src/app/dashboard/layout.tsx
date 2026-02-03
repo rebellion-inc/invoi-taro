@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/app/auth/actions";
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { FileText, Users, LogOut, LayoutDashboard } from "lucide-react";
 
@@ -29,7 +30,14 @@ export default async function DashboardLayout({
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link href="/dashboard" className="flex items-center gap-3">
-                <span className="text-xl font-bold text-gray-900">請求受取太郎</span>
+                <Image
+                  src="/logo.png"
+                  alt="請求受取太郎"
+                  width={150}
+                  height={45}
+                  priority
+                  className="h-8 w-auto"
+                />
               </Link>
               <div className="ml-10 flex items-center space-x-2">
                 <Link
