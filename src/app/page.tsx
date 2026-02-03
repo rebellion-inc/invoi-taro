@@ -14,10 +14,6 @@ export default function Home() {
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto py-20 px-4">
         <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm text-indigo-600 font-medium mb-6 shadow-sm">
-            <Sparkles className="w-4 h-4" />
-            シンプルで効率的な請求書管理
-          </div>
           <div className="flex justify-center mb-8">
             <Image
               src="/logo.png"
@@ -25,7 +21,6 @@ export default function Home() {
               width={400}
               height={120}
               priority
-              className="animate-float"
             />
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
