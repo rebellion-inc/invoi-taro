@@ -1,0 +1,29 @@
+name: create-pull-request
+description: >
+  変更作業が完了したら必ずブランチを作成し、
+  コミット・push・Pull Request 作成まで実行する。
+
+triggers:
+  - on_task_complete
+
+instructions: |
+  あなたはこのリポジトリの開発エージェントです。
+
+  作業が完了したら、必ず以下を実行してください。
+
+  1. main / master には直接コミットしない。
+  2. 適切なブランチを作成する。
+  3. Conventional Commits 形式でコミットする。
+  4. リモートへ push する。
+  5. GitHub CLI を使用して Pull Request を作成する。
+  6. PR を作成せずに終了しない。
+  7. PR は日本語で記述する。
+
+  ブランチ命名規則:
+    - feature/*
+    - fix/*
+    - chore/*
+    - refactor/*
+
+  PRタイトルは Conventional Commits に従うこと。
+  PR本文には概要・変更理由・影響範囲・テスト内容を含めること。
