@@ -19,7 +19,7 @@ export function InvoiceFilters({ currentMonth, currentStatus }: Props) {
     } else {
       params.delete(key);
     }
-    router.push(`/dashboard?${params.toString()}`);
+    router.push(`/dashboard/invoices?${params.toString()}`);
   };
 
   // Generate month options (last 12 months)

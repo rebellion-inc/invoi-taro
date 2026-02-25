@@ -18,6 +18,6 @@ export async function updateInvoiceStatus(invoiceId: string, status: "unpaid" | 
     return { error: "ステータスの更新に失敗しました: " + error.message };
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dashboard/invoices");
   return { success: true };
 }

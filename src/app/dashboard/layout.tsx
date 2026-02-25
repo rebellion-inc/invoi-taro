@@ -29,7 +29,7 @@ export default async function DashboardLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link href="/dashboard" className="flex items-center gap-3">
+              <Link href="/dashboard/invoices" className="flex items-center gap-3">
                 <Image
                   src="/logo.png"
                   alt="請求受取太郎"
@@ -41,7 +41,7 @@ export default async function DashboardLayout({
               </Link>
               <div className="ml-10 flex items-center space-x-2">
                 <Link
-                  href="/dashboard"
+                  href="/dashboard/invoices"
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:bg-white/50 hover:text-indigo-600 transition-all"
                 >
                   <LayoutDashboard className="w-4 h-4" />
