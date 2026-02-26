@@ -18,6 +18,7 @@ instructions: |
   5. GitHub CLI を使用して Pull Request を作成する。
   6. PR を作成せずに終了しない。
   7. PR は日本語で記述する。
+  8. PR URL を出力する。
 
   ブランチ命名規則:
     - feature/*
@@ -27,3 +28,6 @@ instructions: |
 
   PRタイトルは Conventional Commits に従うこと。
   PR本文には概要・変更理由・影響範囲・テスト内容を含めること。
+
+  success_criteria: >
+  Pull Request が作成され、そのURLが表示されていること。
