@@ -39,7 +39,7 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
   const months = getMonthOptions(baseMonth);
 
   return (
-    <div className="flex flex-wrap gap-4 items-end">
+    <div className="aoi-stage rounded-2xl p-4 flex flex-wrap gap-4 items-end">
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
           <Calendar className="w-4 h-4" />
@@ -48,7 +48,7 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
         <select
           value={currentMonth || "all"}
           onChange={(e) => updateFilter("month", e.target.value)}
-          className="block w-44 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
+          className="block w-48 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
           <option value="all">すべての月</option>
           {months.map((month) => (
@@ -66,7 +66,7 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
         <select
           value={currentStatus || "all"}
           onChange={(e) => updateFilter("status", e.target.value === "all" ? "" : e.target.value)}
-          className="block w-36 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
+          className="block w-40 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
           <option value="all">すべて</option>
           <option value="unpaid">これから</option>

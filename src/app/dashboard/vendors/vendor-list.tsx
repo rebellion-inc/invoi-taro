@@ -50,9 +50,9 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full">
-        <thead className="bg-gray-50/50">
+    <div className="overflow-x-auto p-3">
+      <table className="min-w-full border-separate border-spacing-y-2">
+        <thead className="bg-white/50">
           <tr>
             <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
               取引先名
@@ -68,14 +68,14 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody>
           {vendors.map((vendor, index) => (
             <tr 
               key={vendor.id} 
-              className="hover:bg-indigo-50/30 transition-colors animate-fade-in"
+              className="bg-white/80 hover:bg-white transition-colors animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap first:rounded-l-2xl last:rounded-r-2xl">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
                     {vendor.name[0]}
@@ -85,7 +85,7 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
                   </span>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap first:rounded-l-2xl last:rounded-r-2xl">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg">
                     <Link className="w-4 h-4 text-gray-400" />
@@ -115,10 +115,10 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
                   </button>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 first:rounded-l-2xl last:rounded-r-2xl">
                 {dateFormatter.format(new Date(vendor.created_at))}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right">
+              <td className="px-6 py-4 whitespace-nowrap text-right first:rounded-l-2xl last:rounded-r-2xl">
                 <div className="inline-flex items-center gap-2">
                   <NextLink
                     href={`/dashboard/vendors/${vendor.id}`}

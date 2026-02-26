@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { InvoiceList } from "../invoice-list";
 import { InvoiceFilters } from "../invoice-filters";
-import { FileText, TrendingUp, AlertCircle } from "lucide-react";
+import { FileText, TrendingUp, AlertCircle, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ export default async function DashboardInvoicesPage({
 
   if (!profile?.organization_id) {
     return (
-        <div className="glass rounded-2xl p-8">
+        <div className="aoi-stage glass rounded-3xl p-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-3">請求書一覧</h1>
           <p className="text-gray-600 mb-4">
             招待を受けると、ここに請求書が並びます。まずはマイページを確認しましょう。
@@ -91,20 +91,29 @@ export default async function DashboardInvoicesPage({
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-          <FileText className="w-6 h-6 text-white" />
+      <div className="aoi-stage glass rounded-3xl p-6 mb-8">
+        <span className="aoi-kicker mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          INVOICE VIEW
+        </span>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+            <FileText className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">請求書一覧</h1>
+            <p className="text-gray-500 text-sm">今日やる分だけ、ゆるく確認</p>
+          </div>
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">請求書一覧</h1>
-          <p className="text-gray-500 text-sm">今日やる分だけ、ゆるく確認</p>
+          <p className="text-xs text-gray-500 mt-4">迷ったら「これから」の項目だけ見ればOKです。</p>
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="glass rounded-2xl p-6 animate-fade-in stagger-1 opacity-0">
+        <div className="aoi-stage rounded-3xl p-6 animate-fade-in stagger-1 opacity-0">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center">
               <FileText className="w-6 h-6 text-indigo-600" />
             </div>
             <span className="text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">
@@ -115,9 +124,9 @@ export default async function DashboardInvoicesPage({
           <p className="text-sm text-gray-500">受け取った枚数</p>
         </div>
         
-        <div className="glass rounded-2xl p-6 animate-fade-in stagger-2 opacity-0">
+        <div className="aoi-stage rounded-3xl p-6 animate-fade-in stagger-2 opacity-0">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-emerald-600" />
             </div>
             <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
@@ -128,9 +137,9 @@ export default async function DashboardInvoicesPage({
           <p className="text-sm text-gray-500">金額のめやす</p>
         </div>
         
-        <div className="glass rounded-2xl p-6 animate-fade-in stagger-3 opacity-0">
+        <div className="aoi-stage rounded-3xl p-6 animate-fade-in stagger-3 opacity-0">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center">
               <AlertCircle className="w-6 h-6 text-rose-600" />
             </div>
             <span className="text-xs font-medium text-rose-600 bg-rose-100 px-2 py-1 rounded-full">
@@ -142,7 +151,7 @@ export default async function DashboardInvoicesPage({
         </div>
       </div>
 
-      <div className="glass rounded-2xl overflow-hidden animate-fade-in stagger-4 opacity-0">
+      <div className="glass rounded-3xl overflow-hidden animate-fade-in stagger-4 opacity-0">
         <div className="p-6 border-b border-gray-100">
           <InvoiceFilters
             currentMonth={selectedMonth}

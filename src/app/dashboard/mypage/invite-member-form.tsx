@@ -17,6 +17,7 @@ export function InviteMemberForm() {
 
   return (
     <form action={formAction} className="space-y-4">
+      <p className="text-sm text-gray-600">いきなり全員でなくても、まずは1人招待できれば十分です。</p>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
           招待したいメールアドレス
@@ -37,7 +38,7 @@ export function InviteMemberForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex items-center gap-2 px-6 py-3 btn-primary text-white rounded-xl font-medium disabled:opacity-70"
+        className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 btn-primary text-white rounded-xl font-medium disabled:opacity-70"
       >
         {pending ? (
           <>

@@ -4,7 +4,7 @@ import { signup } from "@/app/auth/actions";
 import Link from "next/link";
 import Image from "next/image";
 import { useActionState, useState } from "react";
-import { Building2, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Building2, Mail, Lock, ArrowRight, Loader2, Sparkles, Heart, Coffee } from "lucide-react";
 
 export default function SignupPage() {
   const [withoutOrganization, setWithoutOrganization] = useState(false);
@@ -16,9 +16,36 @@ export default function SignupPage() {
   );
 
   return (
-    <div className="aoi-shell min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
-      <div className="w-full max-w-md animate-fade-in">
-        <div className="glass rounded-2xl shadow-xl p-8">
+    <div className="aoi-shell min-h-screen bg-gradient-mesh flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-[1.1fr_1fr] animate-fade-in">
+        <div className="aoi-stage glass rounded-3xl p-8 lg:p-10 hidden lg:flex flex-col justify-between">
+          <div>
+            <span className="aoi-kicker mb-5">
+              <Sparkles className="w-3.5 h-3.5" />
+              START SMALL
+            </span>
+            <h1 className="text-4xl leading-tight font-bold text-gray-900">
+              完璧じゃなくていい
+              <br />
+              まずは登録だけ
+            </h1>
+            <p className="text-gray-600 mt-4 leading-relaxed">
+              最低限の入力で始められます。使いながら整えていけば、ちゃんと前進です。
+            </p>
+          </div>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div className="flex items-center gap-2 rounded-xl bg-white/70 px-4 py-3">
+              <Heart className="w-4 h-4 text-rose-500" />
+              やることを減らして続けやすく
+            </div>
+            <div className="flex items-center gap-2 rounded-xl bg-white/70 px-4 py-3">
+              <Coffee className="w-4 h-4 text-violet-500" />
+              はじめは3項目だけでOK
+            </div>
+          </div>
+        </div>
+
+        <div className="glass rounded-3xl shadow-xl p-8">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
               <Image
@@ -30,10 +57,14 @@ export default function SignupPage() {
                 className="h-12 w-auto"
               />
             </div>
+            <span className="aoi-kicker mb-3">
+              <Sparkles className="w-3.5 h-3.5" />
+              SIGN UP
+            </span>
             <h2 className="text-3xl font-bold text-gray-900">はじめの一歩でOK</h2>
             <p className="text-gray-600 mt-2">細かい設定はあとからでも大丈夫です</p>
           </div>
-          
+
           <form action={formAction} className="space-y-6">
             {state?.error && (
               <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm flex items-center gap-2 animate-fade-in border border-red-100">

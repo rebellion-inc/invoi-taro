@@ -61,12 +61,13 @@ export function InvoiceDetailForm({
         : null;
 
   return (
-    <div className="glass rounded-2xl p-6">
+    <div className="aoi-stage rounded-3xl p-6">
       <form
         action={formAction}
         onSubmit={() => setDeleteError(null)}
         className="space-y-6"
       >
+        <p className="text-sm text-gray-600">全部を整えなくても、今日必要な項目だけ更新できれば十分です。</p>
         <input type="hidden" name="invoiceId" value={invoiceId} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

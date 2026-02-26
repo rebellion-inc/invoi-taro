@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { VendorList } from "./vendor-list";
 import { CreateVendorForm } from "./create-vendor-form";
-import { Users, Plus } from "lucide-react";
+import { Users, Plus, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default async function VendorsPage() {
 
   if (!profile?.organization_id) {
     return (
-        <div className="glass rounded-2xl p-8">
+        <div className="aoi-stage glass rounded-3xl p-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-3">取引先管理</h1>
           <p className="text-gray-600 mb-4">
             招待を受けると、ここで取引先を追加できます。まずはマイページを確認しましょう。
@@ -46,17 +46,24 @@ export default async function VendorsPage() {
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center shadow-lg">
-          <Users className="w-6 h-6 text-white" />
+      <div className="aoi-stage glass rounded-3xl p-6 mb-8">
+        <span className="aoi-kicker mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          VENDOR CARE
+        </span>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center shadow-lg">
+            <Users className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">取引先管理</h1>
+            <p className="text-gray-500 text-sm">まずはよく使う相手だけ登録</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">取引先管理</h1>
-          <p className="text-gray-500 text-sm">まずはよく使う相手だけ登録</p>
-        </div>
+        <p className="text-xs text-gray-500 mt-4">取引先は少数から。リンク共有だけでも十分に進みます。</p>
       </div>
       
-      <div className="glass rounded-2xl p-6 mb-6 animate-fade-in">
+      <div className="aoi-stage rounded-3xl p-6 mb-6 animate-fade-in">
         <div className="flex items-center gap-2 mb-4">
           <Plus className="w-5 h-5 text-indigo-600" />
           <h2 className="text-lg font-semibold text-gray-900">取引先をひとつ追加</h2>
@@ -64,7 +71,7 @@ export default async function VendorsPage() {
         <CreateVendorForm />
       </div>
 
-      <div className="glass rounded-2xl overflow-hidden animate-fade-in stagger-2 opacity-0">
+      <div className="glass rounded-3xl overflow-hidden animate-fade-in stagger-2 opacity-0">
         <VendorList vendors={vendors || []} />
       </div>
     </div>

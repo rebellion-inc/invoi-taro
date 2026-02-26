@@ -160,34 +160,88 @@ body {
 
 /* Persona theme for non-top pages */
 .aoi-shell {
-  background-color: #fff8f6;
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background-color: #fff5fb;
   background-image:
-    radial-gradient(at 15% 12%, rgba(255, 189, 178, 0.2) 0px, transparent 52%),
-    radial-gradient(at 90% 6%, rgba(196, 181, 253, 0.2) 0px, transparent 48%),
-    radial-gradient(at 15% 92%, rgba(186, 230, 253, 0.18) 0px, transparent 52%);
+    radial-gradient(at 8% 18%, rgba(251, 113, 133, 0.22) 0px, transparent 46%),
+    radial-gradient(at 90% 12%, rgba(167, 139, 250, 0.2) 0px, transparent 42%),
+    radial-gradient(at 14% 94%, rgba(125, 211, 252, 0.2) 0px, transparent 48%),
+    linear-gradient(165deg, #fff8ed 0%, #fff2fa 46%, #eef7ff 100%);
+}
+
+.aoi-shell::before,
+.aoi-shell::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  filter: blur(26px);
+}
+
+.aoi-shell::before {
+  width: 20rem;
+  height: 20rem;
+  top: -7rem;
+  right: -5rem;
+  background: rgba(251, 113, 133, 0.22);
+}
+
+.aoi-shell::after {
+  width: 26rem;
+  height: 26rem;
+  left: -8rem;
+  bottom: -11rem;
+  background: rgba(167, 139, 250, 0.2);
 }
 
 .aoi-shell .glass {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(254, 215, 170, 0.35);
-  box-shadow: 0 10px 30px -22px rgba(251, 113, 133, 0.45);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.86) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 26px 55px -38px rgba(190, 24, 93, 0.5),
+    0 20px 28px -26px rgba(37, 99, 235, 0.35);
 }
 
 .aoi-shell .btn-primary {
-  background: linear-gradient(135deg, #fb7185 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, #fb7185 0%, #f472b6 42%, #a78bfa 100%);
 }
 
 .aoi-shell .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px -10px rgba(251, 113, 133, 0.45);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 26px -18px rgba(251, 113, 133, 0.62);
 }
 
 .aoi-shell .input-modern {
-  border-color: #fed7aa;
-  background: #fffdfb;
+  border-color: #fbcfe8;
+  background: rgba(255, 255, 255, 0.88);
 }
 
 .aoi-shell .input-modern:focus {
   border-color: #f472b6;
-  box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.15);
+  box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.2);
+}
+
+.aoi-shell .aoi-stage {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.92) 0%, rgba(250, 245, 255, 0.88) 100%);
+  box-shadow: 0 22px 48px -38px rgba(167, 139, 250, 0.8);
+}
+
+.aoi-shell .aoi-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(251, 113, 133, 0.2), rgba(167, 139, 250, 0.2));
+  color: #831843;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.aoi-shell table thead th {
+  color: #6b21a8;
 }

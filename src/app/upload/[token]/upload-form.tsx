@@ -74,7 +74,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
 
   if (success) {
     return (
-      <div className="text-center animate-fade-in py-8">
+      <div className="aoi-stage rounded-2xl text-center animate-fade-in py-8 px-6">
         <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
           <CheckCircle className="w-10 h-10 text-white" />
         </div>
@@ -99,7 +99,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-7">
       {error && (
         <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm flex items-center gap-2 animate-fade-in border border-red-100">
           <div className="w-2 h-2 bg-red-500 rounded-full"></div>
@@ -116,12 +116,12 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
-          className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all ${
+          className={`relative border-2 border-dashed rounded-2xl p-10 text-center transition-all ${
             dragActive
-              ? "border-indigo-500 bg-indigo-50"
+              ? "border-fuchsia-400 bg-fuchsia-50"
               : file
               ? "border-emerald-300 bg-emerald-50"
-              : "border-gray-300 hover:border-indigo-400 hover:bg-gray-50"
+              : "border-pink-200 bg-white/70 hover:border-fuchsia-300 hover:bg-white"
           }`}
         >
           <input
@@ -156,6 +156,10 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
         <p className="mt-2 text-xs text-gray-500 text-center">
           PDF, PNG, JPG形式（最大10MB）
         </p>
+      </div>
+
+      <div className="aoi-stage rounded-2xl px-4 py-3 text-sm text-gray-700">
+        入力が空欄でも送信できます。わかる項目だけでOKです。
       </div>
 
       <div>

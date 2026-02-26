@@ -67,12 +67,13 @@ export function VendorDetailForm({
         : null;
 
   return (
-    <div className="glass rounded-2xl p-6">
+    <div className="aoi-stage rounded-3xl p-6">
       <form
         action={formAction}
         onSubmit={() => setDeleteError(null)}
         className="space-y-6"
       >
+        <p className="text-sm text-gray-600">名称だけの更新でもOK。少し整えるだけで使いやすくなります。</p>
         <input type="hidden" name="vendorId" value={vendorId} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

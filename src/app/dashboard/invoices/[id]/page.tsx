@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, FileText } from "lucide-react";
+import { ArrowLeft, FileText, Sparkles } from "lucide-react";
 import { InvoiceDetailForm } from "./invoice-detail-form";
 
 export const metadata: Metadata = {
@@ -48,13 +48,19 @@ export default async function InvoiceDetailPage({
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-          <FileText className="w-6 h-6 text-white" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">請求書詳細</h1>
-          <p className="text-gray-500 text-sm">必要なところだけ整えればOK</p>
+      <div className="aoi-stage glass rounded-3xl p-6 mb-6">
+        <span className="aoi-kicker mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          DETAIL CHECK
+        </span>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+            <FileText className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">請求書詳細</h1>
+            <p className="text-gray-500 text-sm">必要なところだけ整えればOK</p>
+          </div>
         </div>
       </div>
 
@@ -68,7 +74,7 @@ export default async function InvoiceDetailPage({
         </Link>
       </div>
 
-      <div className="glass rounded-2xl p-6 mb-6">
+      <div className="aoi-stage rounded-3xl p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <p className="text-sm text-gray-500">取引先</p>

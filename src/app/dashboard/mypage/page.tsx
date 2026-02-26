@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Building2, UserPlus, UserX } from "lucide-react";
+import { Building2, UserPlus, UserX, Sparkles } from "lucide-react";
 import { InviteMemberForm } from "./invite-member-form";
 import type { Metadata } from "next";
 
@@ -28,17 +28,24 @@ export default async function MyPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
-          <Building2 className="w-6 h-6 text-white" />
+      <div className="aoi-stage glass rounded-3xl p-6">
+        <span className="aoi-kicker mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          MY PACE
+        </span>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+            <Building2 className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">マイページ</h1>
+            <p className="text-sm text-gray-500">今の所属と招待状況を確認</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">マイページ</h1>
-          <p className="text-sm text-gray-500">今の所属と招待状況を確認</p>
-        </div>
+        <p className="text-xs text-gray-500 mt-4">自分のペースで整えられるよう、必要な情報だけまとめています。</p>
       </div>
 
-      <div className="glass rounded-2xl p-6">
+      <div className="aoi-stage rounded-3xl p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-2">いまの所属</h2>
         {organizationName ? (
           <p className="text-gray-700">{organizationName}</p>
@@ -52,7 +59,7 @@ export default async function MyPage() {
           )}
       </div>
 
-      <div className="glass rounded-2xl p-6">
+      <div className="aoi-stage rounded-3xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <UserPlus className="w-5 h-5 text-indigo-600" />
           <h2 className="text-lg font-semibold text-gray-900">メンバー招待</h2>

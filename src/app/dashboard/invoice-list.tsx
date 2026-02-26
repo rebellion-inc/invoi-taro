@@ -45,9 +45,9 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full">
-        <thead className="bg-gray-50/50">
+    <div className="overflow-x-auto p-3">
+      <table className="min-w-full border-separate border-spacing-y-2">
+        <thead className="bg-white/50">
           <tr>
             <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
               取引先
@@ -72,14 +72,14 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody>
           {invoices.map((invoice, index) => (
             <tr 
               key={invoice.id} 
-              className="hover:bg-indigo-50/30 transition-colors animate-fade-in"
+              className="bg-white/80 hover:bg-white transition-colors animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap first:rounded-l-2xl last:rounded-r-2xl">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-white text-xs font-bold">
                     {invoice.vendors?.name?.[0] || "?"}
@@ -89,7 +89,7 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
                   </span>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap first:rounded-l-2xl last:rounded-r-2xl">
                 <button
                   onClick={() => handleViewFile(invoice.file_path)}
                   className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 transition-colors"
@@ -100,20 +100,20 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
                     : invoice.file_name}
                 </button>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap first:rounded-l-2xl last:rounded-r-2xl">
                 <span className="text-sm font-semibold text-gray-900">
                   {invoice.amount ? `¥${numberFormatter.format(invoice.amount)}` : "-"}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 first:rounded-l-2xl last:rounded-r-2xl">
                 {invoice.invoice_date
                   ? dateFormatter.format(new Date(invoice.invoice_date))
                   : "-"}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 first:rounded-l-2xl last:rounded-r-2xl">
                 {dateFormatter.format(new Date(invoice.uploaded_at))}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap first:rounded-l-2xl last:rounded-r-2xl">
                 <button
                   onClick={() =>
                     handleStatusChange(
@@ -134,7 +134,7 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
                   {invoice.status === "paid" ? "対応ずみ" : "これから"}
                 </button>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right">
+              <td className="px-6 py-4 whitespace-nowrap text-right first:rounded-l-2xl last:rounded-r-2xl">
                 <div className="inline-flex items-center gap-2">
                   <Link
                     href={`/dashboard/invoices/${invoice.id}`}

@@ -13,7 +13,9 @@ export function CreateVendorForm() {
   );
 
   return (
-    <form action={formAction} className="flex gap-4 items-end">
+    <form action={formAction} className="space-y-3">
+      <p className="text-sm text-gray-600">よく使う相手から、1件ずつ追加していきましょう。</p>
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-end">
       <div className="flex-1">
         <input
           name="name"
@@ -40,6 +42,7 @@ export function CreateVendorForm() {
           </>
         )}
       </button>
+      </div>
       {state?.error && (
         <span className="text-red-500 text-sm self-center animate-fade-in">{state.error}</span>
       )}

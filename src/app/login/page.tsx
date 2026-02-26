@@ -4,7 +4,7 @@ import { login } from "@/app/auth/actions";
 import Link from "next/link";
 import Image from "next/image";
 import { useActionState } from "react";
-import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, ArrowRight, Loader2, Sparkles, Coffee, Palette } from "lucide-react";
 
 export default function LoginPage() {
   const [state, formAction, pending] = useActionState(
@@ -15,9 +15,36 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="aoi-shell min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
-      <div className="w-full max-w-md animate-fade-in">
-        <div className="glass rounded-2xl shadow-xl p-8">
+    <div className="aoi-shell min-h-screen bg-gradient-mesh flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-[1.1fr_1fr] animate-fade-in">
+        <div className="aoi-stage glass rounded-3xl p-8 lg:p-10 hidden lg:flex flex-col justify-between">
+          <div>
+            <span className="aoi-kicker mb-5">
+              <Sparkles className="w-3.5 h-3.5" />
+              FEEL GOOD MODE
+            </span>
+            <h1 className="text-4xl leading-tight font-bold text-gray-900">
+              がんばりすぎない
+              <br />
+              請求管理にしよう
+            </h1>
+            <p className="text-gray-600 mt-4 leading-relaxed">
+              細かい設定はあとでOK。今日はログインして、ひとつ確認できたら十分です。
+            </p>
+          </div>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div className="flex items-center gap-2 rounded-xl bg-white/70 px-4 py-3">
+              <Coffee className="w-4 h-4 text-rose-500" />
+              5分だけ触って終わりでも大丈夫
+            </div>
+            <div className="flex items-center gap-2 rounded-xl bg-white/70 px-4 py-3">
+              <Palette className="w-4 h-4 text-violet-500" />
+              今日は「見える化」だけ進める
+            </div>
+          </div>
+        </div>
+
+        <div className="glass rounded-3xl shadow-xl p-8">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
               <Image
@@ -29,10 +56,14 @@ export default function LoginPage() {
                 className="h-12 w-auto"
               />
             </div>
+            <span className="aoi-kicker mb-3">
+              <Sparkles className="w-3.5 h-3.5" />
+              LOGIN
+            </span>
             <h2 className="text-3xl font-bold text-gray-900">おかえりなさい</h2>
             <p className="text-gray-600 mt-2">今日はひとつ進めば十分です</p>
           </div>
-          
+
           <form action={formAction} className="space-y-6">
             {state?.error && (
               <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm flex items-center gap-2 animate-fade-in border border-red-100">
