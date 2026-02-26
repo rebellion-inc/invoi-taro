@@ -46,11 +46,11 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
           月を選択
         </label>
         <select
-          value={currentMonth || ""}
+          value={currentMonth || "all"}
           onChange={(e) => updateFilter("month", e.target.value)}
           className="block w-44 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
-          <option value="">すべての期間</option>
+          <option value="all">すべての期間</option>
           {months.map((month) => (
             <option key={month.value} value={month.value}>
               {month.label}
