@@ -94,7 +94,7 @@ export default async function InvoiceDetailPage({
               {invoice.file_name}
             </a>
           </div>
-          <div className="md:text-right">
+          <div>
             <p className="text-sm text-gray-500">請求金額</p>
             <p className="text-lg font-semibold text-gray-900">
               {invoice.amount != null ? `¥${invoice.amount.toLocaleString()}` : "-"}
