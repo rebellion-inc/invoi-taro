@@ -46,5 +46,6 @@ export async function deleteVendor(vendorId: string) {
   }
 
   revalidatePath("/dashboard/vendors");
+
   return { success: true };
 }
