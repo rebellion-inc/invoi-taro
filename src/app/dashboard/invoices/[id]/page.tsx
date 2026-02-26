@@ -82,27 +82,23 @@ export default async function InvoiceDetailPage({
               {new Date(invoice.uploaded_at).toLocaleDateString("ja-JP")}
             </p>
           </div>
-          <div className="md:col-span-2">
-            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-              <div>
-                <p className="text-sm text-gray-500">ファイル</p>
-                <a
-                  href={fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 transition-colors"
-                >
-                  <FileText className="w-4 h-4" />
-                  {invoice.file_name}
-                </a>
-              </div>
-              <div className="md:text-right">
-                <p className="text-sm text-gray-500">請求金額</p>
-                <p className="text-lg font-semibold text-gray-900">
-                  {invoice.amount != null ? `¥${invoice.amount.toLocaleString()}` : "-"}
-                </p>
-              </div>
-            </div>
+          <div>
+            <p className="text-sm text-gray-500">ファイル</p>
+            <a
+              href={fileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              {invoice.file_name}
+            </a>
+          </div>
+          <div className="md:text-right">
+            <p className="text-sm text-gray-500">請求金額</p>
+            <p className="text-lg font-semibold text-gray-900">
+              {invoice.amount != null ? `¥${invoice.amount.toLocaleString()}` : "-"}
+            </p>
           </div>
         </div>
       </div>
