@@ -16,6 +16,9 @@ type Invoice = {
   vendors: { name: string } | null;
 };
 
+const numberFormatter = new Intl.NumberFormat("ja-JP");
+const dateFormatter = new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo" });
+
 export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
   const [updating, setUpdating] = useState<string | null>(null);
 
@@ -99,16 +102,16 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span className="text-sm font-semibold text-gray-900">
-                  {invoice.amount ? `¥${invoice.amount.toLocaleString()}` : "-"}
+                  {invoice.amount ? `¥${numberFormatter.format(invoice.amount)}` : "-"}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {invoice.invoice_date
-                  ? new Date(invoice.invoice_date).toLocaleDateString("ja-JP")
+                  ? dateFormatter.format(new Date(invoice.invoice_date))
                   : "-"}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {new Date(invoice.uploaded_at).toLocaleDateString("ja-JP")}
+                {dateFormatter.format(new Date(invoice.uploaded_at))}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button

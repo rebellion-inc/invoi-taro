@@ -11,6 +11,8 @@ type Vendor = {
   created_at: string;
 };
 
+const dateFormatter = new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo" });
+
 export function VendorList({ vendors }: { vendors: Vendor[] }) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -113,7 +115,7 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {new Date(vendor.created_at).toLocaleDateString("ja-JP")}
+                {dateFormatter.format(new Date(vendor.created_at))}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right">
                 <button
