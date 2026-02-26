@@ -6,9 +6,23 @@ import { Calendar, Filter } from "lucide-react";
 type Props = {
   currentMonth?: string;
   currentStatus?: string;
+  baseMonth: string;
 };
 
-export function InvoiceFilters({ currentMonth, currentStatus }: Props) {
+const getMonthOptions = (baseMonth: string) => {
+  const [year, month] = baseMonth.split("-").map(Number);
+  const baseIndex = year * 12 + (month - 1);
+  return Array.from({ length: 12 }, (_, i) => {
+    const index = baseIndex - i;
+    const optionYear = Math.floor(index / 12);
+    const optionMonth = (index % 12) + 1;
+    const value = `${optionYear}-${String(optionMonth).padStart(2, "0")}`;
+    const label = `${optionYear}年${optionMonth}月`;
+    return { value, label };
+  });
+};
+
+export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -22,15 +36,7 @@ export function InvoiceFilters({ currentMonth, currentStatus }: Props) {
     router.push(`/dashboard/invoices?${params.toString()}`);
   };
 
-  // Generate month options (last 12 months)
-  const months = [];
-  const now = new Date();
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-    const label = `${date.getFullYear()}年${date.getMonth() + 1}月`;
-    months.push({ value, label });
-  }
+  const months = getMonthOptions(baseMonth);
 
   return (
     <div className="flex flex-wrap gap-4 items-end">

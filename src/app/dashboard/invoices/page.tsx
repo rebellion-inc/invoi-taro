@@ -9,6 +9,19 @@ export const metadata: Metadata = {
   description: "受け取った請求書の一覧を確認し、支払い状況を管理できます。",
 };
 
+const tokyoMonthFormatter = new Intl.DateTimeFormat("ja-JP", {
+  timeZone: "Asia/Tokyo",
+  year: "numeric",
+  month: "numeric",
+});
+
+const getTokyoMonth = () => {
+  const parts = tokyoMonthFormatter.formatToParts(new Date());
+  const year = Number(parts.find((part) => part.type === "year")?.value);
+  const month = Number(parts.find((part) => part.type === "month")?.value);
+  return `${year}-${String(month).padStart(2, "0")}`;
+};
+
 export default async function DashboardInvoicesPage({
   searchParams,
 }: {
@@ -16,6 +29,7 @@ export default async function DashboardInvoicesPage({
 }) {
   const params = await searchParams;
   const supabase = await createClient();
+  const baseMonth = getTokyoMonth();
 
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -108,7 +122,11 @@ export default async function DashboardInvoicesPage({
 
       <div className="glass rounded-2xl overflow-hidden animate-fade-in stagger-4 opacity-0">
         <div className="p-6 border-b border-gray-100">
-          <InvoiceFilters currentMonth={params.month} currentStatus={params.status} />
+          <InvoiceFilters
+            currentMonth={params.month}
+            currentStatus={params.status}
+            baseMonth={baseMonth}
+          />
         </div>
         <InvoiceList invoices={invoices || []} />
       </div>
