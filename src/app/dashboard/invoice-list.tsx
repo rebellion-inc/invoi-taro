@@ -3,6 +3,7 @@
 import { updateInvoiceStatus } from "./actions";
 import { useState } from "react";
 import { FileText, ExternalLink, Loader2 } from "lucide-react";
+import Link from "next/link";
 
 type Invoice = {
   id: string;
@@ -131,13 +132,21 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
                 </button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right">
-                <button
-                  onClick={() => handleViewFile(invoice.file_path)}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  表示
-                </button>
+                <div className="inline-flex items-center gap-2">
+                  <Link
+                    href={`/dashboard/invoices/${invoice.id}`}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+                  >
+                    詳細
+                  </Link>
+                  <button
+                    onClick={() => handleViewFile(invoice.file_path)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    表示
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
