@@ -83,7 +83,7 @@ export default async function InvoiceDetailPage({
             </p>
           </div>
           <div className="md:col-span-2">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
               <div>
                 <p className="text-sm text-gray-500">ファイル</p>
                 <a
@@ -96,9 +96,9 @@ export default async function InvoiceDetailPage({
                   {invoice.file_name}
                 </a>
               </div>
-              <div className="text-right">
-                <p className="text-xs text-gray-500">請求金額</p>
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="md:text-right">
+                <p className="text-sm text-gray-500">請求金額</p>
+                <p className="text-lg font-semibold text-gray-900">
                   {invoice.amount != null ? `¥${invoice.amount.toLocaleString()}` : "-"}
                 </p>
               </div>
