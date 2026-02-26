@@ -30,6 +30,7 @@ export default async function DashboardInvoicesPage({
   const params = await searchParams;
   const supabase = await createClient();
   const baseMonth = getTokyoMonth();
+  const selectedMonth = params.month ?? baseMonth;
 
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -47,8 +48,8 @@ export default async function DashboardInvoicesPage({
     .order("uploaded_at", { ascending: false });
 
   // Apply month filter
-  if (params.month) {
-    const [year, month] = params.month.split("-").map(Number);
+  if (selectedMonth && selectedMonth !== "all") {
+    const [year, month] = selectedMonth.split("-").map(Number);
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59);
     query = query
@@ -123,7 +124,7 @@ export default async function DashboardInvoicesPage({
       <div className="glass rounded-2xl overflow-hidden animate-fade-in stagger-4 opacity-0">
         <div className="p-6 border-b border-gray-100">
           <InvoiceFilters
-            currentMonth={params.month}
+            currentMonth={selectedMonth}
             currentStatus={params.status}
             baseMonth={baseMonth}
           />
