@@ -1,5 +1,6 @@
 "use server";
 
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -71,20 +72,47 @@ export async function deleteInvoice(invoiceId: string) {
     return { error: "請求書が見つかりません" };
   }
 
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: "認証が必要です" };
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("organization_id")
+    .eq("id", user.id)
+    .single();
+
+  if (profileError || !profile?.organization_id) {
+    return { error: "組織が見つかりません" };
+  }
+
   const { data: invoice, error: fetchError } = await supabase
     .from("invoices")
-    .select("file_path")
+    .select("file_path, organization_id")
     .eq("id", invoiceId)
+    .eq("organization_id", profile.organization_id)
     .single();
 
   if (fetchError || !invoice) {
     return { error: "請求書が見つかりません" };
   }
 
-  const { error: deleteError } = await supabase
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey) {
+    return { error: "サーバー設定エラーが発生しました" };
+  }
+
+  const adminClient = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    serviceRoleKey
+  );
+
+  const { error: deleteError } = await adminClient
     .from("invoices")
     .delete()
-    .eq("id", invoiceId);
+    .eq("id", invoiceId)
+    .eq("organization_id", invoice.organization_id);
 
   if (deleteError) {
     return { error: "削除に失敗しました: " + deleteError.message };
@@ -92,7 +120,7 @@ export async function deleteInvoice(invoiceId: string) {
 
   let storageErrorMessage: string | null = null;
   if (invoice.file_path) {
-    const { error: storageError } = await supabase.storage
+    const { error: storageError } = await adminClient.storage
       .from("invoices")
       .remove([invoice.file_path]);
 
