@@ -157,3 +157,57 @@ body {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* Non-home operation-focused theme */
+.ops-theme {
+  background: #eef2f7;
+  color: #0f172a;
+}
+
+.ops-theme.bg-gradient-mesh,
+.ops-theme .bg-gradient-mesh {
+  background: #eef2f7;
+  background-image: none;
+}
+
+.ops-theme .glass {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.ops-theme .btn-primary {
+  background: #0f172a;
+}
+
+.ops-theme .btn-primary:hover {
+  transform: none;
+  box-shadow: none;
+  background: #1e293b;
+}
+
+.ops-theme .btn-primary::after {
+  display: none;
+}
+
+.ops-theme .input-modern {
+  border: 1px solid #cbd5e1;
+}
+
+.ops-theme .input-modern:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+}
+
+.ops-theme .animate-fade-in,
+.ops-theme .animate-slide-in,
+.ops-theme .animate-float,
+.ops-theme .animate-shimmer,
+.ops-theme .animate-spin-slow {
+  animation: none !important;
+}
+
+.ops-theme .opacity-0 {
+  opacity: 1 !important;
+}

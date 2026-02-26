@@ -16,7 +16,7 @@ export default function SignupPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
+    <div className="ops-theme min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-fade-in">
         <div className="glass rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">

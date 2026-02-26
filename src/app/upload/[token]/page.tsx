@@ -53,7 +53,7 @@ export default async function UploadPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-mesh py-12 px-4">
+    <div className="ops-theme min-h-screen bg-gradient-mesh py-12 px-4">
       <div className="max-w-md mx-auto animate-fade-in">
         <div className="glass rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
