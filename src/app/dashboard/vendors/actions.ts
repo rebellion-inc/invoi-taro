@@ -39,12 +39,54 @@ export async function createVendor(formData: FormData) {
 export async function deleteVendor(vendorId: string) {
   const supabase = await createClient();
 
-  const { error } = await supabase.from("vendors").delete().eq("id", vendorId);
+  const { data: invoices, error: invoicesError } = await supabase
+    .from("invoices")
+    .select("file_path")
+    .eq("vendor_id", vendorId);
 
-  if (error) {
-    return { error: "削除に失敗しました: " + error.message };
+  if (invoicesError) {
+    return { error: "請求書の取得に失敗しました: " + invoicesError.message };
+  }
+
+  const filePaths = (invoices || [])
+    .map((invoice) => invoice.file_path)
+    .filter((filePath): filePath is string => Boolean(filePath));
+
+  const { error: invoiceDeleteError } = await supabase
+    .from("invoices")
+    .delete()
+    .eq("vendor_id", vendorId);
+
+  if (invoiceDeleteError) {
+    return { error: "請求書の削除に失敗しました: " + invoiceDeleteError.message };
+  }
+
+  const { error: vendorDeleteError } = await supabase
+    .from("vendors")
+    .delete()
+    .eq("id", vendorId);
+
+  if (vendorDeleteError) {
+    return { error: "削除に失敗しました: " + vendorDeleteError.message };
+  }
+
+  let storageErrorMessage: string | null = null;
+  if (filePaths.length > 0) {
+    const { error: storageError } = await supabase.storage
+      .from("invoices")
+      .remove(filePaths);
+
+    if (storageError) {
+      storageErrorMessage = storageError.message;
+    }
   }
 
   revalidatePath("/dashboard/vendors");
+  revalidatePath("/dashboard/invoices");
+
+  if (storageErrorMessage) {
+    return { error: "請求書ファイルの削除に失敗しました: " + storageErrorMessage };
+  }
+
   return { success: true };
 }
