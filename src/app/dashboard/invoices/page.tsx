@@ -66,7 +66,7 @@ export default async function DashboardInvoicesPage({
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="glass rounded-2xl p-6 card-hover animate-fade-in stagger-1 opacity-0">
+        <div className="glass rounded-2xl p-6 animate-fade-in stagger-1 opacity-0">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
               <FileText className="w-6 h-6 text-indigo-600" />
@@ -79,7 +79,7 @@ export default async function DashboardInvoicesPage({
           <p className="text-sm text-gray-500">請求書数</p>
         </div>
         
-        <div className="glass rounded-2xl p-6 card-hover animate-fade-in stagger-2 opacity-0">
+        <div className="glass rounded-2xl p-6 animate-fade-in stagger-2 opacity-0">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-emerald-600" />
@@ -92,7 +92,7 @@ export default async function DashboardInvoicesPage({
           <p className="text-sm text-gray-500">合計金額</p>
         </div>
         
-        <div className="glass rounded-2xl p-6 card-hover animate-fade-in stagger-3 opacity-0">
+        <div className="glass rounded-2xl p-6 animate-fade-in stagger-3 opacity-0">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center">
               <AlertCircle className="w-6 h-6 text-rose-600" />
