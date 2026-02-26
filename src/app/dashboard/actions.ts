@@ -81,14 +81,6 @@ export async function deleteInvoice(invoiceId: string) {
     return { error: "請求書が見つかりません" };
   }
 
-  const { error: storageError } = await supabase.storage
-    .from("invoices")
-    .remove([invoice.file_path]);
-
-  if (storageError) {
-    return { error: "ファイルの削除に失敗しました: " + storageError.message };
-  }
-
   const { error: deleteError } = await supabase
     .from("invoices")
     .delete()
@@ -98,6 +90,23 @@ export async function deleteInvoice(invoiceId: string) {
     return { error: "削除に失敗しました: " + deleteError.message };
   }
 
+  let storageErrorMessage: string | null = null;
+  if (invoice.file_path) {
+    const { error: storageError } = await supabase.storage
+      .from("invoices")
+      .remove([invoice.file_path]);
+
+    if (storageError) {
+      storageErrorMessage = storageError.message;
+    }
+  }
+
   revalidatePath("/dashboard/invoices");
+  revalidatePath(`/dashboard/invoices/${invoiceId}`);
+
+  if (storageErrorMessage) {
+    return { error: "ファイルの削除に失敗しました: " + storageErrorMessage };
+  }
+
   return { success: true };
 }
