@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { deleteVendor } from "./actions";
 import { Copy, Check, Trash2, Link, Users } from "lucide-react";
+import NextLink from "next/link";
 
 type Vendor = {
   id: string;
@@ -118,13 +119,21 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
                 {dateFormatter.format(new Date(vendor.created_at))}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right">
-                <button
-                  onClick={() => handleDelete(vendor.id)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  削除
-                </button>
+                <div className="inline-flex items-center gap-2">
+                  <NextLink
+                    href={`/dashboard/vendors/${vendor.id}`}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+                  >
+                    詳細
+                  </NextLink>
+                  <button
+                    onClick={() => handleDelete(vendor.id)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    削除
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
