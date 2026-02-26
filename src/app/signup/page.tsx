@@ -16,7 +16,7 @@ export default function SignupPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
+    <div className="aoi-shell min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-fade-in">
         <div className="glass rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
@@ -30,10 +30,8 @@ export default function SignupPage() {
                 className="h-12 w-auto"
               />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">
-              アカウント作成
-            </h2>
-            <p className="text-gray-600 mt-2">無料で始めましょう</p>
+            <h2 className="text-3xl font-bold text-gray-900">はじめの一歩でOK</h2>
+            <p className="text-gray-600 mt-2">細かい設定はあとからでも大丈夫です</p>
           </div>
           
           <form action={formAction} className="space-y-6">
@@ -47,7 +45,7 @@ export default function SignupPage() {
             <div className="space-y-4">
               <div>
                 <label htmlFor="organizationName" className="block text-sm font-medium text-gray-700 mb-2">
-                  組織名
+                  組織名（任意）
                 </label>
                 <div className="relative">
                   <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -58,7 +56,7 @@ export default function SignupPage() {
                     required={!withoutOrganization}
                     disabled={withoutOrganization}
                     className="w-full pl-12 pr-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
-                    placeholder={withoutOrganization ? "組織未所属で登録します" : "株式会社〇〇"}
+                    placeholder={withoutOrganization ? "いまは未所属で登録します" : "株式会社〇〇"}
                   />
                 </div>
               </div>
@@ -72,7 +70,7 @@ export default function SignupPage() {
                   onChange={(event) => setWithoutOrganization(event.target.checked)}
                   className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
-                組織未所属でアカウントを作成する
+                今は組織未所属で登録する
               </label>
                
               <div>
@@ -123,7 +121,7 @@ export default function SignupPage() {
                 </>
               ) : (
                 <>
-                  アカウントを作成
+                  この内容で始める
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
@@ -132,7 +130,7 @@ export default function SignupPage() {
           
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              既にアカウントをお持ちの方は{" "}
+              すでにアカウントがある方は{" "}
               <Link href="/login" className="text-indigo-600 font-medium hover:underline">
                 ログイン
               </Link>

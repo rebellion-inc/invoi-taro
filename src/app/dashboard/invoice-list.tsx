@@ -38,8 +38,8 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <FileText className="w-8 h-8 text-gray-400" />
         </div>
-        <p className="text-gray-500 text-lg">請求書がありません</p>
-        <p className="text-gray-400 text-sm mt-1">取引先からの請求書がここに表示されます</p>
+        <p className="text-gray-500 text-lg">まだ請求書はありません</p>
+        <p className="text-gray-400 text-sm mt-1">届いたらここに表示されます。今日はひと休みでも大丈夫。</p>
       </div>
     );
   }
@@ -131,7 +131,7 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
                   {updating === invoice.id ? (
                     <Loader2 className="w-3 h-3 animate-spin" />
                   ) : null}
-                  {invoice.status === "paid" ? "振込済" : "未振込"}
+                  {invoice.status === "paid" ? "対応ずみ" : "これから"}
                 </button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right">

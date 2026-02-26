@@ -15,7 +15,7 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
+    <div className="aoi-shell min-h-screen bg-gradient-mesh flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-fade-in">
         <div className="glass rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
@@ -29,10 +29,8 @@ export default function LoginPage() {
                 className="h-12 w-auto"
               />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">
-              おかえりなさい
-            </h2>
-            <p className="text-gray-600 mt-2">アカウントにログイン</p>
+            <h2 className="text-3xl font-bold text-gray-900">おかえりなさい</h2>
+            <p className="text-gray-600 mt-2">今日はひとつ進めば十分です</p>
           </div>
           
           <form action={formAction} className="space-y-6">
@@ -91,7 +89,7 @@ export default function LoginPage() {
                 </>
               ) : (
                 <>
-                  ログイン
+                  ログインする
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
@@ -100,7 +98,7 @@ export default function LoginPage() {
           
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              アカウントをお持ちでない方は{" "}
+              はじめての方は{" "}
               <Link href="/signup" className="text-indigo-600 font-medium hover:underline">
                 新規登録
               </Link>

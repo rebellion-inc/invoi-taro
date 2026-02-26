@@ -52,7 +52,7 @@ export default async function VendorDetailPage({
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">取引先詳細</h1>
-          <p className="text-gray-500 text-sm">取引先情報の確認と更新</p>
+          <p className="text-gray-500 text-sm">必要なところだけ整えればOK</p>
         </div>
       </div>
 
@@ -62,7 +62,7 @@ export default async function VendorDetailPage({
           className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-indigo-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          一覧へ戻る
+          一覧に戻る
         </Link>
       </div>
 

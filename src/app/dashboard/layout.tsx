@@ -24,7 +24,7 @@ export default async function DashboardLayout({
   const organizationInitial = organizationName?.[0] ?? "未";
 
   return (
-    <div className="min-h-screen bg-gradient-mesh">
+    <div className="aoi-shell min-h-screen bg-gradient-mesh">
       <DashboardNav
         organizationName={organizationName}
         organizationInitial={organizationInitial}

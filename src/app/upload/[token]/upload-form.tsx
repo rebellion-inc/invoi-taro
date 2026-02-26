@@ -78,11 +78,9 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
         <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
           <CheckCircle className="w-10 h-10 text-white" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          アップロード完了
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">受け取りました</h2>
         <p className="text-gray-600 mb-8">
-          請求書のアップロードが完了しました。
+          今日のアップロード、しっかり完了です。
         </p>
         <button
           onClick={() => {
@@ -94,7 +92,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
           className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
         >
           <RefreshCw className="w-4 h-4" />
-          別の請求書をアップロードする
+          もう1件アップロードする
         </button>
       </div>
     );
@@ -111,7 +109,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          請求書ファイル <span className="text-red-500">*</span>
+          請求書ファイル <span className="text-red-500">（必須）</span>
         </label>
         <div
           onDragEnter={handleDrag}
@@ -148,9 +146,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
               <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                 <Upload className="w-6 h-6 text-gray-400" />
               </div>
-              <p className="text-sm text-gray-600">
-                ファイルをドラッグ&ドロップ
-              </p>
+              <p className="text-sm text-gray-600">ここにファイルを置く</p>
               <p className="text-xs text-gray-400 mt-1">
                 または、クリックして選択
               </p>
@@ -165,7 +161,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
           <JapaneseYen className="w-4 h-4" />
-          請求金額（任意）
+           請求金額（任意・わかる範囲でOK）
         </label>
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">¥</span>
@@ -182,7 +178,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
           <Calendar className="w-4 h-4" />
-          請求期日（任意）
+           請求期日（任意・わかる範囲でOK）
         </label>
         <input
           type="date"
@@ -205,7 +201,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
         ) : (
           <>
             <Upload className="w-5 h-5" />
-            アップロード
+            この内容でアップロード
           </>
         )}
       </button>

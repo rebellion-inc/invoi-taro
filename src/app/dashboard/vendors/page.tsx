@@ -23,11 +23,11 @@ export default async function VendorsPage() {
 
   if (!profile?.organization_id) {
     return (
-      <div className="glass rounded-2xl p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">取引先管理</h1>
-        <p className="text-gray-600 mb-4">
-          組織に所属すると取引先を管理できます。先にマイページで招待を受けてください。
-        </p>
+        <div className="glass rounded-2xl p-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">取引先管理</h1>
+          <p className="text-gray-600 mb-4">
+            招待を受けると、ここで取引先を追加できます。まずはマイページを確認しましょう。
+          </p>
         <Link
           href="/dashboard/mypage"
           className="inline-flex items-center px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 font-medium hover:bg-indigo-200"
@@ -52,14 +52,14 @@ export default async function VendorsPage() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">取引先管理</h1>
-          <p className="text-gray-500 text-sm">請求書をアップロードする取引先を管理</p>
+          <p className="text-gray-500 text-sm">まずはよく使う相手だけ登録</p>
         </div>
       </div>
       
       <div className="glass rounded-2xl p-6 mb-6 animate-fade-in">
         <div className="flex items-center gap-2 mb-4">
           <Plus className="w-5 h-5 text-indigo-600" />
-          <h2 className="text-lg font-semibold text-gray-900">新規取引先追加</h2>
+          <h2 className="text-lg font-semibold text-gray-900">取引先をひとつ追加</h2>
         </div>
         <CreateVendorForm />
       </div>

@@ -34,22 +34,22 @@ export default async function MyPage() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">マイページ</h1>
-          <p className="text-sm text-gray-500">組織情報とメンバー管理</p>
+          <p className="text-sm text-gray-500">今の所属と招待状況を確認</p>
         </div>
       </div>
 
       <div className="glass rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">所属組織</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">いまの所属</h2>
         {organizationName ? (
           <p className="text-gray-700">{organizationName}</p>
         ) : (
           <div className="flex items-start gap-2 text-amber-700 bg-amber-50 border border-amber-100 rounded-xl p-4">
             <UserX className="w-5 h-5 mt-0.5 shrink-0" />
-            <p className="text-sm">
-              現在、組織に所属していません。既存メンバーから招待を受けると利用を開始できます。
-            </p>
-          </div>
-        )}
+              <p className="text-sm">
+                まだ組織に所属していません。招待が届いたらすぐに始められます。
+              </p>
+            </div>
+          )}
       </div>
 
       <div className="glass rounded-2xl p-6">
@@ -60,9 +60,7 @@ export default async function MyPage() {
         {profile?.organization_id ? (
           <InviteMemberForm />
         ) : (
-          <p className="text-sm text-gray-600">
-            組織未所属のため招待はできません。所属後にこの画面から招待できます。
-          </p>
+            <p className="text-sm text-gray-600">所属後に、この画面から招待できます。</p>
         )}
       </div>
     </div>

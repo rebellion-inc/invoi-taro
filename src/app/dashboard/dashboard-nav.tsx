@@ -14,12 +14,12 @@ type DashboardNavProps = {
 const navItems = [
   {
     href: "/dashboard/invoices",
-    label: "請求書一覧",
+    label: "請求書",
     icon: LayoutDashboard,
   },
   {
     href: "/dashboard/vendors",
-    label: "取引先管理",
+    label: "取引先",
     icon: Users,
   },
   {

@@ -43,8 +43,8 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <Users className="w-8 h-8 text-gray-400" />
         </div>
-        <p className="text-gray-500 text-lg">取引先がありません</p>
-        <p className="text-gray-400 text-sm mt-1">上のフォームから取引先を追加してください</p>
+        <p className="text-gray-500 text-lg">まだ取引先がありません</p>
+        <p className="text-gray-400 text-sm mt-1">よく使う取引先を1件だけ追加するところからでOKです</p>
       </div>
     );
   }
@@ -104,7 +104,7 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
                     {copiedId === vendor.id ? (
                       <>
                         <Check className="w-4 h-4" />
-                        コピーしました
+                        コピーOK
                       </>
                     ) : (
                       <>

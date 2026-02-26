@@ -157,3 +157,37 @@ body {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* Persona theme for non-top pages */
+.aoi-shell {
+  background-color: #fff8f6;
+  background-image:
+    radial-gradient(at 15% 12%, rgba(255, 189, 178, 0.2) 0px, transparent 52%),
+    radial-gradient(at 90% 6%, rgba(196, 181, 253, 0.2) 0px, transparent 48%),
+    radial-gradient(at 15% 92%, rgba(186, 230, 253, 0.18) 0px, transparent 52%);
+}
+
+.aoi-shell .glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(254, 215, 170, 0.35);
+  box-shadow: 0 10px 30px -22px rgba(251, 113, 133, 0.45);
+}
+
+.aoi-shell .btn-primary {
+  background: linear-gradient(135deg, #fb7185 0%, #a78bfa 100%);
+}
+
+.aoi-shell .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px -10px rgba(251, 113, 133, 0.45);
+}
+
+.aoi-shell .input-modern {
+  border-color: #fed7aa;
+  background: #fffdfb;
+}
+
+.aoi-shell .input-modern:focus {
+  border-color: #f472b6;
+  box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.15);
+}

@@ -19,7 +19,7 @@ export function InviteMemberForm() {
     <form action={formAction} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-          招待するユーザーのメールアドレス
+          招待したいメールアドレス
         </label>
         <div className="relative">
           <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -57,7 +57,7 @@ export function InviteMemberForm() {
       )}
       {state?.success && (
         <p className="text-sm text-emerald-600 animate-fade-in">
-          招待が完了しました。対象ユーザーを組織に追加しました。
+          招待できました。ひとつ前進です。
         </p>
       )}
     </form>

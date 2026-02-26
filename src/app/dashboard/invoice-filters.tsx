@@ -43,14 +43,14 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
           <Calendar className="w-4 h-4" />
-          請求書期日で絞り込み
+          月でしぼる
         </label>
         <select
           value={currentMonth || "all"}
           onChange={(e) => updateFilter("month", e.target.value)}
           className="block w-44 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
-          <option value="all">すべての請求書期日</option>
+          <option value="all">すべての月</option>
           {months.map((month) => (
             <option key={month.value} value={month.value}>
               {month.label}
@@ -61,7 +61,7 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
           <Filter className="w-4 h-4" />
-          ステータス
+          状態
         </label>
         <select
           value={currentStatus || "all"}
@@ -69,8 +69,8 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
           className="block w-36 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
           <option value="all">すべて</option>
-          <option value="unpaid">未振込</option>
-          <option value="paid">振込済</option>
+          <option value="unpaid">これから</option>
+          <option value="paid">対応ずみ</option>
         </select>
       </div>
     </div>

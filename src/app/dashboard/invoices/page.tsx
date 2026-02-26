@@ -43,11 +43,11 @@ export default async function DashboardInvoicesPage({
 
   if (!profile?.organization_id) {
     return (
-      <div className="glass rounded-2xl p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">請求書一覧</h1>
-        <p className="text-gray-600 mb-4">
-          組織に所属すると請求書を閲覧できます。先にマイページで招待を受けてください。
-        </p>
+        <div className="glass rounded-2xl p-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">請求書一覧</h1>
+          <p className="text-gray-600 mb-4">
+            招待を受けると、ここに請求書が並びます。まずはマイページを確認しましょう。
+          </p>
         <Link
           href="/dashboard/mypage"
           className="inline-flex items-center px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 font-medium hover:bg-indigo-200"
@@ -97,7 +97,7 @@ export default async function DashboardInvoicesPage({
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">請求書一覧</h1>
-          <p className="text-gray-500 text-sm">アップロードされた請求書を管理</p>
+          <p className="text-gray-500 text-sm">今日やる分だけ、ゆるく確認</p>
         </div>
       </div>
       
@@ -108,11 +108,11 @@ export default async function DashboardInvoicesPage({
               <FileText className="w-6 h-6 text-indigo-600" />
             </div>
             <span className="text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">
-              総数
+              件数
             </span>
           </div>
           <p className="text-3xl font-bold text-gray-900 mb-1">{invoices?.length || 0}<span className="text-lg text-gray-500 ml-1">件</span></p>
-          <p className="text-sm text-gray-500">請求書数</p>
+          <p className="text-sm text-gray-500">受け取った枚数</p>
         </div>
         
         <div className="glass rounded-2xl p-6 animate-fade-in stagger-2 opacity-0">
@@ -121,11 +121,11 @@ export default async function DashboardInvoicesPage({
               <TrendingUp className="w-6 h-6 text-emerald-600" />
             </div>
             <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
-              合計
+              いまの合計
             </span>
           </div>
           <p className="text-3xl font-bold text-gray-900 mb-1">¥{totalAmount.toLocaleString()}</p>
-          <p className="text-sm text-gray-500">合計金額</p>
+          <p className="text-sm text-gray-500">金額のめやす</p>
         </div>
         
         <div className="glass rounded-2xl p-6 animate-fade-in stagger-3 opacity-0">
@@ -134,11 +134,11 @@ export default async function DashboardInvoicesPage({
               <AlertCircle className="w-6 h-6 text-rose-600" />
             </div>
             <span className="text-xs font-medium text-rose-600 bg-rose-100 px-2 py-1 rounded-full">
-              要対応
+              これから
             </span>
           </div>
           <p className="text-3xl font-bold text-rose-600 mb-1">¥{unpaidAmount.toLocaleString()}</p>
-          <p className="text-sm text-gray-500">未振込金額</p>
+          <p className="text-sm text-gray-500">まだ対応中の金額</p>
         </div>
       </div>
 

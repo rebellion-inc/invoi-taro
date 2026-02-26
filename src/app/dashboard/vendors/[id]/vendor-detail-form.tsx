@@ -60,10 +60,10 @@ export function VendorDetailForm({
 
   const notice = deleteError
     ? { type: "error" as const, text: deleteError }
-    : state?.error
-      ? { type: "error" as const, text: state.error }
+      : state?.error
+        ? { type: "error" as const, text: state.error }
       : state?.success
-        ? { type: "success" as const, text: "保存しました" }
+        ? { type: "success" as const, text: "保存できました" }
         : null;
 
   return (

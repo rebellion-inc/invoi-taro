@@ -54,10 +54,10 @@ export function InvoiceDetailForm({
 
   const notice = deleteError
     ? { type: "error" as const, text: deleteError }
-    : state?.error
-      ? { type: "error" as const, text: state.error }
+      : state?.error
+        ? { type: "error" as const, text: state.error }
       : state?.success
-        ? { type: "success" as const, text: "保存しました" }
+        ? { type: "success" as const, text: "保存できました" }
         : null;
 
   return (
@@ -106,10 +106,10 @@ export function InvoiceDetailForm({
               defaultValue={initialStatus}
               className="w-full px-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
             >
-              <option value="unpaid">未振込</option>
-              <option value="paid">振込済</option>
-            </select>
-          </div>
+                <option value="unpaid">これから</option>
+                <option value="paid">対応ずみ</option>
+              </select>
+            </div>
         </div>
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

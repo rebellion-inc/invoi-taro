@@ -53,16 +53,15 @@ export default async function UploadPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-mesh py-12 px-4">
+    <div className="aoi-shell min-h-screen bg-gradient-mesh py-12 px-4">
       <div className="max-w-md mx-auto animate-fade-in">
         <div className="glass rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg animate-float">
               <FileUp className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              請求書アップロード
-            </h1>
+            <h1 className="text-2xl font-bold text-gray-900">請求書を送信</h1>
+            <p className="text-sm text-gray-500 mt-2">わかる範囲だけの入力で大丈夫です</p>
             <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 rounded-full">
               <div className="w-6 h-6 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-white text-xs font-bold">
                 {vendor.name[0]}
