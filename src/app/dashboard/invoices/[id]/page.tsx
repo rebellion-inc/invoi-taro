@@ -48,19 +48,13 @@ export default async function InvoiceDetailPage({
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6">
         <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
           <FileText className="w-6 h-6 text-white" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">請求書詳細</h1>
           <p className="text-gray-500 text-sm">請求書情報の確認と更新</p>
-        </div>
-        <div className="ml-auto w-full text-right md:w-auto">
-          <p className="text-xs text-gray-500">請求金額</p>
-          <p className="text-2xl font-bold text-gray-900">
-            {invoice.amount != null ? `¥${invoice.amount.toLocaleString()}` : "-"}
-          </p>
         </div>
       </div>
 
@@ -89,16 +83,26 @@ export default async function InvoiceDetailPage({
             </p>
           </div>
           <div className="md:col-span-2">
-            <p className="text-sm text-gray-500">ファイル</p>
-            <a
-              href={fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 transition-colors"
-            >
-              <FileText className="w-4 h-4" />
-              {invoice.file_name}
-            </a>
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm text-gray-500">ファイル</p>
+                <a
+                  href={fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 transition-colors"
+                >
+                  <FileText className="w-4 h-4" />
+                  {invoice.file_name}
+                </a>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">請求金額</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {invoice.amount != null ? `¥${invoice.amount.toLocaleString()}` : "-"}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
