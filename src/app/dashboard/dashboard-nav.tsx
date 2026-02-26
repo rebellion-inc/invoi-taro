@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, UserPlus } from "lucide-react";
 import { logout } from "@/app/auth/actions";
 
 type DashboardNavProps = {
@@ -21,6 +21,11 @@ const navItems = [
     href: "/dashboard/vendors",
     label: "取引先管理",
     icon: Users,
+  },
+  {
+    href: "/dashboard/mypage",
+    label: "マイページ",
+    icon: UserPlus,
   },
 ];
 

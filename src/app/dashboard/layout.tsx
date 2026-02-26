@@ -20,8 +20,8 @@ export default async function DashboardLayout({
     .eq("id", user.id)
     .single();
 
-  const organizationName = profile?.organizations?.name ?? "";
-  const organizationInitial = organizationName?.[0] ?? "O";
+  const organizationName = profile?.organizations?.name ?? "組織未所属";
+  const organizationInitial = organizationName?.[0] ?? "未";
 
   return (
     <div className="min-h-screen bg-gradient-mesh">

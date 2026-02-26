@@ -17,15 +17,20 @@ export async function login(formData: FormData) {
     return { error: error.message };
   }
 
-  redirect("/dashboard/invoices");
+  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {
   const supabase = await createClient();
 
-  const email = formData.get("email") as string;
+  const email = ((formData.get("email") as string) ?? "").trim().toLowerCase();
   const password = formData.get("password") as string;
-  const organizationName = formData.get("organizationName") as string;
+  const organizationName = ((formData.get("organizationName") as string) ?? "").trim();
+  const withoutOrganization = formData.get("withoutOrganization") === "true";
+
+  if (!withoutOrganization && !organizationName) {
+    return { error: "組織名を入力してください" };
+  }
 
   // Create user
   const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -48,21 +53,25 @@ export async function signup(formData: FormData) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  // Create organization
-  const { data: org, error: orgError } = await adminClient
-    .from("organizations")
-    .insert({ name: organizationName })
-    .select()
-    .single();
+  let organizationId: string | null = null;
+  if (!withoutOrganization) {
+    const { data: org, error: orgError } = await adminClient
+      .from("organizations")
+      .insert({ name: organizationName })
+      .select()
+      .single();
 
-  if (orgError) {
-    return { error: "組織の作成に失敗しました: " + orgError.message };
+    if (orgError) {
+      return { error: "組織の作成に失敗しました: " + orgError.message };
+    }
+
+    organizationId = org.id;
   }
 
   // Create profile
   const { error: profileError } = await adminClient.from("profiles").insert({
     id: authData.user.id,
-    organization_id: org.id,
+    organization_id: organizationId,
     email: email,
   });
 
@@ -70,7 +79,7 @@ export async function signup(formData: FormData) {
     return { error: "プロフィールの作成に失敗しました: " + profileError.message };
   }
 
-  redirect("/dashboard/invoices");
+  redirect("/dashboard");
 }
 
 export async function logout() {

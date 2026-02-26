@@ -3,10 +3,11 @@
 import { signup } from "@/app/auth/actions";
 import Link from "next/link";
 import Image from "next/image";
-import { useActionState } from "react";
-import { Building2, Mail, Lock, ArrowRight, Loader2, UserPlus } from "lucide-react";
+import { useActionState, useState } from "react";
+import { Building2, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 
 export default function SignupPage() {
+  const [withoutOrganization, setWithoutOrganization] = useState(false);
   const [state, formAction, pending] = useActionState(
     async (_prevState: { error: string } | null, formData: FormData) => {
       return await signup(formData);
@@ -54,13 +55,26 @@ export default function SignupPage() {
                     id="organizationName"
                     name="organizationName"
                     type="text"
-                    required
+                    required={!withoutOrganization}
+                    disabled={withoutOrganization}
                     className="w-full pl-12 pr-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
-                    placeholder="株式会社〇〇"
+                    placeholder={withoutOrganization ? "組織未所属で登録します" : "株式会社〇〇"}
                   />
                 </div>
               </div>
-              
+
+              <label className="flex items-center gap-2 text-sm text-gray-700">
+                <input
+                  type="checkbox"
+                  name="withoutOrganization"
+                  value="true"
+                  checked={withoutOrganization}
+                  onChange={(event) => setWithoutOrganization(event.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                組織未所属でアカウントを作成する
+              </label>
+               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   メールアドレス

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 import { VendorList } from "./vendor-list";
 import { CreateVendorForm } from "./create-vendor-form";
 import { Users, Plus } from "lucide-react";
@@ -20,10 +21,27 @@ export default async function VendorsPage() {
     .eq("id", user!.id)
     .single();
 
+  if (!profile?.organization_id) {
+    return (
+      <div className="glass rounded-2xl p-8">
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">取引先管理</h1>
+        <p className="text-gray-600 mb-4">
+          組織に所属すると取引先を管理できます。先にマイページで招待を受けてください。
+        </p>
+        <Link
+          href="/dashboard/mypage"
+          className="inline-flex items-center px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 font-medium hover:bg-indigo-200"
+        >
+          マイページへ
+        </Link>
+      </div>
+    );
+  }
+
   const { data: vendors } = await supabase
     .from("vendors")
     .select("*")
-    .eq("organization_id", profile!.organization_id)
+    .eq("organization_id", profile.organization_id)
     .order("created_at", { ascending: false });
 
   return (
