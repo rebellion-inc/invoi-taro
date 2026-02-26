@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 import { InvoiceList } from "../invoice-list";
 import { InvoiceFilters } from "../invoice-filters";
 import { FileText, TrendingUp, AlertCircle } from "lucide-react";
@@ -40,11 +41,28 @@ export default async function DashboardInvoicesPage({
     .eq("id", user!.id)
     .single();
 
+  if (!profile?.organization_id) {
+    return (
+      <div className="glass rounded-2xl p-8">
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">請求書一覧</h1>
+        <p className="text-gray-600 mb-4">
+          組織に所属すると請求書を閲覧できます。先にマイページで招待を受けてください。
+        </p>
+        <Link
+          href="/dashboard/mypage"
+          className="inline-flex items-center px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 font-medium hover:bg-indigo-200"
+        >
+          マイページへ
+        </Link>
+      </div>
+    );
+  }
+
   // Build query
   let query = supabase
     .from("invoices")
     .select("*, vendors(name)")
-    .eq("organization_id", profile!.organization_id)
+    .eq("organization_id", profile.organization_id)
     .order("uploaded_at", { ascending: false });
 
   // Apply month filter
