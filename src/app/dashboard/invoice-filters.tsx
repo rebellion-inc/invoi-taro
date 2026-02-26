@@ -43,14 +43,14 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
           <Calendar className="w-4 h-4" />
-          月を選択
+          請求書期日で絞り込み
         </label>
         <select
           value={currentMonth || "all"}
           onChange={(e) => updateFilter("month", e.target.value)}
           className="block w-44 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
-          <option value="all">すべての期間</option>
+          <option value="all">すべての請求書期日</option>
           {months.map((month) => (
             <option key={month.value} value={month.value}>
               {month.label}

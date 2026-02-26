@@ -65,14 +65,17 @@ export default async function DashboardInvoicesPage({
     .eq("organization_id", profile.organization_id)
     .order("uploaded_at", { ascending: false });
 
-  // Apply month filter
+  // Apply due date month filter
   if (selectedMonth && selectedMonth !== "all") {
     const [year, month] = selectedMonth.split("-").map(Number);
-    const startDate = new Date(year, month - 1, 1);
-    const endDate = new Date(year, month, 0, 23, 59, 59);
+    const startDate = `${year}-${String(month).padStart(2, "0")}-01`;
+    const nextMonthStart =
+      month === 12
+        ? `${year + 1}-01-01`
+        : `${year}-${String(month + 1).padStart(2, "0")}-01`;
     query = query
-      .gte("uploaded_at", startDate.toISOString())
-      .lte("uploaded_at", endDate.toISOString());
+      .gte("invoice_date", startDate)
+      .lt("invoice_date", nextMonthStart);
   }
 
   // Apply status filter
