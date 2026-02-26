@@ -31,7 +31,7 @@ export function InvoiceDetailForm({
   const [isDeleting, startDelete] = useTransition();
 
   useEffect(() => {
-    if (state.success) {
+    if (state?.success) {
       router.refresh();
     }
   }, [state, router]);
