@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { isPlanTier } from "@/lib/plan-limits";
 import { redirect } from "next/navigation";
 import DashboardNav from "./dashboard-nav";
 
@@ -22,12 +23,18 @@ export default async function DashboardLayout({
 
   const organizationName = profile?.organizations?.name ?? "組織未所属";
   const organizationInitial = organizationName?.[0] ?? "未";
+  const planTier = profile?.organizations?.plan_tier;
+  const planLabel =
+    typeof planTier === "string" && isPlanTier(planTier)
+      ? planTier.charAt(0).toUpperCase() + planTier.slice(1)
+      : "Free";
 
   return (
     <div className="min-h-screen bg-gradient-mesh">
       <DashboardNav
         organizationName={organizationName}
         organizationInitial={organizationInitial}
+        planLabel={planLabel}
       />
       <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 animate-fade-in">
         {children}
