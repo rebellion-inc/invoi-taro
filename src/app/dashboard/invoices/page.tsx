@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { InvoiceList } from "../invoice-list";
 import { InvoiceFilters } from "../invoice-filters";
-import { FileText, TrendingUp, AlertCircle } from "lucide-react";
+import { FileText, TrendingUp, AlertCircle, Download } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -32,6 +32,11 @@ export default async function DashboardInvoicesPage({
   const supabase = await createClient();
   const baseMonth = getTokyoMonth();
   const selectedMonth = params.month ?? baseMonth;
+  const exportSearchParams = new URLSearchParams();
+  exportSearchParams.set("month", selectedMonth);
+  if (params.status) {
+    exportSearchParams.set("status", params.status);
+  }
 
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -144,11 +149,20 @@ export default async function DashboardInvoicesPage({
 
       <div className="glass rounded-2xl overflow-hidden animate-fade-in stagger-4 opacity-0">
         <div className="p-6 border-b border-gray-100">
-          <InvoiceFilters
-            currentMonth={selectedMonth}
-            currentStatus={params.status}
-            baseMonth={baseMonth}
-          />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <InvoiceFilters
+              currentMonth={selectedMonth}
+              currentStatus={params.status}
+              baseMonth={baseMonth}
+            />
+            <Link
+              href={`/api/invoices/export?${exportSearchParams.toString()}`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 text-sm font-medium hover:bg-indigo-200 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              CSV出力
+            </Link>
+          </div>
         </div>
         <InvoiceList invoices={invoices || []} />
       </div>
