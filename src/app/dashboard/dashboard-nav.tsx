@@ -4,7 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, LogOut, UserPlus, Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  LogOut,
+  UserPlus,
+  Menu,
+  X,
+  CreditCard,
+} from "lucide-react";
 import { logout } from "@/app/auth/actions";
 
 type DashboardNavProps = {
@@ -27,6 +35,11 @@ const navItems = [
     href: "/dashboard/mypage",
     label: "マイページ",
     icon: UserPlus,
+  },
+  {
+    href: "/dashboard/plans",
+    label: "プラン",
+    icon: CreditCard,
   },
 ];
 

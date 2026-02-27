@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
+import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
 
 export async function inviteMember(formData: FormData) {
   const supabase = await createClient();
@@ -27,6 +28,34 @@ export async function inviteMember(formData: FormData) {
 
   if (!profile?.organization_id) {
     return { error: "組織に所属していないため招待できません" };
+  }
+
+  const { data: organization, error: organizationError } = await supabase
+    .from("organizations")
+    .select("plan_tier")
+    .eq("id", profile.organization_id)
+    .single();
+  if (organizationError || !organization?.plan_tier) {
+    return { error: "プラン情報の取得に失敗しました" };
+  }
+  if (!isPlanTier(organization.plan_tier)) {
+    return { error: "プラン設定が不正です" };
+  }
+
+  const planLimits = getPlanLimits(organization.plan_tier);
+  if (planLimits.maxMembers !== null) {
+    const { count: memberCount, error: countError } = await supabase
+      .from("profiles")
+      .select("*", { count: "exact", head: true })
+      .eq("organization_id", profile.organization_id);
+    if (countError) {
+      return { error: "組織メンバー数の確認に失敗しました: " + countError.message };
+    }
+    if ((memberCount ?? 0) >= planLimits.maxMembers) {
+      return {
+        error: `現在のプランの上限に達しています（組織メンバーは最大${planLimits.maxMembers}人）`,
+      };
+    }
   }
 
   const adminClient = createAdminClient(

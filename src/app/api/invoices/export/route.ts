@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
 
 type InvoiceRow = {
   file_name: string;
@@ -49,6 +50,24 @@ export async function GET(request: NextRequest) {
 
   if (!profile?.organization_id) {
     return NextResponse.json({ error: "プロフィールが見つかりません" }, { status: 403 });
+  }
+
+  const { data: organization, error: organizationError } = await supabase
+    .from("organizations")
+    .select("plan_tier")
+    .eq("id", profile.organization_id)
+    .single();
+  if (organizationError || !organization?.plan_tier) {
+    return NextResponse.json({ error: "プラン情報の取得に失敗しました" }, { status: 500 });
+  }
+  if (!isPlanTier(organization.plan_tier)) {
+    return NextResponse.json({ error: "プラン設定が不正です" }, { status: 500 });
+  }
+  if (!getPlanLimits(organization.plan_tier).canExportCsv) {
+    return NextResponse.json(
+      { error: "現在のプランではCSV出力を利用できません" },
+      { status: 403 }
+    );
   }
 
   let query = supabase
