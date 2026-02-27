@@ -250,8 +250,6 @@ export function InvoiceFlowTutorial() {
 
   return (
     <div className="fixed inset-0 z-[1000] pointer-events-none">
-      <div className="absolute inset-0 bg-black/45" />
-
       <div className="pointer-events-auto fixed right-4 bottom-4 w-[340px] max-w-[calc(100vw-2rem)] rounded-2xl border border-indigo-100 bg-white p-4 shadow-2xl">
         <p className="text-xs font-semibold text-indigo-600 mb-2">
           チュートリアル {Math.min(tutorialState.stepIndex + 1, 4)} / 4
