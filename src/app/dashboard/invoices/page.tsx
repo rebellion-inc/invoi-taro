@@ -5,6 +5,7 @@ import { InvoiceFilters } from "../invoice-filters";
 import { FileText, TrendingUp, AlertCircle, Download } from "lucide-react";
 import type { Metadata } from "next";
 import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
+import { CreateManualInvoiceForm } from "./create-manual-invoice-form";
 
 export const metadata: Metadata = {
   title: "請求書一覧",
@@ -73,6 +74,11 @@ export default async function DashboardInvoicesPage({
     organization?.plan_tier && isPlanTier(organization.plan_tier)
       ? getPlanLimits(organization.plan_tier).canExportCsv
       : false;
+  const { data: vendors } = await supabase
+    .from("vendors")
+    .select("id, name")
+    .eq("organization_id", profile.organization_id)
+    .order("created_at", { ascending: false });
 
   // Build query
   let query = supabase
@@ -107,14 +113,17 @@ export default async function DashboardInvoicesPage({
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-          <FileText className="w-6 h-6 text-white" />
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+            <FileText className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">請求書一覧</h1>
+            <p className="text-gray-500 text-sm">アップロードされた請求書を管理</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">請求書一覧</h1>
-          <p className="text-gray-500 text-sm">アップロードされた請求書を管理</p>
-        </div>
+        <CreateManualInvoiceForm vendors={vendors || []} />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
