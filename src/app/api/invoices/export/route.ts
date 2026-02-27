@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
       invoice.amount,
       invoice.invoice_date,
       uploadedAtFormatter.format(new Date(invoice.uploaded_at)),
-      invoice.status === "paid" ? "対応ずみ" : "これから",
+      invoice.status === "paid" ? "振込済" : "未振込",
     ]);
   });
 
