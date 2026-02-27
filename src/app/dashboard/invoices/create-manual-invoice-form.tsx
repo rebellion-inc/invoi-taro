@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Plus } from "lucide-react";
+import { createPortal } from "react-dom";
 import { createManualInvoice } from "../actions";
 
 type VendorOption = {
@@ -34,42 +35,10 @@ export function CreateManualInvoiceForm({ vendors }: Props) {
     null
   );
 
-  if (vendors.length === 0) {
-    return (
-      <div className="space-y-2">
-        <button
-          type="button"
-          disabled
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 text-gray-400 text-sm font-medium cursor-not-allowed"
-        >
-          <Plus className="w-4 h-4" />
-          手動で請求書を追加
-        </button>
-        <p className="text-sm text-gray-500">
-          先に
-          <Link href="/dashboard/vendors" className="text-indigo-600 hover:text-indigo-800 mx-1">
-            取引先管理
-          </Link>
-          で取引先を登録してください。
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full lg:w-auto">
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors"
-      >
-        <Plus className="w-4 h-4" />
-        手動で請求書を追加
-      </button>
-
-      {isOpen ? (
+  const modal = isOpen && typeof document !== "undefined"
+    ? createPortal(
         <div
-          className="fixed inset-0 z-50 bg-black/40 p-4 flex items-center justify-center"
+          className="fixed inset-0 z-[100] bg-black/40 p-4 flex items-center justify-center"
           onClick={() => setIsOpen(false)}
         >
           <form
@@ -171,8 +140,45 @@ export function CreateManualInvoiceForm({ vendors }: Props) {
               ) : null}
             </div>
           </form>
-        </div>
-      ) : null}
+        </div>,
+        document.body
+      )
+    : null;
+
+  if (vendors.length === 0) {
+    return (
+      <div className="space-y-2">
+        <button
+          type="button"
+          disabled
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 text-gray-400 text-sm font-medium cursor-not-allowed"
+        >
+          <Plus className="w-4 h-4" />
+          手動で請求書を追加
+        </button>
+        <p className="text-sm text-gray-500">
+          先に
+          <Link href="/dashboard/vendors" className="text-indigo-600 hover:text-indigo-800 mx-1">
+            取引先管理
+          </Link>
+          で取引先を登録してください。
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full lg:w-auto">
+      <button
+        type="button"
+        onClick={() => setIsOpen(true)}
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors"
+      >
+        <Plus className="w-4 h-4" />
+        手動で請求書を追加
+      </button>
+
+      {modal}
     </div>
   );
 }
