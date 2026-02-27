@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FileText, Upload, CheckCircle, ArrowRight, Sparkles } from "lucide-react";
+import { FileText, Upload, CheckCircle, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -106,6 +106,20 @@ export default function Home() {
             <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
+
+        <footer className="mt-12 text-center text-sm text-gray-500">
+          <div className="flex justify-center gap-6">
+            <Link href="/privacy-policy" className="hover:text-gray-700 underline-offset-2 hover:underline">
+              プライバシーポリシー
+            </Link>
+            <Link href="/tokushoho" className="hover:text-gray-700 underline-offset-2 hover:underline">
+              特定商取引法に基づく表記
+            </Link>
+            <Link href="/terms" className="hover:text-gray-700 underline-offset-2 hover:underline">
+              利用規約
+            </Link>
+          </div>
+        </footer>
       </div>
     </div>
   );
