@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   CreditCard,
+  GraduationCap,
 } from "lucide-react";
 import { logout } from "@/app/auth/actions";
 
@@ -51,6 +52,10 @@ export default function DashboardNav({
 }: DashboardNavProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const startTutorial = () => {
+    window.dispatchEvent(new Event("invoice-tutorial:start"));
+    setIsMenuOpen(false);
+  };
 
   const isActive = (href: string) => {
     if (href === "/dashboard/invoices" && pathname === "/dashboard") {
@@ -110,6 +115,14 @@ export default function DashboardNav({
                 ログアウト
               </button>
             </form>
+            <button
+              type="button"
+              onClick={startTutorial}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition-all"
+            >
+              <GraduationCap className="w-4 h-4" />
+              チュートリアル
+            </button>
           </div>
           <button
             type="button"
@@ -159,6 +172,14 @@ export default function DashboardNav({
                   ログアウト
                 </button>
               </form>
+              <button
+                type="button"
+                onClick={startTutorial}
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition-all"
+              >
+                <GraduationCap className="w-4 h-4" />
+                チュートリアル
+              </button>
             </div>
           </div>
         )}

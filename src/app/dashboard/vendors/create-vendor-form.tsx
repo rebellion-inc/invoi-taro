@@ -19,6 +19,7 @@ export function CreateVendorForm() {
           name="name"
           type="text"
           required
+          data-tour-id="vendor-name-input"
           placeholder="取引先名を入力"
           className="w-full px-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none placeholder:text-gray-400"
         />
@@ -26,6 +27,7 @@ export function CreateVendorForm() {
       <button
         type="submit"
         disabled={pending}
+        data-tour-id="vendor-add-button"
         className="inline-flex items-center gap-2 px-6 py-3 btn-primary text-white rounded-xl font-medium disabled:opacity-70"
       >
         {pending ? (

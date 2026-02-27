@@ -45,7 +45,7 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" data-tour-id="invoice-list">
       <table className="min-w-full">
         <thead className="bg-gray-50/50">
           <tr>
@@ -122,6 +122,7 @@ export function InvoiceList({ invoices }: { invoices: Invoice[] }) {
                     )
                   }
                   disabled={updating === invoice.id}
+                  data-tour-id={index === 0 ? "invoice-status-toggle" : undefined}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     invoice.status === "paid"
                       ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"

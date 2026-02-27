@@ -27,6 +27,11 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
   const copyToClipboard = async (token: string, vendorId: string) => {
     const url = getUploadUrl(token);
     await navigator.clipboard.writeText(url);
+    window.dispatchEvent(
+      new CustomEvent("invoice-tutorial:vendor-copied", {
+        detail: { token, vendorId },
+      })
+    );
     setCopiedId(vendorId);
     setTimeout(() => setCopiedId(null), 2000);
   };
@@ -50,7 +55,7 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" data-tour-id="vendor-list">
       <table className="min-w-full">
         <thead className="bg-gray-50/50">
           <tr>
@@ -95,6 +100,7 @@ export function VendorList({ vendors }: { vendors: Vendor[] }) {
                   </div>
                   <button
                     onClick={() => copyToClipboard(vendor.upload_token, vendor.id)}
+                    data-tour-id="vendor-copy-button"
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                       copiedId === vendor.id
                         ? "bg-emerald-100 text-emerald-700"

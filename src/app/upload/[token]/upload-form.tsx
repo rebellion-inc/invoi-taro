@@ -45,6 +45,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
         throw new Error(result.error || "アップロードに失敗しました");
       }
 
+      window.dispatchEvent(new Event("invoice-tutorial:upload-success"));
       setSuccess(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "エラーが発生しました");
@@ -118,6 +119,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
+          data-tour-id="upload-file-dropzone"
           className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all ${
             dragActive
               ? "border-indigo-500 bg-indigo-50"
@@ -195,6 +197,7 @@ export function UploadForm({ vendorId, organizationId, token }: Props) {
       <button
         type="submit"
         disabled={!file || uploading}
+        data-tour-id="upload-submit-button"
         className="w-full py-4 btn-primary text-white rounded-xl font-medium text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {uploading ? (
