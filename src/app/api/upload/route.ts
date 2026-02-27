@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
+import { sendInvoiceUploadedNotification } from "@/lib/notifications/invoice-notifications";
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,7 +45,7 @@ export async function POST(request: NextRequest) {
     // Verify token is valid
     const { data: vendor, error: vendorError } = await supabase
       .from("vendors")
-      .select("id, organization_id")
+      .select("id, organization_id, name")
       .eq("id", vendorId)
       .eq("upload_token", token)
       .single();
@@ -123,16 +124,20 @@ export async function POST(request: NextRequest) {
     }
 
     // Create invoice record
-    const { error: insertError } = await supabase.from("invoices").insert({
-      vendor_id: vendorId,
-      organization_id: vendor.organization_id,
-      file_path: filePath,
-      file_name: file.name,
-      amount: amount ? parseInt(amount, 10) : null,
-      invoice_date: invoiceDate || null,
-    });
+    const { data: invoice, error: insertError } = await supabase
+      .from("invoices")
+      .insert({
+        vendor_id: vendorId,
+        organization_id: vendor.organization_id,
+        file_path: filePath,
+        file_name: file.name,
+        amount: amount ? parseInt(amount, 10) : null,
+        invoice_date: invoiceDate || null,
+      })
+      .select("id, organization_id, file_name, amount, invoice_date")
+      .single();
 
-    if (insertError) {
+    if (insertError || !invoice) {
       console.error("Insert error:", insertError);
       // Try to clean up uploaded file
       await supabase.storage.from("invoices").remove([filePath]);
@@ -140,6 +145,20 @@ export async function POST(request: NextRequest) {
         { error: "請求書の登録に失敗しました" },
         { status: 500 }
       );
+    }
+
+    try {
+      await sendInvoiceUploadedNotification({
+        supabase,
+        invoiceId: invoice.id,
+        organizationId: invoice.organization_id,
+        vendorName: vendor.name,
+        fileName: invoice.file_name,
+        amount: invoice.amount,
+        invoiceDate: invoice.invoice_date,
+      });
+    } catch (notificationError) {
+      console.error("Upload notification error:", notificationError);
     }
 
     return NextResponse.json({ success: true });
