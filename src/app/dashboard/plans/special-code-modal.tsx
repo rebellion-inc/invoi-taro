@@ -51,7 +51,7 @@ export function SpecialCodeModal() {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">特別コード入力</h3>
                   <p className="text-sm text-gray-600 mt-1">
-                    コードを入力して Pro プランを解放します。
+                    お持ちのコードを入力してください。
                   </p>
                 </div>
                 <button
@@ -73,7 +73,7 @@ export function SpecialCodeModal() {
                     name="specialCode"
                     type="text"
                     required
-                    placeholder="thanksForUsing!!"
+                    placeholder="コードを入力"
                     className="w-full px-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
                   />
                 </div>
