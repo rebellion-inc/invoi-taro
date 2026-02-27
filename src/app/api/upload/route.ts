@@ -1,17 +1,17 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File;
     const vendorId = formData.get("vendorId") as string;
-    const organizationId = formData.get("organizationId") as string;
     const token = formData.get("token") as string;
     const amount = formData.get("amount") as string;
     const invoiceDate = formData.get("invoiceDate") as string;
 
-    if (!file || !vendorId || !organizationId || !token) {
+    if (!file || !vendorId || !token) {
       return NextResponse.json(
         { error: "必須項目が不足しています" },
         { status: 400 }
@@ -42,24 +42,68 @@ export async function POST(request: NextRequest) {
     );
 
     // Verify token is valid
-    const { data: vendor } = await supabase
+    const { data: vendor, error: vendorError } = await supabase
       .from("vendors")
-      .select("id")
+      .select("id, organization_id")
       .eq("id", vendorId)
       .eq("upload_token", token)
       .single();
 
-    if (!vendor) {
+    if (vendorError || !vendor) {
       return NextResponse.json(
         { error: "無効なアップロードリンクです" },
         { status: 403 }
       );
     }
 
+    const { data: organization, error: organizationError } = await supabase
+      .from("organizations")
+      .select("plan_tier")
+      .eq("id", vendor.organization_id)
+      .single();
+
+    if (organizationError || !organization?.plan_tier) {
+      return NextResponse.json(
+        { error: "プラン情報の取得に失敗しました" },
+        { status: 500 }
+      );
+    }
+
+    if (!isPlanTier(organization.plan_tier)) {
+      return NextResponse.json(
+        { error: "プラン設定が不正です" },
+        { status: 500 }
+      );
+    }
+
+    const planLimits = getPlanLimits(organization.plan_tier);
+    if (planLimits.maxInvoices !== null) {
+      const { count: invoiceCount, error: countError } = await supabase
+        .from("invoices")
+        .select("*", { count: "exact", head: true })
+        .eq("organization_id", vendor.organization_id);
+
+      if (countError) {
+        return NextResponse.json(
+          { error: "請求書数の確認に失敗しました" },
+          { status: 500 }
+        );
+      }
+
+      if ((invoiceCount ?? 0) >= planLimits.maxInvoices) {
+        return NextResponse.json(
+          {
+            error: `現在のプランの上限に達しています（受取可能請求書は最大${planLimits.maxInvoices}件）`,
+          },
+          { status: 403 }
+        );
+      }
+    }
+
     // Generate unique file path
     const timestamp = Date.now();
     const ext = file.name.split(".").pop();
-    const filePath = `${organizationId}/${vendorId}/${timestamp}.${ext}`;
+    const filePath = `${vendor.organization_id}/${vendorId}/${timestamp}.${ext}`;
 
     // Upload file to storage
     const arrayBuffer = await file.arrayBuffer();
@@ -81,7 +125,7 @@ export async function POST(request: NextRequest) {
     // Create invoice record
     const { error: insertError } = await supabase.from("invoices").insert({
       vendor_id: vendorId,
-      organization_id: organizationId,
+      organization_id: vendor.organization_id,
       file_path: filePath,
       file_name: file.name,
       amount: amount ? parseInt(amount, 10) : null,

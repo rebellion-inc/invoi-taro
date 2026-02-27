@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
 import { revalidatePath } from "next/cache";
 
 export async function createVendor(formData: FormData) {
@@ -19,6 +20,38 @@ export async function createVendor(formData: FormData) {
 
   if (!profile?.organization_id) {
     return { error: "組織が見つかりません" };
+  }
+
+  const { data: organization, error: organizationError } = await supabase
+    .from("organizations")
+    .select("plan_tier")
+    .eq("id", profile.organization_id)
+    .single();
+
+  if (organizationError || !organization?.plan_tier) {
+    return { error: "プラン情報の取得に失敗しました" };
+  }
+
+  if (!isPlanTier(organization.plan_tier)) {
+    return { error: "プラン設定が不正です" };
+  }
+
+  const planLimits = getPlanLimits(organization.plan_tier);
+  if (planLimits.maxVendors !== null) {
+    const { count: vendorCount, error: countError } = await supabase
+      .from("vendors")
+      .select("*", { count: "exact", head: true })
+      .eq("organization_id", profile.organization_id);
+
+    if (countError) {
+      return { error: "取引先数の確認に失敗しました: " + countError.message };
+    }
+
+    if ((vendorCount ?? 0) >= planLimits.maxVendors) {
+      return {
+        error: `現在のプランの上限に達しています（取引先は最大${planLimits.maxVendors}社）`,
+      };
+    }
   }
 
   const name = formData.get("name") as string;
