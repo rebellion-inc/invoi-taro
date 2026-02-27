@@ -22,6 +22,7 @@ export function InvoiceDetailForm({
 }: InvoiceDetailFormProps) {
   const router = useRouter();
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [statusValue, setStatusValue] = useState<"paid" | "unpaid">(initialStatus);
   const [state, formAction, pending] = useActionState(
     async (_prevState: ActionState, formData: FormData) => {
       return await updateInvoiceDetails(formData);
@@ -35,6 +36,10 @@ export function InvoiceDetailForm({
       router.refresh();
     }
   }, [state, router]);
+
+  useEffect(() => {
+    setStatusValue(initialStatus);
+  }, [initialStatus]);
 
   const handleDelete = () => {
     if (!confirm("この請求書を削除しますか？ファイルも削除されます。")) {
@@ -103,7 +108,10 @@ export function InvoiceDetailForm({
             </label>
             <select
               name="status"
-              defaultValue={initialStatus}
+              value={statusValue}
+              onChange={(event) =>
+                setStatusValue(event.target.value as "paid" | "unpaid")
+              }
               className="w-full px-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
             >
               <option value="unpaid">未振込</option>
