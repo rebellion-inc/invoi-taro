@@ -157,3 +157,10 @@ body {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+.invoice-tutorial-highlight {
+  position: relative;
+  z-index: 1001 !important;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.9), 0 0 0 9999px rgba(0, 0, 0, 0.45);
+}
