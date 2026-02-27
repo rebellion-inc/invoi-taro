@@ -4,6 +4,7 @@ import { InvoiceList } from "../invoice-list";
 import { InvoiceFilters } from "../invoice-filters";
 import { FileText, TrendingUp, AlertCircle, Download } from "lucide-react";
 import type { Metadata } from "next";
+import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
 
 export const metadata: Metadata = {
   title: "請求書一覧",
@@ -62,6 +63,16 @@ export default async function DashboardInvoicesPage({
       </div>
     );
   }
+
+  const { data: organization } = await supabase
+    .from("organizations")
+    .select("plan_tier")
+    .eq("id", profile.organization_id)
+    .single();
+  const canExportCsv =
+    organization?.plan_tier && isPlanTier(organization.plan_tier)
+      ? getPlanLimits(organization.plan_tier).canExportCsv
+      : false;
 
   // Build query
   let query = supabase
@@ -155,13 +166,19 @@ export default async function DashboardInvoicesPage({
               currentStatus={params.status}
               baseMonth={baseMonth}
             />
-            <Link
-              href={`/api/invoices/export?${exportSearchParams.toString()}`}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 text-sm font-medium hover:bg-indigo-200 transition-colors"
-            >
-              <Download className="w-4 h-4" />
-              CSV出力
-            </Link>
+            {canExportCsv ? (
+              <Link
+                href={`/api/invoices/export?${exportSearchParams.toString()}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-100 text-indigo-700 text-sm font-medium hover:bg-indigo-200 transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                CSV出力
+              </Link>
+            ) : (
+              <p className="text-sm text-gray-500">
+                CSV出力はProプラン以上で利用できます。
+              </p>
+            )}
           </div>
         </div>
         <InvoiceList invoices={invoices || []} />

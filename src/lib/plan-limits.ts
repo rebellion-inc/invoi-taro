@@ -1,14 +1,39 @@
 export type PlanTier = "free" | "pro" | "business";
 
-type PlanLimits = {
+export type PlanLimits = {
   maxVendors: number | null;
   maxInvoices: number | null;
+  maxMembers: number | null;
+  canExportCsv: boolean;
+  monthlyPrice: number;
+  displayName: string;
 };
 
 const PLAN_LIMITS: Record<PlanTier, PlanLimits> = {
-  free: { maxVendors: 5, maxInvoices: 30 },
-  pro: { maxVendors: 50, maxInvoices: 300 },
-  business: { maxVendors: null, maxInvoices: null },
+  free: {
+    maxVendors: 5,
+    maxInvoices: 30,
+    maxMembers: 1,
+    canExportCsv: false,
+    monthlyPrice: 0,
+    displayName: "Free",
+  },
+  pro: {
+    maxVendors: 50,
+    maxInvoices: 300,
+    maxMembers: 3,
+    canExportCsv: true,
+    monthlyPrice: 980,
+    displayName: "Pro",
+  },
+  business: {
+    maxVendors: null,
+    maxInvoices: null,
+    maxMembers: null,
+    canExportCsv: true,
+    monthlyPrice: 4980,
+    displayName: "Business",
+  },
 };
 
 export function isPlanTier(value: string): value is PlanTier {

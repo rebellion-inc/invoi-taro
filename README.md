@@ -20,6 +20,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Billing (Stripe)
+
+Set the following environment variables to enable billing:
+
+```bash
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_PRO_MONTHLY_ID=
+STRIPE_PRICE_BUSINESS_MONTHLY_ID=
+```
+
+Webhook endpoint:
+
+```bash
+/api/stripe/webhook
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
