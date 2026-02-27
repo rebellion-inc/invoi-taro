@@ -3,6 +3,7 @@ import { getPlanLimits, isPlanTier, type PlanTier } from "@/lib/plan-limits";
 import { CreditCard } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SpecialCodeModal } from "./special-code-modal";
 
 export const metadata: Metadata = {
   title: "プラン",
@@ -91,6 +92,8 @@ export default async function PlansPage() {
           </p>
         )}
       </div>
+
+      <SpecialCodeModal />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {planOrder.map((planTier) => {
