@@ -32,12 +32,11 @@ export default async function DashboardInvoicesPage({
   const params = await searchParams;
   const supabase = await createClient();
   const baseMonth = getTokyoMonth();
-  const selectedMonth = params.month ?? baseMonth;
+  const selectedMonth = params.month ?? "all";
+  const selectedStatus = params.status ?? "unpaid";
   const exportSearchParams = new URLSearchParams();
   exportSearchParams.set("month", selectedMonth);
-  if (params.status) {
-    exportSearchParams.set("status", params.status);
-  }
+  exportSearchParams.set("status", selectedStatus);
 
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -95,8 +94,8 @@ export default async function DashboardInvoicesPage({
   }
 
   // Apply status filter
-  if (params.status && params.status !== "all") {
-    query = query.eq("status", params.status);
+  if (selectedStatus && selectedStatus !== "all") {
+    query = query.eq("status", selectedStatus);
   }
 
   const { data: invoices } = await query;
@@ -163,7 +162,7 @@ export default async function DashboardInvoicesPage({
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <InvoiceFilters
               currentMonth={selectedMonth}
-              currentStatus={params.status}
+              currentStatus={selectedStatus}
               baseMonth={baseMonth}
             />
             {canExportCsv ? (
