@@ -64,8 +64,8 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
           ステータス
         </label>
         <select
-          value={currentStatus || "all"}
-          onChange={(e) => updateFilter("status", e.target.value === "all" ? "" : e.target.value)}
+          value={currentStatus || "unpaid"}
+          onChange={(e) => updateFilter("status", e.target.value)}
           className="block w-36 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
           <option value="all">すべて</option>
