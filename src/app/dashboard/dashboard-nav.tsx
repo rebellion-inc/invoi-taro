@@ -10,6 +10,7 @@ import { logout } from "@/app/auth/actions";
 type DashboardNavProps = {
   organizationName?: string | null;
   organizationInitial: string;
+  planLabel: string;
 };
 
 const navItems = [
@@ -33,6 +34,7 @@ const navItems = [
 export default function DashboardNav({
   organizationName,
   organizationInitial,
+  planLabel,
 }: DashboardNavProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,6 +84,9 @@ export default function DashboardNav({
               <span className="text-sm font-medium text-gray-700">
                 {organizationName}
               </span>
+              <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+                {planLabel}
+              </span>
             </div>
             <form action={logout}>
               <button
@@ -123,9 +128,14 @@ export default function DashboardNav({
                 <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-white text-sm font-bold">
                   {organizationInitial}
                 </div>
-                <span className="text-sm font-medium text-gray-700 truncate">
-                  {organizationName}
-                </span>
+                <div className="min-w-0 flex items-center gap-2">
+                  <span className="text-sm font-medium text-gray-700 truncate">
+                    {organizationName}
+                  </span>
+                  <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+                    {planLabel}
+                  </span>
+                </div>
               </div>
               <form action={logout}>
                 <button
