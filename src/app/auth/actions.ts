@@ -4,6 +4,22 @@ import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+async function resolveSiteOrigin() {
+  const envOrigin = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (envOrigin) return envOrigin;
+
+  const requestHeaders = await headers();
+  const origin = requestHeaders.get("origin");
+  if (origin) return origin;
+
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
+  if (!host) return "http://localhost:3000";
+
+  const isLocalHost = host.startsWith("localhost") || host.startsWith("127.0.0.1");
+  const protocol = requestHeaders.get("x-forwarded-proto") ?? (isLocalHost ? "http" : "https");
+  return `${protocol}://${host}`;
+}
+
 export async function login(formData: FormData) {
   const supabase = await createClient();
 
@@ -23,10 +39,7 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
   const supabase = await createClient();
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
-  const origin = requestHeaders.get("origin") ?? (host ? `${protocol}://${host}` : "http://localhost:3000");
+  const origin = await resolveSiteOrigin();
 
   const email = ((formData.get("email") as string) ?? "").trim().toLowerCase();
   const password = formData.get("password") as string;
