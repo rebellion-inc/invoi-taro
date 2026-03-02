@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { Building2, UserPlus, UserX } from "lucide-react";
 import { InviteMemberForm } from "./invite-member-form";
+import { CreateOrganizationForm } from "./create-organization-form";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -43,11 +44,14 @@ export default async function MyPage() {
         {organizationName ? (
           <p className="text-gray-700">{organizationName}</p>
         ) : (
-          <div className="flex items-start gap-2 text-amber-700 bg-amber-50 border border-amber-100 rounded-xl p-4">
-            <UserX className="w-5 h-5 mt-0.5 shrink-0" />
-            <p className="text-sm">
-              現在、組織に所属していません。既存メンバーから招待を受けると利用を開始できます。
-            </p>
+          <div className="space-y-4">
+            <div className="flex items-start gap-2 text-amber-700 bg-amber-50 border border-amber-100 rounded-xl p-4">
+              <UserX className="w-5 h-5 mt-0.5 shrink-0" />
+              <p className="text-sm">
+                現在、組織に所属していません。既存メンバーから招待を受けるか、新しい組織を作成してください。
+              </p>
+            </div>
+            <CreateOrganizationForm />
           </div>
         )}
       </div>
