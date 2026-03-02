@@ -4,7 +4,7 @@ import { FileText, Upload, CheckCircle, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ホーム",
+  title: "請求受取太郎",
   description: "請求受取太郎は、取引先からの請求書を専用URLで簡単に受け取り、管理できるシステムです。",
 };
 
