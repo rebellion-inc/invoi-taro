@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
@@ -22,6 +23,10 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
   const supabase = await createClient();
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
+  const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
+  const origin = requestHeaders.get("origin") ?? (host ? `${protocol}://${host}` : "http://localhost:3000");
 
   const email = ((formData.get("email") as string) ?? "").trim().toLowerCase();
   const password = formData.get("password") as string;
@@ -36,6 +41,9 @@ export async function signup(formData: FormData) {
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: new URL("/login", origin).toString(),
+    },
   });
 
   if (authError) {
