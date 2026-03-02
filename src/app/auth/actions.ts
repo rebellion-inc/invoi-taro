@@ -27,10 +27,7 @@ export async function signup(formData: FormData) {
   const password = formData.get("password") as string;
   const organizationName = ((formData.get("organizationName") as string) ?? "").trim();
   const withoutOrganization = formData.get("withoutOrganization") === "true";
-
-  if (!withoutOrganization && !organizationName) {
-    return { error: "組織名を入力してください" };
-  }
+  const invitationToken = ((formData.get("invitationToken") as string) ?? "").trim();
 
   // Create user
   const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -54,7 +51,35 @@ export async function signup(formData: FormData) {
   );
 
   let organizationId: string | null = null;
-  if (!withoutOrganization) {
+
+  if (invitationToken) {
+    // 招待トークンがある場合、招待を検証して組織に参加
+    const { data: invitation } = await adminClient
+      .from("organization_invitations")
+      .select("id, organization_id, email, status, expires_at")
+      .eq("token", invitationToken)
+      .eq("status", "pending")
+      .single();
+
+    if (
+      invitation &&
+      invitation.email.toLowerCase() === email.toLowerCase() &&
+      new Date(invitation.expires_at) >= new Date()
+    ) {
+      organizationId = invitation.organization_id;
+      // 招待ステータスを承諾済みに更新
+      await adminClient
+        .from("organization_invitations")
+        .update({ status: "accepted" })
+        .eq("id", invitation.id);
+    }
+  }
+
+  if (!organizationId && !withoutOrganization) {
+    if (!organizationName) {
+      return { error: "組織名を入力してください" };
+    }
+
     const { data: org, error: orgError } = await adminClient
       .from("organizations")
       .insert({ name: organizationName })

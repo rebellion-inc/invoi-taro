@@ -3,11 +3,16 @@
 import { signup } from "@/app/auth/actions";
 import Link from "next/link";
 import Image from "next/image";
-import { useActionState, useState } from "react";
+import { Suspense, useActionState, useState } from "react";
 import { Building2, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
-export default function SignupPage() {
-  const [withoutOrganization, setWithoutOrganization] = useState(false);
+function SignupForm() {
+  const searchParams = useSearchParams();
+  const invitationToken = searchParams.get("invitation_token") ?? "";
+  const hasInvitation = !!invitationToken;
+
+  const [withoutOrganization, setWithoutOrganization] = useState(hasInvitation);
   const [state, formAction, pending] = useActionState(
     async (_prevState: { error: string } | null, formData: FormData) => {
       return await signup(formData);
@@ -37,6 +42,15 @@ export default function SignupPage() {
           </div>
           
           <form action={formAction} className="space-y-6">
+            {invitationToken && (
+              <input type="hidden" name="invitationToken" value={invitationToken} />
+            )}
+            {hasInvitation && (
+              <div className="bg-indigo-50 text-indigo-700 p-4 rounded-xl text-sm flex items-center gap-2 border border-indigo-100">
+                <Mail className="w-4 h-4 shrink-0" />
+                招待リンクからのアカウント作成です。登録後、自動的に組織に参加します。
+              </div>
+            )}
             {state?.error && (
               <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm flex items-center gap-2 animate-fade-in border border-red-100">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
@@ -45,35 +59,39 @@ export default function SignupPage() {
             )}
             
             <div className="space-y-4">
-              <div>
-                <label htmlFor="organizationName" className="block text-sm font-medium text-gray-700 mb-2">
-                  組織名
-                </label>
-                <div className="relative">
-                  <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    id="organizationName"
-                    name="organizationName"
-                    type="text"
-                    required={!withoutOrganization}
-                    disabled={withoutOrganization}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
-                    placeholder={withoutOrganization ? "組織未所属で登録します" : "株式会社〇〇"}
-                  />
-                </div>
-              </div>
+              {!hasInvitation && (
+                <>
+                  <div>
+                    <label htmlFor="organizationName" className="block text-sm font-medium text-gray-700 mb-2">
+                      組織名
+                    </label>
+                    <div className="relative">
+                      <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        id="organizationName"
+                        name="organizationName"
+                        type="text"
+                        required={!withoutOrganization}
+                        disabled={withoutOrganization}
+                        className="w-full pl-12 pr-4 py-3 rounded-xl input-modern text-gray-900 focus:outline-none"
+                        placeholder={withoutOrganization ? "組織未所属で登録します" : "株式会社〇〇"}
+                      />
+                    </div>
+                  </div>
 
-              <label className="flex items-center gap-2 text-sm text-gray-700">
-                <input
-                  type="checkbox"
-                  name="withoutOrganization"
-                  value="true"
-                  checked={withoutOrganization}
-                  onChange={(event) => setWithoutOrganization(event.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                組織未所属でアカウントを作成する
-              </label>
+                  <label className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      name="withoutOrganization"
+                      value="true"
+                      checked={withoutOrganization}
+                      onChange={(event) => setWithoutOrganization(event.target.checked)}
+                      className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    組織未所属でアカウントを作成する
+                  </label>
+                </>
+              )}
                
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -141,5 +159,13 @@ export default function SignupPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense>
+      <SignupForm />
+    </Suspense>
   );
 }

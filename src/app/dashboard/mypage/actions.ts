@@ -4,6 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
+import {
+  sendInvitationEmail,
+  sendExistingUserInvitationEmail,
+} from "@/lib/notifications/invitation";
 
 export async function createOrganization(formData: FormData) {
   const supabase = await createClient();
@@ -135,11 +139,65 @@ export async function inviteMember(formData: FormData) {
     return { error: "ユーザー検索に失敗しました: " + findError.message };
   }
 
+  // 組織名を取得（招待メール用）
+  const { data: org } = await supabase
+    .from("organizations")
+    .select("name")
+    .eq("id", profile.organization_id)
+    .single();
+  const organizationName = org?.name ?? "組織";
+
+  // 既に同じ組織への pending 招待が存在するかチェック
+  const { data: existingInvitation } = await adminClient
+    .from("organization_invitations")
+    .select("id")
+    .eq("organization_id", profile.organization_id)
+    .ilike("email", email)
+    .eq("status", "pending")
+    .gte("expires_at", new Date().toISOString())
+    .maybeSingle();
+
+  if (existingInvitation) {
+    return { error: "このメールアドレスには既に招待を送信済みです" };
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(".supabase.co", "").replace("https://", "https://") ?? "";
+
   if (!targetProfiles || targetProfiles.length === 0) {
-    return {
-      error:
-        "対象ユーザーが見つかりません。先に「組織未所属」でアカウントを作成してください",
-    };
+    // 未登録ユーザー: 招待レコード作成 + メール送信
+    const { data: invitation, error: inviteError } = await adminClient
+      .from("organization_invitations")
+      .insert({
+        organization_id: profile.organization_id,
+        email,
+        invited_by: user.id,
+      })
+      .select("token")
+      .single();
+
+    if (inviteError) {
+      return { error: "招待の作成に失敗しました: " + inviteError.message };
+    }
+
+    const signupUrl = `${baseUrl}/signup?invitation_token=${invitation.token}`;
+    try {
+      await sendInvitationEmail({
+        to: email,
+        organizationName,
+        inviterEmail: user.email ?? "",
+        signupUrl,
+      });
+    } catch {
+      // メール送信失敗時は招待レコードを削除
+      await adminClient
+        .from("organization_invitations")
+        .delete()
+        .eq("id", invitation.token);
+      return { error: "招待メールの送信に失敗しました" };
+    }
+
+    revalidatePath("/dashboard/mypage");
+    return { success: true, invited: true as const };
   }
 
   if (targetProfiles.length > 1) {
@@ -151,9 +209,37 @@ export async function inviteMember(formData: FormData) {
     if (targetProfile.organization_id === profile.organization_id) {
       return { error: "対象ユーザーは既に同じ組織に所属しています" };
     }
-    return { error: "対象ユーザーは別の組織に所属しているため招待できません" };
+
+    // 別組織所属ユーザー: 招待レコード作成 + メール通知
+    const { error: inviteError } = await adminClient
+      .from("organization_invitations")
+      .insert({
+        organization_id: profile.organization_id,
+        email,
+        invited_by: user.id,
+      });
+
+    if (inviteError) {
+      return { error: "招待の作成に失敗しました: " + inviteError.message };
+    }
+
+    const dashboardUrl = `${baseUrl}/dashboard`;
+    try {
+      await sendExistingUserInvitationEmail({
+        to: email,
+        organizationName,
+        inviterEmail: user.email ?? "",
+        dashboardUrl,
+      });
+    } catch {
+      // メール失敗でも招待レコードは残す（ダッシュボードで確認可能）
+    }
+
+    revalidatePath("/dashboard/mypage");
+    return { success: true, invited: true as const };
   }
 
+  // 組織未所属ユーザー: 即時追加（既存の動作）
   const { error: updateError } = await adminClient
     .from("profiles")
     .update({ organization_id: profile.organization_id })
@@ -165,5 +251,109 @@ export async function inviteMember(formData: FormData) {
   }
 
   revalidatePath("/dashboard/mypage");
+  return { success: true };
+}
+
+export async function acceptInvitation(invitationId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: "認証が必要です" };
+  }
+
+  const adminClient = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { data: invitation, error: fetchError } = await adminClient
+    .from("organization_invitations")
+    .select("id, organization_id, email, status, expires_at")
+    .eq("id", invitationId)
+    .single();
+
+  if (fetchError || !invitation) {
+    return { error: "招待が見つかりません" };
+  }
+
+  if (invitation.email.toLowerCase() !== user.email?.toLowerCase()) {
+    return { error: "この招待はあなた宛てではありません" };
+  }
+
+  if (invitation.status !== "pending") {
+    return { error: "この招待は既に処理済みです" };
+  }
+
+  if (new Date(invitation.expires_at) < new Date()) {
+    await adminClient
+      .from("organization_invitations")
+      .update({ status: "expired" })
+      .eq("id", invitationId);
+    return { error: "この招待は期限切れです" };
+  }
+
+  // 組織を移動
+  const { error: updateError } = await adminClient
+    .from("profiles")
+    .update({ organization_id: invitation.organization_id })
+    .eq("id", user.id);
+
+  if (updateError) {
+    return { error: "組織の移動に失敗しました: " + updateError.message };
+  }
+
+  // 招待ステータスを更新
+  await adminClient
+    .from("organization_invitations")
+    .update({ status: "accepted" })
+    .eq("id", invitationId);
+
+  revalidatePath("/dashboard");
+  revalidatePath("/dashboard/mypage");
+  return { success: true };
+}
+
+export async function declineInvitation(invitationId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: "認証が必要です" };
+  }
+
+  const adminClient = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { data: invitation, error: fetchError } = await adminClient
+    .from("organization_invitations")
+    .select("id, email, status")
+    .eq("id", invitationId)
+    .single();
+
+  if (fetchError || !invitation) {
+    return { error: "招待が見つかりません" };
+  }
+
+  if (invitation.email.toLowerCase() !== user.email?.toLowerCase()) {
+    return { error: "この招待はあなた宛てではありません" };
+  }
+
+  if (invitation.status !== "pending") {
+    return { error: "この招待は既に処理済みです" };
+  }
+
+  await adminClient
+    .from("organization_invitations")
+    .update({ status: "declined" })
+    .eq("id", invitationId);
+
+  revalidatePath("/dashboard");
   return { success: true };
 }
