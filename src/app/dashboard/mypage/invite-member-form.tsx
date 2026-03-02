@@ -7,7 +7,7 @@ import { Loader2, Mail, UserPlus } from "lucide-react";
 export function InviteMemberForm() {
   const [state, formAction, pending] = useActionState(
     async (
-      _prevState: { error?: string; success?: boolean } | null,
+      _prevState: { error?: string; success?: boolean; invited?: boolean } | null,
       formData: FormData
     ) => {
       return await inviteMember(formData);
@@ -55,9 +55,14 @@ export function InviteMemberForm() {
       {state?.error && (
         <p className="text-sm text-red-600 animate-fade-in">{state.error}</p>
       )}
-      {state?.success && (
+      {state?.success && !state?.invited && (
         <p className="text-sm text-emerald-600 animate-fade-in">
           招待が完了しました。対象ユーザーを組織に追加しました。
+        </p>
+      )}
+      {state?.success && state?.invited && (
+        <p className="text-sm text-emerald-600 animate-fade-in">
+          招待メールを送信しました。対象ユーザーが承諾すると組織に追加されます。
         </p>
       )}
     </form>
