@@ -5,6 +5,68 @@ import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPlanLimits, isPlanTier } from "@/lib/plan-limits";
 
+export async function createOrganization(formData: FormData) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: "認証が必要です" };
+  }
+
+  const organizationName = (formData.get("organizationName") as string | null)?.trim();
+  if (!organizationName) {
+    return { error: "組織名を入力してください" };
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("organization_id")
+    .eq("id", user.id)
+    .single();
+
+  if (profileError) {
+    return { error: "プロフィールの取得に失敗しました: " + profileError.message };
+  }
+
+  if (profile?.organization_id) {
+    return { error: "既に組織に所属しています" };
+  }
+
+  const adminClient = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { data: organization, error: organizationError } = await adminClient
+    .from("organizations")
+    .insert({ name: organizationName })
+    .select("id")
+    .single();
+
+  if (organizationError || !organization?.id) {
+    return {
+      error:
+        "組織の作成に失敗しました: " + (organizationError?.message ?? "作成結果を取得できませんでした"),
+    };
+  }
+
+  const { error: updateError } = await adminClient
+    .from("profiles")
+    .update({ organization_id: organization.id })
+    .eq("id", user.id)
+    .is("organization_id", null);
+
+  if (updateError) {
+    return { error: "プロフィールの更新に失敗しました: " + updateError.message };
+  }
+
+  revalidatePath("/dashboard/mypage");
+  revalidatePath("/dashboard");
+  return { success: true };
+}
+
 export async function inviteMember(formData: FormData) {
   const supabase = await createClient();
 
