@@ -79,7 +79,7 @@ export async function signup(formData: FormData) {
     return { error: "プロフィールの作成に失敗しました: " + profileError.message };
   }
 
-  redirect("/dashboard");
+  redirect("/signup/check-email");
 }
 
 export async function logout() {
