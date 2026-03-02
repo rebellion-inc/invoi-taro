@@ -12,7 +12,7 @@ export type PlanLimits = {
 const PLAN_LIMITS: Record<PlanTier, PlanLimits> = {
   free: {
     maxVendors: 5,
-    maxInvoices: 30,
+    maxInvoices: 5,
     maxMembers: 1,
     canExportCsv: false,
     monthlyPrice: 0,
