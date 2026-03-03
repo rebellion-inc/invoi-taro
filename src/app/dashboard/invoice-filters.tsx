@@ -50,7 +50,7 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
           onChange={(e) => updateFilter("month", e.target.value)}
           className="block w-44 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
-          <option value="all">すべての請求書期日</option>
+          <option value="all">-</option>
           {months.map((month) => (
             <option key={month.value} value={month.value}>
               {month.label}
@@ -68,7 +68,7 @@ export function InvoiceFilters({ currentMonth, currentStatus, baseMonth }: Props
           onChange={(e) => updateFilter("status", e.target.value)}
           className="block w-36 px-4 py-2.5 rounded-xl input-modern text-gray-900 text-sm focus:outline-none cursor-pointer"
         >
-          <option value="all">すべて</option>
+          <option value="all">-</option>
           <option value="unpaid">未振込</option>
           <option value="paid">振込済</option>
         </select>
