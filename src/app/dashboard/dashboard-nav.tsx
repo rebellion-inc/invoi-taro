@@ -96,12 +96,6 @@ export default function DashboardNav({
           </div>
           <div className="hidden sm:flex sm:items-center sm:gap-4">
             <div className="flex items-center gap-2 px-4 py-2 bg-white/50 rounded-xl">
-              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                {organizationInitial}
-              </div>
-              <span className="text-sm font-medium text-gray-700">
-                {organizationName}
-              </span>
               <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">
                 {planLabel}
               </span>
