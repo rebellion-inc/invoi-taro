@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { sendEmailViaResend } from "./email";
+import { canSendEmailViaResend, sendEmailViaResend } from "./email";
 
 type NotificationType = "uploaded" | "due_date_morning";
 
@@ -73,6 +73,10 @@ async function deleteNotificationLog(supabase: SupabaseClient, notificationKey: 
 }
 
 export async function sendInvoiceUploadedNotification(input: BaseNotificationInput) {
+  if (!canSendEmailViaResend()) {
+    return { sent: false, reason: "email_not_configured" as const };
+  }
+
   const recipients = await getOrganizationRecipients(input.supabase, input.organizationId);
   if (recipients.length === 0) {
     return { sent: false, reason: "no_recipients" as const };
@@ -127,6 +131,10 @@ export async function sendInvoiceUploadedNotification(input: BaseNotificationInp
 export async function sendInvoiceDueReminderNotification(
   input: BaseNotificationInput & { reminderDateJst: string }
 ) {
+  if (!canSendEmailViaResend()) {
+    return { sent: false, reason: "email_not_configured" as const };
+  }
+
   const recipients = await getOrganizationRecipients(input.supabase, input.organizationId);
   if (recipients.length === 0) {
     return { sent: false, reason: "no_recipients" as const };

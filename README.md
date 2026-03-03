@@ -38,6 +38,15 @@ Webhook endpoint:
 /api/stripe/webhook
 ```
 
+## Email Notifications (Resend)
+
+Set the following environment variables to enable email notifications:
+
+```bash
+RESEND_API_KEY=
+MAIL_FROM=
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
