@@ -7,6 +7,10 @@ type SendEmailInput = {
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
+export function canSendEmailViaResend() {
+  return Boolean(process.env.RESEND_API_KEY && process.env.MAIL_FROM);
+}
+
 function getEnv(name: string) {
   const value = process.env[name];
   if (!value) {
