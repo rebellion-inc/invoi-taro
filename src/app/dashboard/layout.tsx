@@ -4,6 +4,7 @@ import { isPlanTier } from "@/lib/plan-limits";
 import { redirect } from "next/navigation";
 import DashboardNav from "./dashboard-nav";
 import { InvitationBanner } from "@/components/invitation-banner";
+import { BugReportFab } from "./bug-report-fab";
 
 export default async function DashboardLayout({
   children,
@@ -80,6 +81,7 @@ export default async function DashboardLayout({
         <InvitationBanner invitations={invitations} />
         {children}
       </main>
+      <BugReportFab />
     </div>
   );
 }
