@@ -61,10 +61,20 @@ const features = [
 ];
 
 const flow = [
-  { step: "01", title: "リンクを共有", icon: Link2 },
-  { step: "02", title: "請求書を受け取り", icon: FileText },
-  { step: "03", title: "一覧で確認", icon: ListChecks },
-  { step: "04", title: "支払い情報をチェック", icon: CheckCheck },
+  { step: "01", title: "リンクを共有", icon: Link2, align: "left" as const },
+  {
+    step: "02",
+    title: "請求書を\n受け取り",
+    icon: FileText,
+    align: "right" as const,
+  },
+  { step: "03", title: "一覧で確認", icon: ListChecks, align: "left" as const },
+  {
+    step: "04",
+    title: "支払い情報を\nチェック",
+    icon: CheckCheck,
+    align: "right" as const,
+  },
 ];
 
 const plans = [
@@ -435,23 +445,89 @@ export default function Home() {
           <h2 className="text-center text-2xl font-bold flex items-center justify-center gap-2">
             <FootPrintIcon />
             ご利用の流れ
-            </h2>
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            {flow.map((item) => {
+          </h2>
+          <div className="mt-10">
+            {flow.map((item, index) => {
               const Icon = item.icon;
+              const isLeft = item.align === "left";
+              const isLast = index === flow.length - 1;
               return (
-                <article
-                  key={item.step}
-                  className="rounded-2xl bg-white p-4 text-center shadow-sm"
-                >
-                  <p className="text-xs font-semibold text-[#0676F6]">
-                    STEP {item.step}
-                  </p>
-                  <div className="mx-auto mt-3 flex h-14 w-14 items-center justify-center rounded-full bg-blue-50">
-                    <Icon className="h-7 w-7 text-[#0676F6]" />
+                <div key={item.step}>
+                  <div
+                    className={`flex ${
+                      isLeft ? "justify-start" : "justify-end"
+                    }`}
+                  >
+                    <div className="relative h-42.5 w-42.5 rounded-full border border-[#D6E4F6] bg-[#EDF3FA]">
+                      <p
+                        className={`absolute -top-3 text-sm font-bold leading-none text-[#0676F6] tracking-tight ${
+                          isLeft ? "left-3" : "right-3"
+                        }`}
+                      >
+                        STEP
+                      </p>
+                      <p
+                        className={`absolute top-1.5 text-[32px] font-bold leading-none text-[#0676F6] tracking-tight ${
+                          isLeft ? "left-3" : "right-3"
+                        }`}
+                      >
+                        {item.step}
+                      </p>
+                      <p className="absolute top-12 left-1/2 w-full -translate-x-1/2 whitespace-pre-line text-center text-sm font-bold tracking-[0.7px] text-[#333]">
+                        {item.title}
+                      </p>
+                      <div className="absolute bottom-5 left-1/2 -translate-x-1/2">
+                        <Icon
+                          className="h-16 w-16 text-gray-600"
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-3 text-sm font-medium">{item.title}</p>
-                </article>
+                  {!isLast && (
+                    <div
+                      className={`flex ${
+                        isLeft
+                          ? "justify-center pl-16"
+                          : "justify-center pr-16"
+                      }`}
+                    >
+                      <div
+                        className="relative my-1 h-10 w-16"
+                        style={
+                          !isLeft
+                            ? { transform: "scaleX(-1)" }
+                            : undefined
+                        }
+                      >
+                        <Image
+                          src="/lp/footprint.png"
+                          alt=""
+                          width={16}
+                          height={16}
+                          className="absolute left-0 top-0 opacity-50"
+                          style={{ transform: "rotate(99deg)" }}
+                        />
+                        <Image
+                          src="/lp/footprint.png"
+                          alt=""
+                          width={16}
+                          height={16}
+                          className="absolute left-5 top-3 opacity-50"
+                          style={{ transform: "rotate(99deg)" }}
+                        />
+                        <Image
+                          src="/lp/footprint.png"
+                          alt=""
+                          width={16}
+                          height={16}
+                          className="absolute left-11 top-5 opacity-50"
+                          style={{ transform: "rotate(99deg)" }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
