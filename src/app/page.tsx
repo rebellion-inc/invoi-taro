@@ -109,25 +109,25 @@ const reasons = [
   {
     title: "低コストで使用可能",
     body: "導入を検討している方やお試し利用に適した\nコストをかけずに導入できるサービスです。",
-    imageSrc: "/lp/reason_1.jpg",
+    imageSrc: "/lp/reason_1.png",
     imageAlt: "コストイメージ",
   },
   {
     title: "迷わないUI",
     body: "操作説明が不要で、初めての方でも\n直感的に使えるシンプルな画面設計です。",
-    imageSrc: "/lp/reason_2.jpg",
+    imageSrc: "/lp/reason_2.png",
     imageAlt: "UIイメージ",
   },
   {
     title: "すぐに始められる",
     body: "面倒な初期設定は必要ありません。\n登録後はすぐに利用を開始できます。",
-    imageSrc: "/lp/reason_3.jpg",
+    imageSrc: "/lp/reason_3.png",
     imageAlt: "すぐ始められるイメージ",
   },
   {
     title: "取引先に負担がかからない",
     body: "取引先はアカウントの登録が不要です。\nリンクひとつで請求書を送信できます。",
-    imageSrc: "/lp/reason_4.jpg",
+    imageSrc: "/lp/reason_4.png",
     imageAlt: "取引先イメージ",
   },
 ];
@@ -220,6 +220,62 @@ function QuickStartCheckIcon() {
         mask="url(#path-2-inside-1_116_357)"
       />
     </svg>
+  );
+}
+
+function CallToActionSection() {
+  return (
+    <section className="bg-[#F8FAFC] px-6 py-10">
+      <div className="text-center">
+        <p className="text-sm font-bold tracking-wider text-[#0676F6]">
+          \まずは無料で/
+        </p>
+        <div className="mt-1 flex items-center justify-center gap-3">
+          <svg
+            width="21"
+            height="21"
+            viewBox="0 0 21 21"
+            fill="none"
+            className="shrink-0"
+            aria-hidden="true"
+          >
+            <path d="M10.5 21L21 10.5H0L10.5 21Z" fill="#0676F6" />
+          </svg>
+          <h2 className="text-xl font-bold tracking-wide text-[#333]">
+            受取太郎を始めましょう
+          </h2>
+          <svg
+            width="21"
+            height="21"
+            viewBox="0 0 21 21"
+            fill="none"
+            className="shrink-0"
+            aria-hidden="true"
+          >
+            <path d="M10.5 21L21 10.5H0L10.5 21Z" fill="#0676F6" />
+          </svg>
+        </div>
+      </div>
+      <div className="mt-5">
+        <Link
+          href="/signup"
+          className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5"
+        >
+          <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white">
+            <span className="text-[10px] font-bold leading-tight text-[#0676F6]">
+              最短
+            </span>
+            <span className="text-lg font-bold leading-tight text-[#0676F6]">
+              3分
+            </span>
+          </span>
+          <span className="flex-1 text-center text-xl font-bold tracking-wider text-white">
+            無料で始める
+          </span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-white" />
+        </Link>
+      </div>
+    </section>
   );
 }
 
@@ -542,71 +598,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-6 py-10">
-          <div className="text-center">
-            <p className="text-sm font-bold tracking-wider text-[#0676F6]">
-              ＼まずは無料で/
-            </p>
-            <div className="mt-1 flex items-center justify-center gap-3">
-              <svg
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-                className="shrink-0"
-                aria-hidden="true"
-              >
-                <rect
-                  x="0"
-                  y="10.6"
-                  width="15"
-                  height="15"
-                  transform="rotate(-45 0 10.6)"
-                  fill="#0676F6"
-                />
-              </svg>
-              <h2 className="text-xl font-bold tracking-wide text-[#333]">
-                受取太郎を始めましょう
-              </h2>
-              <svg
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-                className="shrink-0"
-                aria-hidden="true"
-              >
-                <rect
-                  x="0"
-                  y="10.6"
-                  width="15"
-                  height="15"
-                  transform="rotate(-45 0 10.6)"
-                  fill="#0676F6"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="mt-5">
-            <Link
-              href="/signup"
-              className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5"
-            >
-              <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white">
-                <span className="text-[10px] font-bold leading-tight text-[#0676F6]">
-                  最短
-                </span>
-                <span className="text-lg font-bold leading-tight text-[#0676F6]">
-                  3分
-                </span>
-              </span>
-              <span className="flex-1 text-center text-xl font-bold tracking-wider text-white">
-                無料で始める
-              </span>
-              <ChevronRight className="h-5 w-5 shrink-0 text-white" />
-            </Link>
-          </div>
-        </section>
+        <CallToActionSection />
 
         <section className="bg-[#E5F2F9] px-4 py-10">
           <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2">
@@ -695,75 +687,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-6 py-10">
-          <div className="text-center">
-            <p className="text-sm font-bold tracking-wider text-[#0676F6]">
-              ＼まずは無料で/
-            </p>
-            <div className="mt-1 flex items-center justify-center gap-3">
-              <svg
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-                className="shrink-0"
-                aria-hidden="true"
-              >
-                <rect
-                  x="0"
-                  y="10.6"
-                  width="15"
-                  height="15"
-                  transform="rotate(-45 0 10.6)"
-                  fill="#0676F6"
-                />
-              </svg>
-              <h2 className="text-xl font-bold tracking-wide text-[#333]">
-                受取太郎を始めましょう
-              </h2>
-              <svg
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-                className="shrink-0"
-                aria-hidden="true"
-              >
-                <rect
-                  x="0"
-                  y="10.6"
-                  width="15"
-                  height="15"
-                  transform="rotate(-45 0 10.6)"
-                  fill="#0676F6"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="mt-5">
-            <Link
-              href="/signup"
-              className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5"
-            >
-              <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white">
-                <span className="text-[10px] font-bold leading-tight text-[#0676F6]">
-                  最短
-                </span>
-                <span className="text-lg font-bold leading-tight text-[#0676F6]">
-                  3分
-                </span>
-              </span>
-              <span className="flex-1 text-center text-xl font-bold tracking-wider text-white">
-                無料で始める
-              </span>
-              <ChevronRight className="h-5 w-5 shrink-0 text-white" />
-            </Link>
-          </div>
-        </section>
+        <CallToActionSection />
 
-        <footer className="bg-[#F7F9FC] px-4 py-5">
+        <footer className="bg-[#E5F2F9] px-4 py-5">
           <p className="text-center text-sm text-[#333]">
-            © 2026 rebellion.inc
+            © 2026 合同会社リベリオン
           </p>
           <div className="mt-3 flex justify-center gap-4 text-xs text-gray-500">
             <Link href="/privacy-policy" className="hover:underline">
