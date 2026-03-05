@@ -11,6 +11,7 @@ import {
   User,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { ScrollFootprints } from "@/components/scroll-footprints";
 
 const notoSans = Noto_Sans_JP({
   subsets: ["latin"],
@@ -523,7 +524,7 @@ export default function Home() {
                       isLeft ? "justify-start" : "justify-end"
                     }`}
                   >
-                    <div className="relative h-42.5 w-42.5 rounded-full border border-[#D6E4F6] bg-[#EDF3FA]">
+                    <div className="relative h-42.5 w-42.5 rounded-full border border-[#D6E4F6] bg-[#E5F2F9]">
                       <p
                         className={`absolute -top-3 text-sm font-bold leading-none text-[#0676F6] tracking-tight ${
                           isLeft ? "left-3" : "right-3"
@@ -532,13 +533,13 @@ export default function Home() {
                         STEP
                       </p>
                       <p
-                        className={`absolute top-1.5 text-[32px] font-bold leading-none text-[#0676F6] tracking-tight ${
+                        className={`absolute top-1.3 text-[32px] font-bold leading-none text-[#0676F6] tracking-tight ${
                           isLeft ? "left-3" : "right-3"
                         }`}
                       >
                         {item.step}
                       </p>
-                      <p className="absolute top-12 left-1/2 w-full -translate-x-1/2 whitespace-pre-line text-center text-sm font-bold tracking-[0.7px] text-[#333]">
+                      <p className="absolute top-10 left-1/2 w-full -translate-x-1/2 whitespace-pre-line text-center text-sm font-bold tracking-[0.7px] text-[#333]">
                         {item.title}
                       </p>
                       <div className="absolute bottom-5 left-1/2 -translate-x-1/2">
@@ -557,39 +558,7 @@ export default function Home() {
                           : "justify-center pr-16"
                       }`}
                     >
-                      <div
-                        className="relative my-1 h-10 w-16"
-                        style={
-                          !isLeft
-                            ? { transform: "scaleX(-1)" }
-                            : undefined
-                        }
-                      >
-                        <Image
-                          src="/lp/footprint.png"
-                          alt=""
-                          width={16}
-                          height={16}
-                          className="absolute left-0 top-0 opacity-50"
-                          style={{ transform: "rotate(99deg)" }}
-                        />
-                        <Image
-                          src="/lp/footprint.png"
-                          alt=""
-                          width={16}
-                          height={16}
-                          className="absolute left-5 top-3 opacity-50"
-                          style={{ transform: "rotate(99deg)" }}
-                        />
-                        <Image
-                          src="/lp/footprint.png"
-                          alt=""
-                          width={16}
-                          height={16}
-                          className="absolute left-11 top-5 opacity-50"
-                          style={{ transform: "rotate(99deg)" }}
-                        />
-                      </div>
+                      <ScrollFootprints flip={!isLeft} />
                     </div>
                   )}
                 </div>
@@ -600,43 +569,43 @@ export default function Home() {
 
         <CallToActionSection />
 
-        <section className="bg-[#E5F2F9] px-4 py-10">
+        <section className="bg-[#E5F2F9] px-4 py-12">
           <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2">
             <FootPrintIcon />
             料金プラン
           </h2>
-          <div className="mt-6 space-y-5">
+          <div className="mt-10 space-y-12">
             {plans.map((plan) => (
               <article
                 key={plan.name}
                 className="relative"
               >
                 {plan.recommended ? (
-                  <div className="mx-auto -mb-4 flex w-44 items-center justify-center rounded-full border-2 border-[#0676F6] bg-white py-1 relative z-10">
-                    <span className="text-xs font-bold text-[#0676F6]">
+                  <div className="mx-auto -mb-0.75 flex h-8 w-41.5 items-center justify-center rounded-t-[10px] bg-[#0676F6] relative z-10">
+                    <span className="text-sm font-bold text-white">
                       最もおすすめ
                     </span>
                   </div>
                 ) : null}
                 <div
-                  className={`rounded-2xl bg-white px-5 py-8 text-center shadow-md ${
+                  className={`rounded-[15px] bg-white px-5 pt-6 pb-10 text-center shadow-md ${
                     plan.recommended
-                      ? "border-2 border-[#0676F6]"
+                      ? "border-[3px] border-[#0676F6]"
                       : ""
                   }`}
                 >
-                  <h3 className="text-4xl font-bold">{plan.name}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-black/50">
+                  <h3 className={`text-[40px] font-bold ${plan.recommended ? "text-[#0676F6]" : ""}`}>{plan.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-black/50">
                     {plan.description}
                   </p>
-                  <div className="mt-4 flex items-end justify-center gap-1">
+                  <div className="mt-10 flex items-end justify-center gap-1">
                     <span className="pb-1 text-base font-medium text-[#333]">月額</span>
                     <span className="text-5xl font-bold leading-none text-[#333]">
                       {plan.price}
                     </span>
                     <span className="pb-1 text-xl font-bold text-[#333]">円</span>
                   </div>
-                  <div className="mt-5 flex justify-center">
+                  <div className="mt-10 flex justify-center">
                     <Link
                       href="/signup"
                       className="inline-flex items-center gap-2 rounded-full border border-[#0676F6] px-8 py-2.5 text-base font-bold text-[#0676F6] transition-all hover:bg-[#0676F6] hover:text-white"
