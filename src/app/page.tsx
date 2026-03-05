@@ -4,6 +4,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import {
   ArrowRight,
   CheckCheck,
+  ChevronRight,
   FileText,
   Link2,
   ListChecks,
@@ -107,19 +108,27 @@ const plans = [
 const reasons = [
   {
     title: "低コストで使用可能",
-    body: "導入を検討している方や、お試し利用に適したコストをかけずに導入できるサービスです。",
+    body: "導入を検討している方やお試し利用に適した\nコストをかけずに導入できるサービスです。",
+    imageSrc: "/lp/reason_1.jpg",
+    imageAlt: "コストイメージ",
   },
   {
     title: "迷わないUI",
-    body: "操作説明が不要で、初めての方でも直感的に使えるシンプルな画面設計です。",
+    body: "操作説明が不要で、初めての方でも\n直感的に使えるシンプルな画面設計です。",
+    imageSrc: "/lp/reason_2.jpg",
+    imageAlt: "UIイメージ",
   },
   {
     title: "すぐに始められる",
-    body: "面倒な初期設定は不要で登録後すぐに利用を開始できます。",
+    body: "面倒な初期設定は必要ありません。\n登録後はすぐに利用を開始できます。",
+    imageSrc: "/lp/reason_3.jpg",
+    imageAlt: "すぐ始められるイメージ",
   },
   {
-    title: "取引先に負担をかけない",
-    body: "取引先はアカウント登録不要です。リンクを送るだけなので手間をかけさせません。",
+    title: "取引先に負担がかからない",
+    body: "取引先はアカウントの登録が不要です。\nリンクひとつで請求書を送信できます。",
+    imageSrc: "/lp/reason_4.jpg",
+    imageAlt: "取引先イメージ",
   },
 ];
 
@@ -533,74 +542,146 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#0676F6] px-4 py-10 text-white">
-          <p className="text-center text-sm">まずは無料で</p>
-          <h2 className="mt-1 text-center text-3xl font-bold">
-            受取太郎を始めましょう
-          </h2>
-          <div className="mt-6">
+        <section className="bg-[#F8FAFC] px-6 py-10">
+          <div className="text-center">
+            <p className="text-sm font-bold tracking-wider text-[#0676F6]">
+              ＼まずは無料で/
+            </p>
+            <div className="mt-1 flex items-center justify-center gap-3">
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 21 21"
+                fill="none"
+                className="shrink-0"
+                aria-hidden="true"
+              >
+                <rect
+                  x="0"
+                  y="10.6"
+                  width="15"
+                  height="15"
+                  transform="rotate(-45 0 10.6)"
+                  fill="#0676F6"
+                />
+              </svg>
+              <h2 className="text-xl font-bold tracking-wide text-[#333]">
+                受取太郎を始めましょう
+              </h2>
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 21 21"
+                fill="none"
+                className="shrink-0"
+                aria-hidden="true"
+              >
+                <rect
+                  x="0"
+                  y="10.6"
+                  width="15"
+                  height="15"
+                  transform="rotate(-45 0 10.6)"
+                  fill="#0676F6"
+                />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-5">
             <Link
               href="/signup"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-4 text-base font-semibold text-[#0676F6]"
+              className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5"
             >
-              無料で始める
-              <ArrowRight className="h-5 w-5" />
+              <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white">
+                <span className="text-[10px] font-bold leading-tight text-[#0676F6]">
+                  最短
+                </span>
+                <span className="text-lg font-bold leading-tight text-[#0676F6]">
+                  3分
+                </span>
+              </span>
+              <span className="flex-1 text-center text-xl font-bold tracking-wider text-white">
+                無料で始める
+              </span>
+              <ChevronRight className="h-5 w-5 shrink-0 text-white" />
             </Link>
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-4 py-10">
-          <h2 className="text-center text-2xl font-bold">料金プラン</h2>
-          <div className="mt-6 space-y-4">
+        <section className="bg-[#E5F2F9] px-4 py-10">
+          <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2">
+            <FootPrintIcon />
+            料金プラン
+          </h2>
+          <div className="mt-6 space-y-5">
             {plans.map((plan) => (
               <article
                 key={plan.name}
-                className={`rounded-2xl border p-5 ${
-                  plan.recommended
-                    ? "border-[#0676F6] bg-blue-50"
-                    : "border-gray-200 bg-white"
-                }`}
+                className="relative"
               >
                 {plan.recommended ? (
-                  <p className="mb-2 text-right text-xs font-semibold text-[#0676F6]">
-                    最もおすすめ
-                  </p>
+                  <div className="mx-auto -mb-4 flex w-44 items-center justify-center rounded-full border-2 border-[#0676F6] bg-white py-1 relative z-10">
+                    <span className="text-xs font-bold text-[#0676F6]">
+                      最もおすすめ
+                    </span>
+                  </div>
                 ) : null}
-                <h3 className="text-3xl font-bold">{plan.name}</h3>
-                <p className="mt-2 text-sm text-gray-600">{plan.description}</p>
-                <p className="mt-4 text-sm text-gray-600">月額</p>
-                <p className="text-4xl font-bold">
-                  {plan.price}
-                  <span className="ml-1 text-lg font-medium">円</span>
-                </p>
-                <Link
-                  href="/signup"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0676F6] px-4 py-3 text-sm font-semibold text-white"
+                <div
+                  className={`rounded-2xl bg-white px-5 py-8 text-center shadow-md ${
+                    plan.recommended
+                      ? "border-2 border-[#0676F6]"
+                      : ""
+                  }`}
                 >
-                  {plan.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                  <h3 className="text-4xl font-bold">{plan.name}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-black/50">
+                    {plan.description}
+                  </p>
+                  <div className="mt-4 flex items-end justify-center gap-1">
+                    <span className="pb-1 text-base font-medium text-[#333]">月額</span>
+                    <span className="text-5xl font-bold leading-none text-[#333]">
+                      {plan.price}
+                    </span>
+                    <span className="pb-1 text-xl font-bold text-[#333]">円</span>
+                  </div>
+                  <div className="mt-5 flex justify-center">
+                    <Link
+                      href="/signup"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#0676F6] px-8 py-2.5 text-base font-bold text-[#0676F6] transition-all hover:bg-[#0676F6] hover:text-white"
+                    >
+                      {plan.cta}
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="px-4 py-10">
-          <h2 className="text-center text-2xl font-bold">
+        <section className="bg-[#F8FAFC] px-5 py-10">
+          <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2">
+            <FootPrintIcon />
             受取太郎が選ばれる理由
           </h2>
-          <div className="mt-6 space-y-4">
+          <div className="mt-8 space-y-10">
             {reasons.map((reason, index) => (
-              <article
-                key={reason.title}
-                className="rounded-2xl border border-gray-200 p-4"
-              >
-                <p className="text-xs font-semibold text-[#0676F6]">
-                  POINT {String(index + 1).padStart(2, "0")}
-                </p>
-                <div className="mt-3 h-32 rounded-xl bg-gray-100" />
-                <h3 className="mt-3 text-lg font-semibold">{reason.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              <article key={reason.title}>
+                <div className="relative">
+                  <div className="absolute -top-2 left-0 z-10 flex h-14 w-14 flex-col items-center justify-center rounded-lg bg-[#F7F9FC]">
+                    <span className="text-xs font-bold leading-none text-[#0676F6]">
+                      POINT
+                    </span>
+                    <span className="text-2xl font-bold leading-none text-[#0676F6]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="overflow-hidden rounded-lg bg-gray-200">
+                    <div className="h-48 w-full bg-gray-200" />
+                  </div>
+                </div>
+                <h3 className="mt-4 text-xl font-bold">{reason.title}</h3>
+                <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#333]">
                   {reason.body}
                 </p>
               </article>
@@ -608,25 +689,75 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#0676F6] px-4 py-10 text-white">
-          <p className="text-center text-sm">まずは無料で</p>
-          <h2 className="mt-1 text-center text-3xl font-bold">
-            受取太郎を始めましょう
-          </h2>
-          <div className="mt-6">
+        <section className="bg-[#F8FAFC] px-6 py-10">
+          <div className="text-center">
+            <p className="text-sm font-bold tracking-wider text-[#0676F6]">
+              ＼まずは無料で/
+            </p>
+            <div className="mt-1 flex items-center justify-center gap-3">
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 21 21"
+                fill="none"
+                className="shrink-0"
+                aria-hidden="true"
+              >
+                <rect
+                  x="0"
+                  y="10.6"
+                  width="15"
+                  height="15"
+                  transform="rotate(-45 0 10.6)"
+                  fill="#0676F6"
+                />
+              </svg>
+              <h2 className="text-xl font-bold tracking-wide text-[#333]">
+                受取太郎を始めましょう
+              </h2>
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 21 21"
+                fill="none"
+                className="shrink-0"
+                aria-hidden="true"
+              >
+                <rect
+                  x="0"
+                  y="10.6"
+                  width="15"
+                  height="15"
+                  transform="rotate(-45 0 10.6)"
+                  fill="#0676F6"
+                />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-5">
             <Link
               href="/signup"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-4 text-base font-semibold text-[#0676F6]"
+              className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5"
             >
-              無料で始める
-              <ArrowRight className="h-5 w-5" />
+              <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white">
+                <span className="text-[10px] font-bold leading-tight text-[#0676F6]">
+                  最短
+                </span>
+                <span className="text-lg font-bold leading-tight text-[#0676F6]">
+                  3分
+                </span>
+              </span>
+              <span className="flex-1 text-center text-xl font-bold tracking-wider text-white">
+                無料で始める
+              </span>
+              <ChevronRight className="h-5 w-5 shrink-0 text-white" />
             </Link>
           </div>
         </section>
 
-        <footer className="border-t border-gray-200 px-4 py-6">
-          <p className="text-center text-xs text-gray-500">
-            ©2026 rebellion.inc
+        <footer className="bg-[#F7F9FC] px-4 py-5">
+          <p className="text-center text-sm text-[#333]">
+            © 2026 rebellion.inc
           </p>
           <div className="mt-3 flex justify-center gap-4 text-xs text-gray-500">
             <Link href="/privacy-policy" className="hover:underline">
