@@ -83,26 +83,47 @@ const plans = [
   {
     name: "Free",
     price: "0",
+    subtitle: "まずは気楽に試したい人に",
     description:
       "取引先を最大5社まで登録可能で月あたり30件まで請求書を管理できます。",
     cta: "無料で始める",
     recommended: false,
+    specs: [
+      { label: "取引社数：", value: "5社" },
+      { label: "受取請求書数：", value: "30件" },
+      { label: "CSV出力：", value: "-" },
+      { label: "チーム招待：", value: "1人" },
+    ],
   },
   {
     name: "Pro",
     price: "980",
+    subtitle: "成長中の中小企業に最適",
     description:
       "取引先は最大50社まで登録可能。月あたり300件まで請求書を管理できます。",
     cta: "申し込む",
     recommended: true,
+    specs: [
+      { label: "取引社数：", value: "50社" },
+      { label: "受取請求書数：", value: "300件" },
+      { label: "CSV出力：", value: "対応" },
+      { label: "チーム招待：", value: "3人" },
+    ],
   },
   {
     name: "Business",
     price: "4,980",
+    subtitle: "大規模・BPO事業者向け",
     description:
       "上限を気にせず使えるプランです。取引先・請求書を無制限で管理できます。",
     cta: "申し込む",
     recommended: false,
+    specs: [
+      { label: "取引社数：", value: "無制限" },
+      { label: "受取請求書数：", value: "無制限" },
+      { label: "CSV出力：", value: "対応" },
+      { label: "チーム招待：", value: "無制限" },
+    ],
   },
 ];
 
@@ -226,23 +247,23 @@ function QuickStartCheckIcon() {
 
 function CallToActionSection() {
   return (
-    <section className="bg-[#F8FAFC] px-6 py-10">
+    <section className="bg-[#F8FAFC] px-6 py-10 lg:py-20">
       <div className="text-center">
-        <p className="text-sm font-bold tracking-wider text-[#0676F6]">
+        <p className="text-sm font-bold tracking-wider text-[#0676F6] lg:text-lg">
           \まずは無料で/
         </p>
-        <div className="mt-1 flex items-center justify-center gap-3">
+        <div className="mt-1 flex items-center justify-center gap-3 lg:gap-5">
           <svg
             width="21"
             height="21"
             viewBox="0 0 21 21"
             fill="none"
-            className="shrink-0"
+            className="shrink-0 lg:w-7 lg:h-7"
             aria-hidden="true"
           >
             <path d="M10.5 21L21 10.5H0L10.5 21Z" fill="#0676F6" />
           </svg>
-          <h2 className="text-xl font-bold tracking-wide text-[#333]">
+          <h2 className="text-xl font-bold tracking-wide text-[#333] lg:text-4xl">
             受取太郎を始めましょう
           </h2>
           <svg
@@ -250,30 +271,30 @@ function CallToActionSection() {
             height="21"
             viewBox="0 0 21 21"
             fill="none"
-            className="shrink-0"
+            className="shrink-0 lg:w-7 lg:h-7"
             aria-hidden="true"
           >
             <path d="M10.5 21L21 10.5H0L10.5 21Z" fill="#0676F6" />
           </svg>
         </div>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 lg:mt-8 lg:flex lg:justify-center">
         <Link
           href="/signup"
-          className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5"
+          className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5 lg:w-136.5 lg:py-4 lg:pl-4 lg:pr-8"
         >
-          <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white">
-            <span className="text-[10px] font-bold leading-tight text-[#0676F6]">
+          <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white lg:h-22 lg:w-22">
+            <span className="text-[10px] font-bold leading-tight text-[#0676F6] lg:text-sm">
               最短
             </span>
-            <span className="text-lg font-bold leading-tight text-[#0676F6]">
+            <span className="text-lg font-bold leading-tight text-[#0676F6] lg:text-3xl">
               3分
             </span>
           </span>
-          <span className="flex-1 text-center text-xl font-bold tracking-wider text-white">
+          <span className="flex-1 text-center text-xl font-bold tracking-wider text-white lg:text-3xl">
             無料で始める
           </span>
-          <ChevronRight className="h-5 w-5 shrink-0 text-white" />
+          <ChevronRight className="h-5 w-5 shrink-0 text-white lg:h-7 lg:w-7" />
         </Link>
       </div>
     </section>
@@ -286,41 +307,41 @@ export default function Home() {
       className={`${notoSans.className} bg-white text-gray-900 tracking-[0.05em]`}
     >
       <div className="w-full bg-[#F7F9FC]">
-        <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 px-4 py-2 backdrop-blur-sm">
-          <div className="flex items-center justify-between gap-2">
+        <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 px-4 py-2 backdrop-blur-sm lg:px-12 lg:py-0 lg:h-21">
+          <div className="flex items-center justify-between gap-2 lg:h-full lg:mx-auto lg:max-w-341.5">
             <Link href="/dashboard/invoices" className="shrink-0">
               <Image
                 src="/logo.png"
                 alt="請求受取太郎"
-                width={100}
-                height={34}
+                width={188}
+                height={64}
                 priority
-                className="h-8 w-auto"
+                className="h-8 w-auto lg:h-16"
               />
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 lg:gap-6">
               <Link
                 href="/login"
-                className="inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white"
+                className="inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
               >
-                <User className="h-4 w-4 fill-white stroke-white" />
+                <User className="h-4 w-4 fill-white stroke-white lg:h-6 lg:w-6" />
                 ログイン
               </Link>
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-1.5 rounded-4xl px-3 py-1.5 font-medium text-[#0676F6] border border-[#0676F6] hover:bg-[#0676F6] hover:text-white transition-all text-xs"
+                className="inline-flex items-center gap-1.5 rounded-4xl px-3 py-1.5 font-medium text-[#0676F6] border border-[#0676F6] hover:bg-[#0676F6] hover:text-white transition-all text-xs lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
               >
                 無料で始める
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
               </Link>
             </div>
           </div>
         </header>
 
-        <section className="relative h-[calc(100dvh-50px)]">
-          <div className="absolute top-5 left-0 h-18 w-28">
+        <section className="relative h-[calc(100dvh-50px)] lg:h-173">
+          <div className="absolute top-5 left-0 h-18 w-28 lg:left-4 lg:top-8 lg:h-24 lg:w-40">
             <Image
-              className="absolute bottom-0 left-0 opacity-0 animate-fade-in"
+              className="absolute bottom-0 left-0 opacity-0 animate-fade-in lg:w-6 lg:h-6"
               style={{ animationDelay: "0s" }}
               src="/lp/footprint.png"
               alt="足跡のイラスト"
@@ -328,7 +349,7 @@ export default function Home() {
               height={18}
             />
             <Image
-              className="absolute bottom-8 left-2 opacity-0 animate-fade-in"
+              className="absolute bottom-8 left-2 opacity-0 animate-fade-in lg:bottom-10 lg:left-4 lg:w-6 lg:h-6"
               style={{ animationDelay: "0.4s" }}
               src="/lp/footprint.png"
               alt="足跡のイラスト"
@@ -336,7 +357,7 @@ export default function Home() {
               height={18}
             />
             <Image
-              className="absolute bottom-8 left-10 opacity-0 animate-fade-in"
+              className="absolute bottom-8 left-10 opacity-0 animate-fade-in lg:bottom-10 lg:left-14 lg:w-6 lg:h-6"
               style={{ animationDelay: "0.8s" }}
               src="/lp/footprint.png"
               alt="足跡のイラスト"
@@ -344,7 +365,7 @@ export default function Home() {
               height={18}
             />
             <Image
-              className="absolute bottom-16 left-10 opacity-0 animate-fade-in"
+              className="absolute bottom-16 left-10 opacity-0 animate-fade-in lg:bottom-20 lg:left-14 lg:w-6 lg:h-6"
               style={{ animationDelay: "1.2s" }}
               src="/lp/footprint.png"
               alt="足跡のイラスト"
@@ -352,7 +373,7 @@ export default function Home() {
               height={18}
             />
             <Image
-              className="absolute bottom-16 left-18 opacity-0 animate-fade-in"
+              className="absolute bottom-16 left-18 opacity-0 animate-fade-in lg:bottom-20 lg:left-24 lg:w-6 lg:h-6"
               style={{ animationDelay: "1.6s" }}
               src="/lp/footprint.png"
               alt="足跡のイラスト"
@@ -360,8 +381,8 @@ export default function Home() {
               height={18}
             />
           </div>
-          <div className="flex h-full flex-col">
-            <div className="pt-5 px-4">
+          <div className="flex h-full flex-col lg:flex-row-reverse lg:items-center lg:mx-auto lg:max-w-341.5 lg:px-10">
+            <div className="pt-5 px-4 lg:flex-1 lg:pt-0 lg:px-0">
               <Image
                 src="/lp/fv.png"
                 alt="請求受取太郎のイメージ画像"
@@ -370,48 +391,48 @@ export default function Home() {
                 className="w-full h-auto object-cover object-center"
               />
             </div>
-            <div className="mx-auto flex flex-1 flex-col gap-5 justify-center">
-              <p className="text-base font-bold text-gray-700">
-                <span className="text-4xl text-[#0676F6]">イヌ</span>
+            <div className="mx-auto flex flex-1 flex-col gap-5 justify-center lg:mx-0 lg:items-start lg:flex-none lg:w-[45%] lg:gap-6 lg:pl-10">
+              <p className="text-base font-bold text-gray-700 lg:text-2xl">
+                <span className="text-4xl text-[#0676F6] lg:text-7xl">イヌ</span>
                 でも使える！？
               </p>
-              <h1 className="text-6xl font-bold">請求書管理</h1>
-              <p className="flex items-center justify-center gap-2 text-sm text-gray-700">
+              <h1 className="text-6xl font-bold lg:text-8xl">請求書管理</h1>
+              <p className="flex items-center justify-center gap-2 text-sm text-gray-700 lg:justify-start lg:text-base">
                 <QuickStartCheckIcon />
                 最短3分!無料ですぐに使えます!
               </p>
-              <div className="flex justify-center gap-2">
+              <div className="flex justify-center gap-2 lg:justify-start lg:gap-4">
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white"
+                  className="inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
                 >
-                  <User className="h-4 w-4 fill-white stroke-white" />
+                  <User className="h-4 w-4 fill-white stroke-white lg:h-6 lg:w-6" />
                   ログイン
                 </Link>
                 <Link
                   href="/signup"
-                  className="inline-flex items-center gap-1.5 rounded-4xl border border-[#0676F6] px-3 py-1.5 text-xs font-medium text-[#0676F6] transition-all hover:bg-[#0676F6] hover:text-white"
+                  className="inline-flex items-center gap-1.5 rounded-4xl border border-[#0676F6] px-3 py-1.5 text-xs font-medium text-[#0676F6] transition-all hover:bg-[#0676F6] hover:text-white lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
                 >
                   無料で始める
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
                 </Link>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-4 py-10">
-          <h2 className="flex items-center justify-center gap-2 text-center text-lg font-bold">
+        <section className="bg-[#F8FAFC] px-4 py-10 lg:px-12 lg:py-20">
+          <h2 className="flex items-center justify-center gap-2 text-center text-lg font-bold lg:text-4xl lg:gap-3">
             <FootPrintIcon />
             こんなお悩みございませんか？
           </h2>
-          <div className="my-9 space-y-10">
+          <div className="my-9 space-y-10 lg:my-14 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:max-w-261.5 lg:mx-auto">
             {worries.map((worry, index) => (
               <article
                 key={worry.text}
-                className="rounded bg-white p-8 shadow-sm relative"
+                className="rounded bg-white p-8 shadow-sm relative lg:p-6"
               >
-                <p className="text-4xl font-bold text-[#0676F6] absolute -top-5 left-4">
+                <p className="text-4xl font-bold text-[#0676F6] absolute -top-5 left-4 lg:text-5xl lg:-top-6">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <div>
@@ -420,10 +441,10 @@ export default function Home() {
                     alt={worry.imageAlt}
                     width={480}
                     height={320}
-                    className="h-28 w-full object-contain"
+                    className="h-28 w-full object-contain lg:h-50 lg:mx-auto"
                   />
                 </div>
-                <p className="mt-3 text-sm font-bold leading-relaxed text-center">
+                <p className="mt-3 text-sm font-bold leading-relaxed text-center lg:text-base lg:mt-6">
                   {worry.text.split("<br>").map((line, lineIndex) => (
                     <span key={`${worry.imageSrc}-${lineIndex}`}>
                       {line}
@@ -438,14 +459,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="px-4 py-10 bg-[#E5F2F9] relative">
-          <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+        <section className="px-4 py-10 bg-[#E5F2F9] relative lg:px-12 lg:py-20">
+          <div className="absolute -top-6 left-1/2 -translate-x-1/2 lg:-top-8">
             <svg
               width="53"
               height="53"
               viewBox="0 0 53 53"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="lg:w-18 lg:h-18"
             >
               <rect
                 x="14.9727"
@@ -460,38 +482,38 @@ export default function Home() {
               />
             </svg>
           </div>
-          <div className="px-4">
-            <h2 className="text-center text-lg font-bold tracking-widest">
+          <div className="px-4 lg:px-0 lg:max-w-261.5 lg:mx-auto">
+            <h2 className="text-center text-lg font-bold tracking-widest lg:text-4xl">
               <span className="text-[#0676F6]">「受取太郎」</span>にお任せください！
             </h2>
-            <p className="px-4 mt-6 max-w-xs text-xs leading-loose text-gray-600">
+            <p className="px-4 mt-6 max-w-xs text-xs leading-loose text-gray-600 lg:max-w-none lg:text-base lg:text-center lg:px-0 lg:mt-8">
               難しい操作や大がかりな運用は不要です。
               <br />
               請求書の受取・一覧管理・支払い状況の
-              <br />
+              <br className="lg:hidden" />
               確認を直感的に行えるシンプルな
-              <br />
+              <br className="lg:hidden" />
               請求書管理機能を提供します。
             </p>
-            <div className="mt-6 space-y-10">
+            <div className="mt-6 space-y-10 lg:mt-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-12">
               {features.map((feature) => (
                 <article
                   key={feature.title}
-                  className="rounded-2xl p-4"
+                  className="rounded-2xl p-4 lg:p-0 lg:text-center"
                 >
-                    <div className="overflow-hidden rounded-xl bg-gray-100 p-2">
+                    <div className="overflow-hidden rounded-xl bg-gray-100 p-2 lg:bg-transparent lg:p-0 lg:flex lg:justify-center">
                       <Image
                         src={feature.imageSrc}
                         alt={feature.imageAlt}
                         width={960}
                         height={600}
-                        className="h-40 w-full object-contain"
+                        className="h-40 w-full object-contain lg:h-50 lg:w-50 lg:object-cover lg:rounded-xl"
                       />
                     </div>
-                  <h3 className="mt-4 text-xl font-semibold">
+                  <h3 className="mt-4 text-xl font-semibold lg:text-2xl lg:mt-6">
                     {feature.title}
                   </h3>
-                  <ul className="mt-3 space-y-2 text-sm text-gray-700">
+                  <ul className="mt-3 space-y-2 text-sm text-gray-700 lg:text-base lg:inline-block lg:text-left">
                     {feature.points.map((point) => (
                       <li key={point} className="flex items-start gap-2">
                         <span className="mt-0.5 shrink-0">
@@ -507,44 +529,45 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-4 py-10">
-          <h2 className="text-center text-2xl font-bold flex items-center justify-center gap-2">
+        <section className="bg-[#F8FAFC] px-4 py-10 lg:px-12 lg:py-20">
+          <h2 className="text-center text-2xl font-bold flex items-center justify-center gap-2 lg:text-4xl lg:gap-3">
             <FootPrintIcon />
             ご利用の流れ
           </h2>
-          <div className="mt-10">
+          <div className="mt-10 lg:mt-16 lg:flex lg:justify-center lg:items-start lg:max-w-261.5 lg:mx-auto">
             {flow.map((item, index) => {
               const Icon = item.icon;
               const isLeft = item.align === "left";
               const isLast = index === flow.length - 1;
+              const isEven = index % 2 === 1;
               return (
-                <div key={item.step}>
+                <div key={item.step} className={`lg:-ml-4 first:lg:ml-0 ${isEven ? "lg:mt-35" : "lg:mt-0"}`}>
                   <div
                     className={`flex ${
                       isLeft ? "justify-start" : "justify-end"
-                    }`}
+                    } lg:justify-center`}
                   >
-                    <div className="relative h-42.5 w-42.5 rounded-full border border-[#D6E4F6] bg-[#E5F2F9]">
+                    <div className="relative h-42.5 w-42.5 rounded-full border border-[#D6E4F6] bg-[#E5F2F9] lg:h-65 lg:w-65">
                       <p
-                        className={`absolute -top-3 text-sm font-bold leading-none text-[#0676F6] tracking-tight ${
+                        className={`absolute -top-3 text-sm font-bold leading-none text-[#0676F6] tracking-tight lg:text-base ${
                           isLeft ? "left-3" : "right-3"
-                        }`}
+                        } lg:left-3`}
                       >
                         STEP
                       </p>
                       <p
-                        className={`absolute top-1.3 text-[32px] font-bold leading-none text-[#0676F6] tracking-tight ${
+                        className={`absolute top-1.3 text-[32px] font-bold leading-none text-[#0676F6] tracking-tight lg:text-[40px] lg:top-2 ${
                           isLeft ? "left-3" : "right-3"
-                        }`}
+                        } lg:left-3`}
                       >
                         {item.step}
                       </p>
-                      <p className="absolute top-10 left-1/2 w-full -translate-x-1/2 whitespace-pre-line text-center text-sm font-bold tracking-[0.7px] text-[#333]">
+                      <p className="absolute top-10 left-1/2 w-full -translate-x-1/2 whitespace-pre-line text-center text-sm font-bold tracking-[0.7px] text-[#333] lg:top-14 lg:text-base">
                         {item.title}
                       </p>
-                      <div className="absolute bottom-5 left-1/2 -translate-x-1/2">
+                      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 lg:bottom-8">
                         <Icon
-                          className="h-16 w-16 text-gray-600"
+                          className="h-16 w-16 text-gray-600 lg:h-24 lg:w-24"
                           strokeWidth={1.5}
                         />
                       </div>
@@ -552,7 +575,7 @@ export default function Home() {
                   </div>
                   {!isLast && (
                     <div
-                      className={`flex ${
+                      className={`flex lg:hidden ${
                         isLeft
                           ? "justify-center pl-16"
                           : "justify-center pr-16"
@@ -569,12 +592,12 @@ export default function Home() {
 
         <CallToActionSection />
 
-        <section className="bg-[#E5F2F9] px-4 py-12">
-          <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2">
+        <section className="bg-[#E5F2F9] px-4 py-12 lg:px-12 lg:py-20">
+          <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2 lg:text-4xl lg:gap-3">
             <FootPrintIcon />
             料金プラン
           </h2>
-          <div className="mt-10 space-y-12">
+          <div className="mt-10 space-y-12 lg:mt-14 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-10 lg:max-w-261.5 lg:mx-auto lg:items-end">
             {plans.map((plan) => (
               <article
                 key={plan.name}
@@ -595,17 +618,29 @@ export default function Home() {
                   }`}
                 >
                   <h3 className={`text-[40px] font-bold ${plan.recommended ? "text-[#0676F6]" : ""}`}>{plan.name}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-black/50">
+                  <p className="mt-2 text-sm leading-relaxed text-black/50 lg:hidden">
                     {plan.description}
                   </p>
-                  <div className="mt-10 flex items-end justify-center gap-1">
+                  <p className="hidden lg:block mt-2 text-sm leading-relaxed text-black/50">
+                    {plan.subtitle}
+                  </p>
+                  <div className="mt-10 flex items-end justify-center gap-1 lg:mt-8">
                     <span className="pb-1 text-base font-medium text-[#333]">月額</span>
                     <span className="text-5xl font-bold leading-none text-[#333]">
                       {plan.price}
                     </span>
                     <span className="pb-1 text-xl font-bold text-[#333]">円</span>
                   </div>
-                  <div className="mt-10 flex justify-center">
+                  <div className="hidden lg:block mt-8 space-y-3 text-left px-5">
+                    {plan.specs.map((spec) => (
+                      <div key={spec.label} className="flex items-center gap-2">
+                        <span className="w-1.5 h-3.5 rounded-sm bg-[#0676F6] shrink-0" />
+                        <span className="text-sm text-[#333]">{spec.label}</span>
+                        <span className="ml-auto text-sm font-bold text-[#333]">{spec.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-10 flex justify-center lg:mt-8">
                     <Link
                       href="/signup"
                       className="inline-flex items-center gap-2 rounded-full border border-[#0676F6] px-8 py-2.5 text-base font-bold text-[#0676F6] transition-all hover:bg-[#0676F6] hover:text-white"
@@ -620,49 +655,84 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-5 py-10">
-          <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2">
+        <section className="bg-[#F8FAFC] px-5 py-10 lg:px-12 lg:py-20">
+          <h2 className="text-center text-xl font-bold flex items-center justify-center gap-2 lg:text-4xl lg:gap-3">
             <FootPrintIcon />
             受取太郎が選ばれる理由
           </h2>
-          <div className="mt-8 space-y-10">
-            {reasons.map((reason, index) => (
-              <article key={reason.title} className="relative pl-5 pt-5">
-                <div className="absolute left-0 top-0 z-10 flex h-14.75 w-14.75 flex-col items-center justify-center rounded-xl bg-[#F7F9FC]">
-                  <span className="text-xs font-bold leading-none text-[#0676F6]">
-                    POINT
-                  </span>
-                  <span className="text-[28px] font-bold leading-none text-[#0676F6]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div className="overflow-hidden rounded-xl">
-                  <Image
-                    src={reason.imageSrc}
-                    alt={reason.imageAlt}
-                    width={580}
-                    height={406}
-                    className="aspect-290/203 w-full object-cover"
-                  />
-                </div>
-                <div className="mt-4 pl-2">
-                  <h3 className="text-xl font-bold">{reason.title}</h3>
-                  <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#333]">
-                    {reason.body}
-                  </p>
-                </div>
-              </article>
-            ))}
+          <div className="mt-8 space-y-10 lg:mt-16 lg:space-y-16 lg:max-w-261.5 lg:mx-auto">
+            {reasons.map((reason, index) => {
+              const isImageLeft = index % 2 === 0;
+              return (
+                <article key={reason.title} className="relative pl-5 pt-5 lg:pl-0 lg:pt-0">
+                  {/* Mobile POINT badge */}
+                  <div className="absolute left-0 top-0 z-10 flex h-14.75 w-14.75 flex-col items-center justify-center rounded-xl bg-[#F7F9FC] lg:hidden">
+                    <span className="text-xs font-bold leading-none text-[#0676F6]">
+                      POINT
+                    </span>
+                    <span className="text-[28px] font-bold leading-none text-[#0676F6]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  {/* Mobile layout */}
+                  <div className="lg:hidden">
+                    <div className="overflow-hidden rounded-xl">
+                      <Image
+                        src={reason.imageSrc}
+                        alt={reason.imageAlt}
+                        width={580}
+                        height={406}
+                        className="aspect-290/203 w-full object-cover"
+                      />
+                    </div>
+                    <div className="mt-4 pl-2">
+                      <h3 className="text-xl font-bold">{reason.title}</h3>
+                      <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#333]">
+                        {reason.body}
+                      </p>
+                    </div>
+                  </div>
+                  {/* PC layout - alternating zigzag */}
+                  <div className={`hidden lg:flex lg:items-center lg:gap-16 ${isImageLeft ? "" : "lg:flex-row-reverse"}`}>
+                    <div className="overflow-hidden rounded-xl shrink-0">
+                      <Image
+                        src={reason.imageSrc}
+                        alt={reason.imageAlt}
+                        width={580}
+                        height={406}
+                        className="w-100 h-70 object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex flex-col items-center justify-center">
+                          <span className="text-xs font-bold leading-none text-[#0676F6]">
+                            POINT
+                          </span>
+                          <span className="text-[40px] font-bold leading-none text-[#0676F6]">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+                        <h3 className="text-3xl font-bold">{reason.title}</h3>
+                      </div>
+                      <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-[#333]">
+                        {reason.body}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
         <CallToActionSection />
 
-        <footer className="bg-[#E5F2F9] px-4 py-5">
-          <p className="text-center text-sm text-[#333]">
+        <footer className="bg-[#E5F2F9] px-4 py-5 lg:py-12">
+          <p className="text-center text-sm text-[#333] lg:text-base">
             © 2026 合同会社リベリオン
           </p>
-          <div className="mt-3 flex justify-center gap-4 text-xs text-gray-500">
+          <div className="mt-3 flex justify-center gap-4 text-xs text-gray-500 lg:mt-4 lg:text-sm lg:gap-6">
             <Link href="/privacy-policy" className="hover:underline">
               プライバシーポリシー
             </Link>
