@@ -666,24 +666,30 @@ export default function Home() {
           </h2>
           <div className="mt-8 space-y-10">
             {reasons.map((reason, index) => (
-              <article key={reason.title}>
-                <div className="relative">
-                  <div className="absolute -top-2 left-0 z-10 flex h-14 w-14 flex-col items-center justify-center rounded-lg bg-[#F7F9FC]">
-                    <span className="text-xs font-bold leading-none text-[#0676F6]">
-                      POINT
-                    </span>
-                    <span className="text-2xl font-bold leading-none text-[#0676F6]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div className="overflow-hidden rounded-lg bg-gray-200">
-                    <div className="h-48 w-full bg-gray-200" />
-                  </div>
+              <article key={reason.title} className="relative pl-5 pt-5">
+                <div className="absolute left-0 top-0 z-10 flex h-14.75 w-14.75 flex-col items-center justify-center rounded-xl bg-[#F7F9FC]">
+                  <span className="text-xs font-bold leading-none text-[#0676F6]">
+                    POINT
+                  </span>
+                  <span className="text-[28px] font-bold leading-none text-[#0676F6]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </div>
-                <h3 className="mt-4 text-xl font-bold">{reason.title}</h3>
-                <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#333]">
-                  {reason.body}
-                </p>
+                <div className="overflow-hidden rounded-xl">
+                  <Image
+                    src={reason.imageSrc}
+                    alt={reason.imageAlt}
+                    width={580}
+                    height={406}
+                    className="aspect-290/203 w-full object-cover"
+                  />
+                </div>
+                <div className="mt-4 pl-2">
+                  <h3 className="text-xl font-bold">{reason.title}</h3>
+                  <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#333]">
+                    {reason.body}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
