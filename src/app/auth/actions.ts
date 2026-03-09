@@ -119,6 +119,7 @@ export async function signup(formData: FormData) {
     id: authData.user.id,
     organization_id: organizationId,
     email: email,
+    invoice_flow_tutorial_seen_at: null,
   });
 
   if (profileError) {
