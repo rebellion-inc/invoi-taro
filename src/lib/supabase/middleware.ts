@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getReviewCredentials } from "@/lib/review-mode";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -29,9 +30,17 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  const {
+  let {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const reviewCredentials = getReviewCredentials();
+  if (!user && reviewCredentials) {
+    const { data, error } = await supabase.auth.signInWithPassword(reviewCredentials);
+    if (!error) {
+      user = data.user;
+    }
+  }
 
   // Protected routes
   if (
