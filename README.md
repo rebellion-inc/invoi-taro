@@ -47,6 +47,16 @@ RESEND_API_KEY=
 MAIL_FROM=
 ```
 
+## Review Open Access (for payment screening)
+
+Set the following environment variables to automatically sign in a review account and allow access without manual login:
+
+```bash
+REVIEW_OPEN_ACCESS=true
+REVIEW_USER_EMAIL=
+REVIEW_USER_PASSWORD=
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
