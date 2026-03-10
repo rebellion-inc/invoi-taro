@@ -131,25 +131,25 @@ const reasons = [
   {
     title: "低コストで使用可能",
     body: "導入を検討している方やお試し利用に適した\nコストをかけずに導入できるサービスです。",
-    imageSrc: "/lp/reason_1.png",
+    imageSrc: "/lp/reason_01.png",
     imageAlt: "コストイメージ",
   },
   {
     title: "迷わないUI",
     body: "操作説明が不要で、初めての方でも\n直感的に使えるシンプルな画面設計です。",
-    imageSrc: "/lp/reason_2.png",
+    imageSrc: "/lp/reason_02.png",
     imageAlt: "UIイメージ",
   },
   {
     title: "すぐに始められる",
     body: "面倒な初期設定は必要ありません。\n登録後はすぐに利用を開始できます。",
-    imageSrc: "/lp/reason_3.png",
+    imageSrc: "/lp/reason_03.png",
     imageAlt: "すぐ始められるイメージ",
   },
   {
     title: "取引先に負担がかからない",
     body: "取引先はアカウントの登録が不要です。\nリンクひとつで請求書を送信できます。",
-    imageSrc: "/lp/reason_4.png",
+    imageSrc: "/lp/reason_04.png",
     imageAlt: "取引先イメージ",
   },
 ];
@@ -322,9 +322,9 @@ export default function Home() {
             <div className="flex items-center gap-2 lg:gap-6">
               <Link
                 href="/login"
-                className="inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
+                className="group inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white transition-all hover:bg-white hover:text-[#0676F6] hover:border hover:border-[#0676F6] lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
               >
-                <User className="h-4 w-4 fill-white stroke-white lg:h-6 lg:w-6" />
+                <User className="h-4 w-4 fill-white stroke-white transition-colors group-hover:fill-[#0676F6] group-hover:stroke-[#0676F6] lg:h-6 lg:w-6" />
                 ログイン
               </Link>
               <Link
@@ -404,9 +404,9 @@ export default function Home() {
               <div className="flex justify-center gap-2 lg:justify-start lg:gap-4">
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
+                  className="group inline-flex items-center gap-1.5 rounded-4xl bg-[#0676F6] px-3 py-1.5 text-xs font-medium text-white transition-all hover:bg-white hover:text-[#0676F6] hover:border hover:border-[#0676F6] lg:gap-2 lg:px-6 lg:py-2.5 lg:text-base"
                 >
-                  <User className="h-4 w-4 fill-white stroke-white lg:h-6 lg:w-6" />
+                  <User className="h-4 w-4 fill-white stroke-white transition-colors group-hover:fill-[#0676F6] group-hover:stroke-[#0676F6] lg:h-6 lg:w-6" />
                   ログイン
                 </Link>
                 <Link
@@ -486,12 +486,12 @@ export default function Home() {
             <h2 className="text-center text-lg font-bold tracking-widest lg:text-4xl">
               <span className="text-[#0676F6]">「受取太郎」</span>にお任せください！
             </h2>
-            <p className="px-4 mt-6 max-w-xs text-xs leading-loose text-gray-600 lg:max-w-none lg:text-base lg:text-center lg:px-0 lg:mt-8">
+            <p className="px-4 mt-6 max-w-xs mx-auto text-sm font-medium leading-[200%] text-gray-600 lg:max-w-none lg:text-base lg:w-fit lg:mx-auto lg:px-0 lg:mt-8">
               難しい操作や大がかりな運用は不要です。
               <br />
               請求書の受取・一覧管理・支払い状況の
               <br className="lg:hidden" />
-              確認を直感的に行えるシンプルな
+              確認を<br className="hidden lg:block" />直感的に行えるシンプルな
               <br className="lg:hidden" />
               請求書管理機能を提供します。
             </p>
@@ -529,12 +529,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#F8FAFC] px-4 py-10 lg:px-12 lg:py-20">
+        <section className="bg-[#F8FAFC] px-4 py-10 lg:px-12 lg:py-20 max-w-sm mx-auto">
           <h2 className="text-center text-2xl font-bold flex items-center justify-center gap-2 lg:text-4xl lg:gap-3">
             <FootPrintIcon />
             ご利用の流れ
           </h2>
-          <div className="mt-10 lg:mt-16 lg:flex lg:justify-center lg:items-start lg:max-w-261.5 lg:mx-auto">
+          <div className="mt-10 lg:mt-16 lg:flex lg:gap-5 lg:justify-center lg:items-start lg:max-w-261.5 lg:mx-auto">
             {flow.map((item, index) => {
               const Icon = item.icon;
               const isLeft = item.align === "left";
@@ -574,15 +574,26 @@ export default function Home() {
                     </div>
                   </div>
                   {!isLast && (
-                    <div
-                      className={`flex lg:hidden ${
-                        isLeft
-                          ? "justify-center pl-16"
-                          : "justify-center pr-16"
-                      }`}
-                    >
-                      <ScrollFootprints flip={!isLeft} />
-                    </div>
+                    <>
+                      <div
+                        className={`flex lg:hidden absolute z-100${
+                          isLeft
+                            ? "justify-center pl-34"
+                            : "justify-center pl-38"
+                        }`}
+                      >
+                        <ScrollFootprints flip={!isLeft} />
+                      </div>
+                      <div
+                        className={`hidden lg:flex lg:-mt-10 relative z-1 ${
+                          isLeft
+                            ? "lg:justify-center lg:translate-x-30 lg:-translate-y-2 lg:-rotate-15"
+                            : "lg:justify-center lg:translate-x-35 lg:-translate-y-50 lg:-rotate-160"
+                        }`}
+                      >
+                        <ScrollFootprints flip={!isLeft} />
+                      </div>
+                    </>
                   )}
                 </div>
               );
