@@ -281,9 +281,9 @@ function CallToActionSection() {
       <div className="mt-5 lg:mt-8 lg:flex lg:justify-center">
         <Link
           href="/signup"
-          className="flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5 lg:w-136.5 lg:py-4 lg:pl-4 lg:pr-8"
+          className="group flex items-center gap-3 rounded-full bg-[#0676F6] py-2.5 pl-2.5 pr-5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#035fc5] hover:shadow-[0_14px_30px_-14px_rgba(6,118,246,0.95)] lg:w-136.5 lg:py-4 lg:pl-4 lg:pr-8"
         >
-          <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white lg:h-22 lg:w-22">
+          <span className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full bg-white transition-transform duration-300 ease-out group-hover:scale-105 lg:h-22 lg:w-22">
             <span className="text-[10px] font-bold leading-tight text-[#0676F6] lg:text-sm">
               最短
             </span>
@@ -294,7 +294,7 @@ function CallToActionSection() {
           <span className="flex-1 text-center text-xl font-bold tracking-wider text-white lg:text-3xl">
             無料で始める
           </span>
-          <ChevronRight className="h-5 w-5 shrink-0 text-white lg:h-7 lg:w-7" />
+          <ChevronRight className="h-5 w-5 shrink-0 text-white transition-transform duration-300 ease-out group-hover:translate-x-1 lg:h-7 lg:w-7" />
         </Link>
       </div>
     </section>
