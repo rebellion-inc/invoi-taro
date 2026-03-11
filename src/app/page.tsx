@@ -397,7 +397,7 @@ export default function Home() {
                 でも使える！？
               </p>
               <h1 className="text-6xl font-bold lg:text-8xl">請求書管理</h1>
-              <p className="flex items-center justify-center gap-2 text-sm text-gray-700 lg:justify-start lg:text-base">
+              <p className="flex items-center justify-center gap-2 text-sm leading-[120%] tracking-[0.2em] font-semibold text-[#333] lg:justify-start lg:text-lg">
                 <QuickStartCheckIcon />
                 最短3分!無料ですぐに使えます!
               </p>
@@ -422,11 +422,11 @@ export default function Home() {
         </section>
 
         <section className="bg-[#F8FAFC] px-4 py-10 lg:px-12 lg:py-20">
-          <h2 className="flex items-center justify-center gap-2 text-center text-lg font-bold lg:text-4xl lg:gap-3">
+          <h2 className="flex items-center justify-center gap-2 text-center text-lg font-bold lg:mb-12 lg:text-4xl lg:gap-3">
             <FootPrintIcon />
             こんなお悩みございませんか？
           </h2>
-          <div className="my-9 space-y-10 lg:my-14 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:max-w-261.5 lg:mx-auto">
+          <div className="my-9 px-12 space-y-10 lg:my-14 lg:px-0 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:max-w-261.5 lg:mx-auto">
             {worries.map((worry, index) => (
               <article
                 key={worry.text}
@@ -444,7 +444,7 @@ export default function Home() {
                     className="h-28 w-full object-contain lg:h-50 lg:mx-auto"
                   />
                 </div>
-                <p className="mt-3 text-sm font-bold leading-relaxed text-center lg:text-base lg:mt-6">
+                <p className="mt-3 text-sm font-semibold leading-relaxed mx-auto w-fit lg:text-xl lg:mt-6">
                   {worry.text.split("<br>").map((line, lineIndex) => (
                     <span key={`${worry.imageSrc}-${lineIndex}`}>
                       {line}
@@ -486,7 +486,7 @@ export default function Home() {
             <h2 className="text-center text-lg font-bold tracking-widest lg:text-4xl">
               <span className="text-[#0676F6]">「受取太郎」</span>にお任せください！
             </h2>
-            <p className="px-4 mt-6 max-w-xs mx-auto text-sm font-medium leading-[200%] text-gray-600 lg:max-w-none lg:text-base lg:w-fit lg:mx-auto lg:px-0 lg:mt-8">
+            <p className="w-fit mt-6 max-w-xs mx-auto text-sm font-medium leading-[200%] text-gray-600 lg:max-w-none lg:text-base lg:mx-auto lg:px-0 lg:mt-8">
               難しい操作や大がかりな運用は不要です。
               <br />
               請求書の受取・一覧管理・支払い状況の
@@ -513,7 +513,7 @@ export default function Home() {
                   <h3 className="mt-4 text-xl font-semibold lg:text-2xl lg:mt-6">
                     {feature.title}
                   </h3>
-                  <ul className="mt-3 space-y-2 text-sm text-gray-700 lg:text-base lg:inline-block lg:text-left">
+                  <ul className="font-medium mt-3 space-y-2 text-sm text-gray-700 lg:text-base lg:inline-block lg:text-left">
                     {feature.points.map((point) => (
                       <li key={point} className="flex items-start gap-2">
                         <span className="mt-0.5 shrink-0">
@@ -576,9 +576,9 @@ export default function Home() {
                   {!isLast && (
                     <>
                       <div
-                        className={`flex lg:hidden absolute z-100${
+                        className={`flex lg:hidden absolute z-1${
                           isLeft
-                            ? "justify-center pl-34"
+                            ? "justify-center pl-34 z-1"
                             : "justify-center pl-38"
                         }`}
                       >
@@ -629,7 +629,7 @@ export default function Home() {
                   }`}
                 >
                   <h3 className={`text-[40px] font-bold ${plan.recommended ? "text-[#0676F6]" : ""}`}>{plan.name}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-black/50 lg:hidden">
+                  <p className="mt-2 text-sm text-start w-fit mx-auto leading-relaxed text-black/50 lg:hidden">
                     {plan.description}
                   </p>
                   <p className="hidden lg:block mt-2 text-sm leading-relaxed text-black/50">
@@ -698,7 +698,7 @@ export default function Home() {
                     </div>
                     <div className="mt-4 pl-2">
                       <h3 className="text-xl font-bold">{reason.title}</h3>
-                      <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#333]">
+                      <p className="mt-2 whitespace-pre-line text-sm font-medium leading-relaxed text-[#333]">
                         {reason.body}
                       </p>
                     </div>
@@ -726,7 +726,7 @@ export default function Home() {
                         </div>
                         <h3 className="text-3xl font-bold">{reason.title}</h3>
                       </div>
-                      <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-[#333]">
+                      <p className="mt-4 whitespace-pre-line text-base font-medium leading-relaxed text-[#333]">
                         {reason.body}
                       </p>
                     </div>
