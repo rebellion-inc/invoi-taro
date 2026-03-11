@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { ScrollFootprints } from "@/components/scroll-footprints";
+import { SiteFooter } from "@/components/site-footer";
 
 const notoSans = Noto_Sans_JP({
   subsets: ["latin"],
@@ -743,17 +744,7 @@ export default function Home() {
           <p className="text-center text-sm text-[#333] lg:text-base">
             © 2026 合同会社リベリオン
           </p>
-          <div className="mt-3 flex justify-center gap-4 text-xs text-gray-500 lg:mt-4 lg:text-sm lg:gap-6">
-            <Link href="/privacy-policy" className="hover:underline">
-              プライバシーポリシー
-            </Link>
-            <Link href="/terms" className="hover:underline">
-              利用規約
-            </Link>
-            <Link href="/tokushoho" className="hover:underline">
-              特商法
-            </Link>
-          </div>
+          <SiteFooter className="mt-3 lg:mt-4" innerClassName="gap-4 lg:gap-6" />
         </footer>
       </div>
     </main>

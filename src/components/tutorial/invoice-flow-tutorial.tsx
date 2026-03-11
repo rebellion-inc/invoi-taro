@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 type TutorialStep = {
   id: string;
@@ -19,8 +20,8 @@ type TutorialState = {
 };
 
 const STATE_KEY = "invoice-tutorial-state-v1";
-const COMPLETED_KEY = "invoice-tutorial-completed-v1";
-const AUTO_STARTED_KEY = "invoice-tutorial-auto-started-v1";
+const LEGACY_COMPLETED_KEY = "invoice-tutorial-completed-v1";
+const LEGACY_AUTO_STARTED_KEY = "invoice-tutorial-auto-started-v1";
 
 const steps: TutorialStep[] = [
   {
@@ -86,8 +87,17 @@ const getStepPath = (step: TutorialStep, copiedToken: string | null) => {
 export function InvoiceFlowTutorial() {
   const pathname = usePathname();
   const router = useRouter();
+  const supabase = useMemo(
+    () => (typeof window === "undefined" ? null : createClient()),
+    []
+  );
   const [hydrated, setHydrated] = useState(false);
   const [tutorialState, setTutorialState] = useState<TutorialState>(defaultState);
+  const [hasSeenInvoiceFlowTutorial, setHasSeenInvoiceFlowTutorial] = useState(true);
+  const [accountStateError, setAccountStateError] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [loadedUserId, setLoadedUserId] = useState<string | null>(null);
+  const autoStartRequestedRef = useRef(false);
   const currentStep = steps[tutorialState.stepIndex] ?? steps[0];
 
   useEffect(() => {
@@ -100,10 +110,55 @@ export function InvoiceFlowTutorial() {
           setTutorialState(defaultState);
         }
       }
+      localStorage.removeItem(LEGACY_COMPLETED_KEY);
+      localStorage.removeItem(LEGACY_AUTO_STARTED_KEY);
       setHydrated(true);
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!supabase) return;
+
+    let mounted = true;
+
+    void (async () => {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (!mounted) return;
+
+      if (error) {
+        console.error("Failed to load current user for tutorial", error);
+        return;
+      }
+
+      const nextUserId = user?.id ?? null;
+      setCurrentUserId(nextUserId);
+      setLoadedUserId(null);
+      if (!nextUserId) {
+        setHasSeenInvoiceFlowTutorial(true);
+      }
+    })();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      const nextUserId = session?.user?.id ?? null;
+      setCurrentUserId(nextUserId);
+      setLoadedUserId(null);
+      setHasSeenInvoiceFlowTutorial(true);
+      setAccountStateError(null);
+      autoStartRequestedRef.current = false;
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
 
   const persistState = useCallback(
     (updater: TutorialState | ((prev: TutorialState) => TutorialState)) => {
@@ -116,33 +171,51 @@ export function InvoiceFlowTutorial() {
     []
   );
 
+  const persistSeenState = useCallback(async () => {
+    if (!supabase || !currentUserId || hasSeenInvoiceFlowTutorial) return;
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ invoice_flow_tutorial_seen_at: new Date().toISOString() })
+      .eq("id", currentUserId)
+      .is("invoice_flow_tutorial_seen_at", null);
+
+    if (error) {
+      setAccountStateError("チュートリアル状態の保存に失敗しました: " + error.message);
+      return;
+    }
+
+    setHasSeenInvoiceFlowTutorial(true);
+    setLoadedUserId(currentUserId);
+  }, [currentUserId, hasSeenInvoiceFlowTutorial, supabase]);
+
   const startTutorial = useCallback(
     (autoStarted: boolean) => {
+      setAccountStateError(null);
       persistState({
         running: true,
         stepIndex: 0,
         copiedToken: null,
         uploadDone: false,
       });
-      localStorage.removeItem(COMPLETED_KEY);
       if (autoStarted) {
-        localStorage.setItem(AUTO_STARTED_KEY, "1");
+        void persistSeenState();
       }
       if (pathname !== "/dashboard/vendors") {
         router.push("/dashboard/vendors");
       }
     },
-    [pathname, persistState, router]
+    [pathname, persistSeenState, persistState, router]
   );
 
   const closeTutorial = useCallback(
     (completed: boolean) => {
       persistState({ ...defaultState });
       if (completed) {
-        localStorage.setItem(COMPLETED_KEY, "1");
+        void persistSeenState();
       }
     },
-    [persistState]
+    [persistSeenState, persistState]
   );
 
   useEffect(() => {
@@ -170,16 +243,51 @@ export function InvoiceFlowTutorial() {
 
   useEffect(() => {
     if (!hydrated) return;
+    if (!supabase) return;
+    if (!pathname.startsWith("/dashboard")) return;
+    if (!currentUserId) return;
+    if (loadedUserId === currentUserId) return;
+
+    let cancelled = false;
+
+    void (async () => {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("invoice_flow_tutorial_seen_at")
+        .eq("id", currentUserId)
+        .single();
+
+      if (cancelled) return;
+
+      if (error) {
+        console.error("Failed to load invoice flow tutorial status", error);
+        setHasSeenInvoiceFlowTutorial(true);
+      } else {
+        setHasSeenInvoiceFlowTutorial(Boolean(profile?.invoice_flow_tutorial_seen_at));
+      }
+
+      autoStartRequestedRef.current = false;
+      setLoadedUserId(currentUserId);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUserId, hydrated, loadedUserId, pathname, supabase]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!currentUserId) return;
+    if (loadedUserId !== currentUserId) return;
     if (tutorialState.running) return;
     const isDashboard = pathname.startsWith("/dashboard");
     if (!isDashboard) return;
-    const completed = localStorage.getItem(COMPLETED_KEY) === "1";
-    const autoStarted = localStorage.getItem(AUTO_STARTED_KEY) === "1";
-    if (!completed && !autoStarted) {
-      const timer = window.setTimeout(() => startTutorial(true), 0);
-      return () => window.clearTimeout(timer);
-    }
-  }, [hydrated, pathname, startTutorial, tutorialState.running]);
+    if (hasSeenInvoiceFlowTutorial) return;
+    if (autoStartRequestedRef.current) return;
+    autoStartRequestedRef.current = true;
+    const timer = window.setTimeout(() => startTutorial(true), 0);
+    return () => window.clearTimeout(timer);
+  }, [currentUserId, hasSeenInvoiceFlowTutorial, hydrated, loadedUserId, pathname, startTutorial, tutorialState.running]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -275,6 +383,9 @@ export function InvoiceFlowTutorial() {
           <p className="mt-2 text-xs text-amber-600">
             アップロード完了後に次へ進めます。
           </p>
+        ) : null}
+        {accountStateError ? (
+          <p className="mt-2 text-xs text-rose-600">{accountStateError}</p>
         ) : null}
 
         <div className="mt-4 flex items-center justify-between gap-2">

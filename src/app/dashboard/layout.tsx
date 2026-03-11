@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import DashboardNav from "./dashboard-nav";
 import { InvitationBanner } from "@/components/invitation-banner";
 import { BugReportFab } from "./bug-report-fab";
+import { SiteFooter } from "@/components/site-footer";
 
 export default async function DashboardLayout({
   children,
@@ -56,12 +57,18 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-mesh">
+    <div className="min-h-screen bg-gradient-mesh flex flex-col">
       <DashboardNav />
-      <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 animate-fade-in">
-        <InvitationBanner invitations={invitations} />
-        {children}
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 animate-fade-in">
+          <InvitationBanner invitations={invitations} />
+          {children}
+        </div>
       </main>
+      <SiteFooter
+        className="border-t border-white/20 px-4 pt-6 pb-24 sm:pb-8"
+        innerClassName="max-w-7xl mx-auto"
+      />
       <BugReportFab />
     </div>
   );
