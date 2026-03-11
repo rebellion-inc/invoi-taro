@@ -5,6 +5,7 @@ import "./globals.css";
 import { InvoiceFlowTutorial } from "@/components/tutorial/invoice-flow-tutorial";
 
 const GTM_ID = "GTM-WRZL3ZT5";
+const GOOGLE_SITE_VERIFICATION = "v-3XRebbEY8cY29E5NEQAlejN6u8Ydamki0OQrUoNUs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +23,9 @@ export const metadata: Metadata = {
     template: "%s | 請求受取太郎",
   },
   description: "請求書のアップロードと管理をシンプルに。取引先に専用URLを発行し、請求書を簡単に受け取ることができます。",
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export default function RootLayout({
