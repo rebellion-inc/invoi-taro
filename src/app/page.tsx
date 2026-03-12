@@ -13,6 +13,7 @@ import {
 import type { Metadata } from "next";
 import { ScrollFootprints } from "@/components/scroll-footprints";
 import { SiteFooter } from "@/components/site-footer";
+import { SITE_DESCRIPTION, SITE_OG_TITLE } from "@/lib/site";
 
 const notoSans = Noto_Sans_JP({
   subsets: ["latin"],
@@ -20,8 +21,10 @@ const notoSans = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "ホーム",
-  description: "請求受取太郎のサービス紹介ページです。",
+  title: {
+    absolute: SITE_OG_TITLE,
+  },
+  description: SITE_DESCRIPTION,
 };
 
 const worries = [
