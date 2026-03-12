@@ -23,6 +23,10 @@ export const metadata: Metadata = {
     template: "%s | 請求受取太郎",
   },
   description: "請求書のアップロードと管理をシンプルに。取引先に専用URLを発行し、請求書を簡単に受け取ることができます。",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
   },
