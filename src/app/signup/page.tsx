@@ -3,6 +3,7 @@
 import { signup } from "@/app/auth/actions";
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import { Suspense, useActionState, useState } from "react";
 import { Building2, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -164,8 +165,27 @@ function SignupForm() {
 
 export default function SignupPage() {
   return (
-    <Suspense>
-      <SignupForm />
-    </Suspense>
+    <>
+      <Script id="google-conversion-event-helper" strategy="afterInteractive">
+        {`// Helper function to delay opening a URL until a gtag event is sent.
+// Call it in response to an action that should navigate to a URL.
+function gtagSendEvent(url) {
+  var callback = function () {
+    if (typeof url === 'string') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion_event_default_1', {
+    'event_callback': callback,
+    'event_timeout': 2000,
+    // <event_parameters>
+  });
+  return false;
+}`}
+      </Script>
+      <Suspense>
+        <SignupForm />
+      </Suspense>
+    </>
   );
 }
