@@ -15,12 +15,20 @@ export async function generateMetadata({
   if (!vendor) {
     return {
       title: "取引先が見つかりません",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
   return {
     title: `請求書アップロード - ${vendor.name}`,
     description: `${vendor.name}様の請求書をアップロードしてください。`,
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 
