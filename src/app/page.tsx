@@ -11,9 +11,15 @@ import {
   User,
 } from "lucide-react";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { ScrollFootprints } from "@/components/scroll-footprints";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE_DESCRIPTION, SITE_OG_TITLE } from "@/lib/site";
+import {
+  getOrganizationSchema,
+  getWebSiteSchema,
+  getSoftwareApplicationSchema,
+} from "@/lib/structured-data";
 
 const notoSans = Noto_Sans_JP({
   subsets: ["latin"],
@@ -25,6 +31,9 @@ export const metadata: Metadata = {
     absolute: SITE_OG_TITLE,
   },
   description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
 };
 
 const worries = [
@@ -306,10 +315,35 @@ function CallToActionSection() {
 }
 
 export default function Home() {
+  const organizationSchema = getOrganizationSchema();
+  const webSiteSchema = getWebSiteSchema();
+  const softwareAppSchema = getSoftwareApplicationSchema();
+
   return (
     <main
       className={`${notoSans.className} bg-white text-gray-900 tracking-[0.05em]`}
     >
+      <Script
+        id="structured-data-organization"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+      <Script
+        id="structured-data-website"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webSiteSchema),
+        }}
+      />
+      <Script
+        id="structured-data-software-app"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(softwareAppSchema),
+        }}
+      />
       <div className="w-full bg-[#F7F9FC]">
         <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 px-4 py-2 backdrop-blur-sm lg:px-12 lg:py-0 lg:h-21">
           <div className="flex items-center justify-between gap-2 lg:h-full lg:mx-auto lg:max-w-341.5">

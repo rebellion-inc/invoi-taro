@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "特定商取引法に基づく表記",
   description: "請求受取太郎の特定商取引法に基づく表記です。",
+  alternates: {
+    canonical: "/tokushoho",
+  },
 };
 
 export default function TokushohoPage() {
