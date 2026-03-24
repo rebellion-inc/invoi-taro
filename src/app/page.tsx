@@ -14,6 +14,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { ScrollFootprints } from "@/components/scroll-footprints";
 import { SiteFooter } from "@/components/site-footer";
+import { ImageLightbox } from "@/components/image-lightbox";
 import { SITE_DESCRIPTION, SITE_OG_TITLE } from "@/lib/site";
 import {
   getOrganizationSchema,
@@ -540,7 +541,7 @@ export default function Home() {
                   className="rounded-2xl p-4 lg:p-0 lg:text-center"
                 >
                     <div className="overflow-hidden rounded-xl bg-gray-100 p-2 lg:bg-transparent lg:p-0 lg:flex lg:justify-center">
-                      <Image
+                      <ImageLightbox
                         src={feature.imageSrc}
                         alt={feature.imageAlt}
                         width={960}
